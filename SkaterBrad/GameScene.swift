@@ -124,4 +124,5 @@ class GameScene: SKScene {
             self.jumpTime = self.jumpTime + self.deltaTime
         }
     }
+    //Test
 }
