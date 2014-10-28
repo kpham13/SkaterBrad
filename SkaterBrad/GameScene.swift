@@ -34,6 +34,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //kori/brian
     let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
     let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+    var bradJumpTexture = SKTexture(imageNamed: "")
+    var bradDuckTexture = SKTexture(imageNamed: "")
 
     //spawns a trashcan every 2 seconds -kori/brian
     let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
@@ -46,11 +48,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeAction:")
         swipeRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         self.view?.addGestureRecognizer(swipeRecognizer)
+        
+        // Swipe Recognizer Setup [Tuan/Vincent]
+        var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
+        swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeUpRecognizer)
+        
+        var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
+        swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
+        self.view?.addGestureRecognizer(swipeDownRecognizer)
 
         // Physics - Setting Gravity to Game World
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
-
-        // Background
+        self.physicsWorld.contactDelegate = self
+        
+        // City Background [Tina]
         for var index = 0; index < 2; ++index {
             let bg = SKSpriteNode(imageNamed: "bg\(index).jpg")
             bg.anchorPoint = CGPointZero
@@ -198,16 +210,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
           }
           
-        }
         
-      })
-      
-      println()
-
-      
-      
-      
-        //        /* Called before each frame is rendered */
+        if self.jumpMode == true {
+            self.currentTime = currentTime
+            self.deltaTime = self.currentTime - self.previousTime
+            self.previousTime = currentTime
+            self.jumpTime = self.jumpTime + self.deltaTime
+        }
+    }
+})
+}
+    
+    // MARK: - HERO ACTIONS
+    // [Tuan/Vincent]
+    
+    func swipeUpAction(swipe: UISwipeGestureRecognizer) {
+        
+        self.jumpMode = true
+        self.jumpTime = 0.0
+        println(self.jumpNumber)
+        println(self.jumpTime)
+        println(self.deltaTime)
+        //         Jump Limit Logic ------ Uncomment to use.
+        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
+            self.jumpNumber += 1
+        }
     }
     
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
