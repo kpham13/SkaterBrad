@@ -8,7 +8,8 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
+
     
     // Jump Properties
     var currentTime = 0.0
@@ -29,13 +30,17 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         
         // Swipe Recognizer Setup
-        var swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeAction:")
-        swipeRecognizer.direction = UISwipeGestureRecognizerDirection.Up
-        self.view?.addGestureRecognizer(swipeRecognizer)
+        var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
+        swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeUpRecognizer)
+        
+        var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
+        swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
+        self.view?.addGestureRecognizer(swipeDownRecognizer)
 
         // Physics - setting gravity to game world
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
-        // Background
+        self.physicsWorld.contactDelegate = self
         
         for var index = 0; index < 2; ++index {
             let bg = SKSpriteNode(imageNamed: "bg\(index).jpg")
@@ -56,7 +61,6 @@ class GameScene: SKScene {
         }
 
         
-        
         // Hero
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
@@ -67,78 +71,64 @@ class GameScene: SKScene {
         
         // Determine physics body around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
+
+        //  hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: hero.size.width, height: hero.size.height))
+
         //hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
+        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory)
+
         
         self.addChild(hero)
         
         // Ground
-//        var groundTexture = SKTexture(imageNamed: "") // Add 336x112 image
-//        
-//        var sprite = SKSpriteNode(texture: groundTexture)
-//        sprite.setScale(2.0)
-//        sprite.position = CGPointMake(self.size.width / 2, sprite.size.height / 2)
-//
-//        self.addChild(sprite)
-//        
-//        var ground = SKNode()
-//        
-//        ground.position = CGPointMake(0, groundTexture.size().height)
-//        ground.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height * 2))
-//        ground.physicsBody?.dynamic = false
-        
-
-        
+        var groundTexture = SKTexture(imageNamed: "") // Add 336x112 image
+  
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
         ground.hidden = true
         ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
         ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
+
+        println(self.frame.size.width)
+        println(groundTexture.size().height * 2)
         
+
         self.addChild(ground)
         
-//        /* Setup your scene here */
-//        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-//        myLabel.text = "Hello, World!";
-//        myLabel.fontSize = 65;
-//        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-//        
-//        self.addChild(myLabel)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-//        /* Called when a touch begins */
-//        
-//        for touch: AnyObject in touches {
-//            let location = touch.locationInNode(self)
-//            
-//            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-//            
-//            sprite.xScale = 0.5
-//            sprite.yScale = 0.5
-//            sprite.position = location
-//            
-//            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-//            
-//            sprite.runAction(SKAction.repeatActionForever(action))
-//            
-//            self.addChild(sprite)
-        }
-    func swipeAction(swipe: UISwipeGestureRecognizer) {
+
+    }
+
+    func swipeUpAction(swipe: UISwipeGestureRecognizer) {
+
         self.jumpMode = true
         self.jumpTime = 0.0
         println(self.jumpNumber)
         println(self.jumpTime)
         println(self.deltaTime)
-        // Jump Limit Logic ------ Uncomment to use.
-//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+//         Jump Limit Logic ------ Uncomment to use.
+        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
             self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
             self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
             self.jumpNumber += 1
-//        }
+        }
+    }
+    
+    func swipeDownAction(swipe: UISwipeGestureRecognizer) {
+        println("Swipe down")
+        let wait = SKAction.waitForDuration(1.0)
+        
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        println("Contact occured")
+        self.jumpNumber = 0
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -161,11 +151,15 @@ class GameScene: SKScene {
             }
             
         })
-
         
-        
-        
-        //        /* Called before each frame is rendered */
+        if self.jumpMode == true {
+            self.currentTime = currentTime
+            self.deltaTime = self.currentTime - self.previousTime
+            self.previousTime = currentTime
+            self.jumpTime = self.jumpTime + self.deltaTime
+        }
     }
 }
+//test
 
+//test
