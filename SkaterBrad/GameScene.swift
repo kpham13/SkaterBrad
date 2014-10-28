@@ -11,9 +11,18 @@ import SpriteKit
 class GameScene: SKScene {
 
     var hero = SKSpriteNode()
-
+    let obst2 = SKSpriteNode()
+//    obst2 = SKSpriteNode(imageNamed: "crane.png")
+    
     override func didMoveToView(view: SKView) {
 
+        //obstacles
+        
+//        obst2 = SKSpriteNode(imageNamed: "crane.png")
+        
+        self.addChild(obst2)
+        
+        
         // Physics - setting gravity to game world
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
         
@@ -23,7 +32,7 @@ class GameScene: SKScene {
         
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
-        hero.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.5) // Change y to ground level
+        hero.position = CGPoint(x: self.frame.size.width * 0.3, y: self.frame.size.height * 0.5) // Change y to ground level
         
         // Determine physics body around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
@@ -37,8 +46,9 @@ class GameScene: SKScene {
         var groundTexture = SKTexture(imageNamed: "") // Add 336x112 image
         
         var sprite = SKSpriteNode(texture: groundTexture)
-        sprite.setScale(2.0)
-        sprite.position = CGPointMake(self.size.width / 2, sprite.size.height / 2)
+        
+        sprite.setScale(1.0)
+        sprite.position = CGPointMake(self.size.width / 3, sprite.size.height / 2)
 
         self.addChild(sprite)
         

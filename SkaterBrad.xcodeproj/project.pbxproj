@@ -16,6 +16,7 @@
 		0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */; };
 		0A5479D119FEE4F500D697D8 /* SkaterBradTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */; };
 		0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0AE34DD419FEFD8600E83179 /* hero.jpg */; };
+		45537FB51A001A1100A9EFE0 /* crane.png in Resources */ = {isa = PBXBuildFile; fileRef = 45537FB41A001A1100A9EFE0 /* crane.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +43,7 @@
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkaterBradTests.swift; sourceTree = "<group>"; };
 		0AE34DD419FEFD8600E83179 /* hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hero.jpg; sourceTree = "<group>"; };
+		45537FB41A001A1100A9EFE0 /* crane.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = crane.png; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -98,6 +100,7 @@
 		0A5479B419FEE4F500D697D8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				45537FB41A001A1100A9EFE0 /* crane.png */,
 				0AE34DD419FEFD8600E83179 /* hero.jpg */,
 				0A5479B519FEE4F500D697D8 /* Info.plist */,
 			);
@@ -205,6 +208,7 @@
 				0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */,
 				0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
+				45537FB51A001A1100A9EFE0 /* crane.png in Resources */,
 				0A5479C019FEE4F500D697D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
