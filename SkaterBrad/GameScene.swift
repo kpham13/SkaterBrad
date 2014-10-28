@@ -9,10 +9,28 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    // Jump Properties
+    var currentTime = 0.0
+    var previousTime = 0.0
+    var deltaTime = 0.0
+    var jumpNumber = 0
+    var jumpTime = 0.0
+    var jumpMode = false
 
     var hero = SKSpriteNode()
+    
+    // Node Categories
+    let heroCategory = 0x1 << 1
+    let groundCategory = 0x1 << 2
+    
 
     override func didMoveToView(view: SKView) {
+        
+        // Swipe Recognizer Setup
+        var swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeAction:")
+        swipeRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeRecognizer)
 
         // Physics - setting gravity to game world
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
@@ -27,9 +45,10 @@ class GameScene: SKScene {
         
         // Determine physics body around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
-        //hero.physicsBody = SKPhysicsBody(rectangleOfSize: <#CGSize#>) // look at later
+        //hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
+        hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
         
         self.addChild(hero)
         
@@ -47,6 +66,7 @@ class GameScene: SKScene {
         ground.position = CGPointMake(0, groundTexture.size().height)
         ground.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height * 2))
         ground.physicsBody?.dynamic = false
+        ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         
 //        var ground = SKShapeNode(rectOfSize: CGSize(width: 150, height: 100))
 //        ground.fillColor = UIColor.redColor()
@@ -83,10 +103,28 @@ class GameScene: SKScene {
 //            
 //            self.addChild(sprite)
         }
+    func swipeAction(swipe: UISwipeGestureRecognizer) {
+        self.jumpMode = true
+        self.jumpTime = 0.0
+        println(self.jumpNumber)
+        println(self.jumpTime)
+        println(self.deltaTime)
+        // Jump Limit Logic ------ Uncomment to use.
+//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
+            self.jumpNumber += 1
+//        }
+    }
     
     override func update(currentTime: CFTimeInterval) {
-        //        /* Called before each frame is rendered */
+        /* Called before each frame is rendered */
+        if self.jumpMode == true {
+            self.currentTime = currentTime
+            self.deltaTime = self.currentTime - self.previousTime
+            self.previousTime = currentTime
+            self.jumpTime = self.jumpTime + self.deltaTime
+        }
     }
-
 }
 
