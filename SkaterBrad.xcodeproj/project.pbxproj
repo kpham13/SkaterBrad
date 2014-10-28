@@ -15,6 +15,7 @@
 		0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C119FEE4F500D697D8 /* Images.xcassets */; };
 		0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */; };
 		0A5479D119FEE4F500D697D8 /* SkaterBradTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */; };
+		0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0AE34DD419FEFD8600E83179 /* hero.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -40,6 +41,7 @@
 		0A5479CA19FEE4F500D697D8 /* SkaterBradTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkaterBradTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkaterBradTests.swift; sourceTree = "<group>"; };
+		0AE34DD419FEFD8600E83179 /* hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hero.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -96,6 +98,7 @@
 		0A5479B419FEE4F500D697D8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0AE34DD419FEFD8600E83179 /* hero.jpg */,
 				0A5479B519FEE4F500D697D8 /* Info.plist */,
 			);
 			name = "Supporting Files";
@@ -199,6 +202,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
+				0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */,
 				0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
 				0A5479C019FEE4F500D697D8 /* Main.storyboard in Resources */,
@@ -413,6 +417,7 @@
 				0A5479D619FEE4F500D697D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		0A5479D719FEE4F500D697D8 /* Build configuration list for PBXNativeTarget "SkaterBradTests" */ = {
 			isa = XCConfigurationList;
@@ -421,6 +426,7 @@
 				0A5479D919FEE4F500D697D8 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
