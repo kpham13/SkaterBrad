@@ -8,7 +8,7 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
+class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Jump Properties
     var currentTime = 0.0
@@ -28,12 +28,17 @@ class GameScene: SKScene {
     override func didMoveToView(view: SKView) {
         
         // Swipe Recognizer Setup
-        var swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeAction:")
-        swipeRecognizer.direction = UISwipeGestureRecognizerDirection.Up
-        self.view?.addGestureRecognizer(swipeRecognizer)
+        var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
+        swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeUpRecognizer)
+        
+        var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
+        swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
+        self.view?.addGestureRecognizer(swipeDownRecognizer)
 
         // Physics - setting gravity to game world
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
+        self.physicsWorld.contactDelegate = self
         
         // Hero
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
@@ -45,10 +50,12 @@ class GameScene: SKScene {
         
         // Determine physics body around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
+//        hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: hero.size.width, height: hero.size.height))
         //hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
+        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory)
         
         self.addChild(hero)
         
@@ -58,6 +65,8 @@ class GameScene: SKScene {
         var sprite = SKSpriteNode(texture: groundTexture)
         sprite.setScale(2.0)
         sprite.position = CGPointMake(self.size.width / 2, sprite.size.height / 2)
+        println(sprite.frame.height)
+        
 
         self.addChild(sprite)
         
@@ -67,6 +76,8 @@ class GameScene: SKScene {
         ground.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height * 2))
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
+        println(self.frame.size.width)
+        println(groundTexture.size().height * 2)
         
 //        var ground = SKShapeNode(rectOfSize: CGSize(width: 150, height: 100))
 //        ground.fillColor = UIColor.redColor()
@@ -103,18 +114,29 @@ class GameScene: SKScene {
 //            
 //            self.addChild(sprite)
         }
-    func swipeAction(swipe: UISwipeGestureRecognizer) {
+    func swipeUpAction(swipe: UISwipeGestureRecognizer) {
         self.jumpMode = true
         self.jumpTime = 0.0
         println(self.jumpNumber)
         println(self.jumpTime)
         println(self.deltaTime)
-        // Jump Limit Logic ------ Uncomment to use.
-//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+//         Jump Limit Logic ------ Uncomment to use.
+        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
             self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
             self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
             self.jumpNumber += 1
-//        }
+        }
+    }
+    
+    func swipeDownAction(swipe: UISwipeGestureRecognizer) {
+        println("Swipe down")
+        let wait = SKAction.waitForDuration(1.0)
+        
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        println("Contact occured")
+        self.jumpNumber = 0
     }
     
     override func update(currentTime: CFTimeInterval) {
