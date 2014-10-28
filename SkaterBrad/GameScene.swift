@@ -9,6 +9,14 @@
 import SpriteKit
 
 class GameScene: SKScene {
+    
+    // Jump Properties
+    var currentTime = 0.0
+    var previousTime = 0.0
+    var deltaTime = 0.0
+    var jumpNumber = 0
+    var jumpTime = 0.0
+    var jumpMode = false
 
     var hero = SKSpriteNode()
     var backgroundSpeed : CGFloat = 1.0
@@ -16,6 +24,11 @@ class GameScene: SKScene {
     var roadSize : CGSize?
 
     override func didMoveToView(view: SKView) {
+        
+        // Swipe Recognizer Setup
+        var swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeAction:")
+        swipeRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeRecognizer)
 
         // Physics - setting gravity to game world
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
@@ -51,9 +64,10 @@ class GameScene: SKScene {
         
         // Determine physics body around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
-        //hero.physicsBody = SKPhysicsBody(rectangleOfSize: <#CGSize#>) // look at later
+        //hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
+        hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
         
         self.addChild(hero)
         
@@ -79,6 +93,7 @@ class GameScene: SKScene {
         ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
         ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
         ground.physicsBody?.dynamic = false
+        ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         
         self.addChild(ground)
         
@@ -109,6 +124,19 @@ class GameScene: SKScene {
 //            
 //            self.addChild(sprite)
         }
+    func swipeAction(swipe: UISwipeGestureRecognizer) {
+        self.jumpMode = true
+        self.jumpTime = 0.0
+        println(self.jumpNumber)
+        println(self.jumpTime)
+        println(self.deltaTime)
+        // Jump Limit Logic ------ Uncomment to use.
+//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
+            self.jumpNumber += 1
+//        }
+    }
     
     override func update(currentTime: CFTimeInterval) {
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
@@ -136,6 +164,5 @@ class GameScene: SKScene {
         
         //        /* Called before each frame is rendered */
     }
-
 }
 
