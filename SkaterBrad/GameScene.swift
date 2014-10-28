@@ -22,6 +22,9 @@ class GameScene: SKScene {
     var backgroundSpeed : CGFloat = 1.0
     var roadSpeed : CGFloat = 5.0
     var roadSize : CGSize?
+    
+    let heroCategory = 0x1 << 1
+    let groundCategory = 0x1 << 2
 
     override func didMoveToView(view: SKView) {
         
