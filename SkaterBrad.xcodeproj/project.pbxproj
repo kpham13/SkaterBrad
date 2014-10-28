@@ -16,6 +16,8 @@
 		0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */; };
 		0A5479D119FEE4F500D697D8 /* SkaterBradTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */; };
 		0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0AE34DD419FEFD8600E83179 /* hero.jpg */; };
+		92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 92A49ADB1A00127C00EEDF39 /* background.jpg */; };
+		92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A49AE51A00225B00EEDF39 /* road@3x.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,6 +44,8 @@
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkaterBradTests.swift; sourceTree = "<group>"; };
 		0AE34DD419FEFD8600E83179 /* hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hero.jpg; sourceTree = "<group>"; };
+		92A49ADB1A00127C00EEDF39 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
+		92A49AE51A00225B00EEDF39 /* road@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "road@3x.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +93,8 @@
 				0A5479BC19FEE4F500D697D8 /* GameViewController.swift */,
 				0A5479BE19FEE4F500D697D8 /* Main.storyboard */,
 				0A5479C119FEE4F500D697D8 /* Images.xcassets */,
+				92A49AE51A00225B00EEDF39 /* road@3x.png */,
+				92A49ADB1A00127C00EEDF39 /* background.jpg */,
 				0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */,
 				0A5479B419FEE4F500D697D8 /* Supporting Files */,
 			);
@@ -203,7 +209,9 @@
 			files = (
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
 				0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */,
+				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
 				0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */,
+				92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
 				0A5479C019FEE4F500D697D8 /* Main.storyboard in Resources */,
 			);
@@ -349,6 +357,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SkaterBrad/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -359,6 +368,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SkaterBrad/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
