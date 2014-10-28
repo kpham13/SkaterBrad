@@ -130,7 +130,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
         println("Swipe down")
+        
+        let originalHeight = hero.frame.height
+        let duckHeight = originalHeight / 2
+        
+        let duck = SKAction.resizeToHeight(duckHeight, duration: 0.5)
+        let duckMove = SKAction.moveToY(50.0, duration: 0.5)
         let wait = SKAction.waitForDuration(1.0)
+        let stand = SKAction.resizeToHeight(originalHeight, duration: 0.5)
+        let standMove = SKAction.moveBy(CGVectorMake(0.0, duckHeight), duration: 0.5)
+        
+        let duckAction = SKAction.sequence([duck, duckMove, wait, standMove, stand])
+        self.hero.runAction(duckAction)
         
     }
     
