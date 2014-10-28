@@ -8,9 +8,11 @@
 
 import SpriteKit
 
-class GameScene: SKScene {
-    
-    // Jump Properties
+class GameScene: SKScene, SKPhysicsContactDelegate {
+
+    var hero = SKSpriteNode()
+
+    // Jump Properties [Tuan/Vincent]
     var currentTime = 0.0
     var previousTime = 0.0
     var deltaTime = 0.0
@@ -18,11 +20,12 @@ class GameScene: SKScene {
     var jumpTime = 0.0
     var jumpMode = false
 
-    var hero = SKSpriteNode()
+    // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
     var roadSpeed : CGFloat = 5.0
     var roadSize : CGSize?
     
+    // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
   
@@ -44,7 +47,7 @@ class GameScene: SKScene {
         swipeRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         self.view?.addGestureRecognizer(swipeRecognizer)
 
-        // Physics - setting gravity to game world
+        // Physics - Setting Gravity to Game World
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
 
         // Background
@@ -57,7 +60,7 @@ class GameScene: SKScene {
 
         }
         
-        // Roads
+        // Roads [Tina]
         for var index = 0; index < 2; ++index {
             let road = SKSpriteNode(imageNamed: "road.jpg")
             road.anchorPoint = CGPointZero
@@ -66,59 +69,43 @@ class GameScene: SKScene {
             self.roadSize = road.size
             self.addChild(road)
         }
-
         
-        
-        // Hero
+        // Hero [Kevin/Tina]
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         
+        //Tina/ brad jumping texture
+        bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
+        //Tina/ brad ducking texture
+        bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
+
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
         hero.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.5) // Change y to ground level
         
-        // Determine physics body around Hero
+        // Physics Body Around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
-        //hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
-        
+        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory)
         self.addChild(hero)
         
-        // Ground
-//        var groundTexture = SKTexture(imageNamed: "") // Add 336x112 image
-//        
-//        var sprite = SKSpriteNode(texture: groundTexture)
-//        sprite.setScale(2.0)
-//        sprite.position = CGPointMake(self.size.width / 2, sprite.size.height / 2)
-//
-//        self.addChild(sprite)
-//        
-//        var ground = SKNode()
-//        
-//        ground.position = CGPointMake(0, groundTexture.size().height)
-//        ground.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height * 2))
-//        ground.physicsBody?.dynamic = false
-        
-
-        
+        // Ground [Kevin/Tina]
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
         ground.hidden = true
         ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
         ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
+
+        //println(self.frame.size.width)
+        //println(groundTexture.size().height * 2)
         
         self.addChild(ground)
         
-//        /* Setup your scene here */
-//        let myLabel = SKLabelNode(fontNamed:"Chalkduster")
-//        myLabel.text = "Hello, World!";
-//        myLabel.fontSize = 65;
-//        myLabel.position = CGPoint(x:CGRectGetMidX(self.frame), y:CGRectGetMidY(self.frame));
-//        
-//        self.addChild(myLabel)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -177,7 +164,10 @@ class GameScene: SKScene {
 //        }
     }
     
+
     override func update(currentTime: CFTimeInterval) {
+        
+        //Kevin-Tina/ Moving background
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
             if let bg = node as? SKSpriteNode {
                 bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
@@ -188,6 +178,7 @@ class GameScene: SKScene {
             
         })
         
+        //Kevin-Tina/ Moving road
         self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
             if let road = node as? SKSpriteNode {
                 road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
@@ -218,5 +209,15 @@ class GameScene: SKScene {
       
         //        /* Called before each frame is rendered */
     }
+    
+    func swipeDownAction(swipe: UISwipeGestureRecognizer) {
+        println("Swipe down")
+        let wait = SKAction.waitForDuration(1.0)
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        println("Contact occured")
+        self.jumpNumber = 0
+    }
+    
 }
-
