@@ -66,9 +66,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.addChild(road)
         }
         
-        //Tina-Kevin/ Hero
-        
-        //Tina/ brad normal pose texture
+        // Hero [Kevin/Tina]
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         
@@ -88,28 +86,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
-        
-        
-        
+        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory)
         self.addChild(hero)
         
-        // Kevin-Tina/ Ground
-//        var groundTexture = SKTexture(imageNamed: "") // Add 336x112 image
-//        
-//        var sprite = SKSpriteNode(texture: groundTexture)
-//        sprite.setScale(2.0)
-//        sprite.position = CGPointMake(self.size.width / 2, sprite.size.height / 2)
-//
-//        self.addChild(sprite)
-//        
-//        var ground = SKNode()
-//        
-//        ground.position = CGPointMake(0, groundTexture.size().height)
-//        ground.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height * 2))
-//        ground.physicsBody?.dynamic = false
-        
-
-        
+        // Ground [Kevin/Tina]
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
         ground.hidden = true
         ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
@@ -125,37 +105,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-//        /* Called when a touch begins */
-//        
-//        for touch: AnyObject in touches {
-//            let location = touch.locationInNode(self)
-//            
-//            let sprite = SKSpriteNode(imageNamed:"Spaceship")
-//            
-//            sprite.xScale = 0.5
-//            sprite.yScale = 0.5
-//            sprite.position = location
-//            
-//            let action = SKAction.rotateByAngle(CGFloat(M_PI), duration:1)
-//            
-//            sprite.runAction(SKAction.repeatActionForever(action))
-//            
-//            self.addChild(sprite)
-        }
-    func swipeAction(swipe: UISwipeGestureRecognizer) {
-        self.jumpMode = true
-        self.jumpTime = 0.0
-        println(self.jumpNumber)
-        println(self.jumpTime)
-        println(self.deltaTime)
-        // Jump Limit Logic ------ Uncomment to use.
-//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
-            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
-            self.jumpNumber += 1
-//        }
-        
-        
+
     }
     
 
