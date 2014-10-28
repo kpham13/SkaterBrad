@@ -11,19 +11,54 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var hero = SKSpriteNode()
-    let obst2 = SKSpriteNode()
-//    obst2 = SKSpriteNode(imageNamed: "crane.png")
-    
-    override func didMoveToView(view: SKView) {
 
-        //obstacles
+    // Jump Properties [Tuan/Vincent]
+    var currentTime = 0.0
+    var previousTime = 0.0
+    var deltaTime = 0.0
+    var jumpNumber = 0
+    var jumpTime = 0.0
+    var jumpMode = false
+
+    // Background Movement [Tina]
+    var backgroundSpeed : CGFloat = 1.0
+    var roadSpeed : CGFloat = 5.0
+    var roadSize : CGSize?
+    
+    // Node Categories [Tuan/Vincent]
+    let heroCategory = 0x1 << 1
+    let groundCategory = 0x1 << 2
+  
+  override func didMoveToView(view: SKView) {
+    
+    //kori/brian
+    let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+    let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+    var bradJumpTexture = SKTexture(imageNamed: "")
+    var bradDuckTexture = SKTexture(imageNamed: "")
+
+    //spawns a trashcan every 2 seconds -kori/brian
+    let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
+    let delay = SKAction.waitForDuration(NSTimeInterval(1.5))
+    let spawnThenDelay = SKAction.sequence([spawn, delay])
+    let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
+    self.runAction(spawnThenDelayForever)
+
+        // Swipe Recognizer Setup
+        var swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeAction:")
+        swipeRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeRecognizer)
         
-//        obst2 = SKSpriteNode(imageNamed: "crane.png")
+        // Swipe Recognizer Setup [Tuan/Vincent]
+        var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
+        swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeUpRecognizer)
         
-        self.addChild(obst2)
-        
-        
-        // Physics - setting gravity to game world
+        var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
+        swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
+        self.view?.addGestureRecognizer(swipeDownRecognizer)
+
+        // Physics - Setting Gravity to Game World
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
         self.physicsWorld.contactDelegate = self
         
@@ -70,20 +105,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory)
         self.addChild(hero)
         
-        // Ground
-        var groundTexture = SKTexture(imageNamed: "") // Add 336x112 image
-        
-        var sprite = SKSpriteNode(texture: groundTexture)
-        
-        sprite.setScale(1.0)
-        sprite.position = CGPointMake(self.size.width / 3, sprite.size.height / 2)
-
-        self.addChild(sprite)
-        
-        var ground = SKNode()
-        
-        ground.position = CGPointMake(0, groundTexture.size().height)
-        ground.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height * 2))
+        // Ground [Kevin/Tina]
+        var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
+        ground.hidden = true
+        ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
+        ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
 
