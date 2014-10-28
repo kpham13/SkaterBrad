@@ -28,6 +28,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
+    
+    var bradJumpTexture = SKTexture(imageNamed: "")
+    var bradDuckTexture = SKTexture(imageNamed: "")
 
     override func didMoveToView(view: SKView) {
         
@@ -67,6 +70,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         
+        //Tina/ brad jumping texture
+        bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
+        //Tina/ brad ducking texture
+        bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
+
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
         hero.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.5) // Change y to ground level
@@ -98,7 +108,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
+
     override func update(currentTime: CFTimeInterval) {
+        
+        //Kevin-Tina/ Moving background
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
             if let bg = node as? SKSpriteNode {
                 bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
@@ -109,6 +122,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         })
         
+        //Kevin-Tina/ Moving road
         self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
             if let road = node as? SKSpriteNode {
                 road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
