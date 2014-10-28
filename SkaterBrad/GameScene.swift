@@ -109,11 +109,12 @@ class GameScene: SKScene {
         println(self.jumpNumber)
         println(self.jumpTime)
         println(self.deltaTime)
-        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+        // Jump Limit Logic ------ Uncomment to use.
+//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
             self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 25))
+            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
             self.jumpNumber += 1
-        }
+//        }
     }
     
     override func update(currentTime: CFTimeInterval) {
