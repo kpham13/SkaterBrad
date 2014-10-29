@@ -388,6 +388,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        println(contact.bodyB.node!.name)
         
     }
-       
+  
 }
 
