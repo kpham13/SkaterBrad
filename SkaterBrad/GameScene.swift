@@ -142,12 +142,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         if self.nodeAtPoint(location) == self.playButton {
             self.runAction(SKAction.runBlock({ () -> Void in
+                self.playButton.removeFromParent()
                 self.playGame()
             }))
         }
         
         if self.nodeAtPoint(location) == self.menuButton {
             self.runAction(SKAction.runBlock({ () -> Void in
+                self.menuButton.removeFromParent()
                 self.restartGame()
             }))
         }
@@ -156,9 +158,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func registerAppTransitionObservers() {
 
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
-        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
-
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
@@ -207,12 +207,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func createMenuButton() {
         menuButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30 )
         menuButton.zPosition = 5
+        
         self.addChild(self.menuButton)
     }
     
     func showGameOver() {
         backgroundMusicPlayer.stop()
-
+        self.hero.physicsBody?.dynamic = false
         self.roadSpeed = 0
         self.backgroundSpeed = 0
 
@@ -248,8 +249,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func playGame() {
-        playButton.removeFromParent()
-
         // Obstacles Spawn, every 2 seconds [Brian/Kori]
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
@@ -376,7 +375,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
-        
+//        println("bodyA is \(contact.bodyA.node?.name) ")
+//        println("bodyB is \(contact.bodyB.node?.name) ")
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         switch contactMask {
         case UInt32(self.heroCategory) | UInt32(self.groundCategory):
