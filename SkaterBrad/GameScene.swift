@@ -135,12 +135,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(ground)
         
-        // Spawns a Trash Can Every 2 Seconds [Brian/Kori]
-        let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
-        let delay = SKAction.waitForDuration(NSTimeInterval(1.5))
-        let spawnThenDelay = SKAction.sequence([spawn, delay])
-        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-        self.runAction(spawnThenDelayForever)
     }
     
     
