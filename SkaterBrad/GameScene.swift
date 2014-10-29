@@ -32,8 +32,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
     
         // Texture Variables
+
         let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
         let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+    //brian notes
+        let block1 = SKSpriteNode(imageNamed: "block1")
+        
         var bradJumpTexture = SKTexture(imageNamed: "")
         var bradDuckTexture = SKTexture(imageNamed: "")
 
@@ -224,5 +228,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         craneHook.size = CGSize(width: 60.0, height: 100.0)
         self.addChild(craneHook)
     }
-    
+
 }
