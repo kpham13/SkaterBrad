@@ -28,12 +28,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
-    
-    var bradJumpTexture = SKTexture(imageNamed: "")
-    var bradDuckTexture = SKTexture(imageNamed: "")
-
+  
     override func didMoveToView(view: SKView) {
-        
+    
+        // Texture Variables
+        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        var bradJumpTexture = SKTexture(imageNamed: "")
+        var bradDuckTexture = SKTexture(imageNamed: "")
+
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
@@ -54,6 +57,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bg.position = CGPoint(x: index * Int(bg.size.width), y: 0)
             bg.name = "background"
             self.addChild(bg)
+
         }
         
         // Roads [Tina]
@@ -76,10 +80,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //Tina/ brad jumping texture
         bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
         
-        //Tina/ brad ducking texture
+        // Hero Ducking Texture [Tina]
         bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
         
-
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
         hero.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.5) // Change y to ground level
@@ -105,55 +108,85 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(ground)
         
+        // Spawns a Trash Can Every 2 Seconds [Brian/Kori]
+        let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
+        let delay = SKAction.waitForDuration(NSTimeInterval(1.5))
+        let spawnThenDelay = SKAction.sequence([spawn, delay])
+        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
+        self.runAction(spawnThenDelayForever)
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-
+    }
+  
+    func swipeAction(swipe: UISwipeGestureRecognizer) {
+        self.jumpMode = true
+        self.jumpTime = 0.0
+        println(self.jumpNumber)
+        println(self.jumpTime)
+        println(self.deltaTime)
+        
+        // Jump Limit Logic ------ Uncomment to use.
+//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 60))
+            self.jumpNumber += 1
+//        }
     }
     
-
     override func update(currentTime: CFTimeInterval) {
         
-        //Kevin-Tina/ Moving background
+        // Moving Background [Kevin/Tina]
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
             if let bg = node as? SKSpriteNode {
                 bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
+                
                 if bg.position.x <= -bg.size.width {
                     bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
                 }
             }
-            
         })
         
-        //Kevin-Tina/ Moving road
+        // Moving Road [Kevin/Tina]
         self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
             if let road = node as? SKSpriteNode {
                 road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
+                
                 if road.position.x <= -road.size.width {
                     road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
                 }
             }
-            
         })
-        
-        if self.jumpMode == true {
-            self.currentTime = currentTime
-            self.deltaTime = self.currentTime - self.previousTime
-            self.previousTime = currentTime
-            self.jumpTime = self.jumpTime + self.deltaTime
-        }
+      
+        //kori and brian
+        self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
+            if let trash = node as? SKSpriteNode {
+                trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
+                
+                if trash.position.x < 0 {
+                    trash.removeFromParent()
+                }
+          
+                if self.jumpMode == true {
+                    self.currentTime = currentTime
+                    self.deltaTime = self.currentTime - self.previousTime
+                    self.previousTime = currentTime
+                    self.jumpTime = self.jumpTime + self.deltaTime
+                }
+            }
+        })
     }
     
     // MARK: - HERO ACTIONS
     // [Tuan/Vincent]
     
     func swipeUpAction(swipe: UISwipeGestureRecognizer) {
-        
         self.jumpMode = true
         self.jumpTime = 0.0
         println(self.jumpNumber)
         println(self.jumpTime)
         println(self.deltaTime)
+        
         //         Jump Limit Logic ------ Uncomment to use.
         if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
             self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
@@ -183,6 +216,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
         self.jumpNumber = 0
+    }
+    
+    // MARK: - OBSTACLES
+    // [Brian/Kori]
+    
+    func spawnObstacles(){
+        
+        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        
+        trashCan.position = CGPointMake(/*CGRectGetMinX(self.frame) +*/ self.frame.width, 75)
+        trashCan.size = CGSize(width: 35, height: 40)
+        trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
+        trashCan.physicsBody?.dynamic = false
+        trashCan.zPosition = 12
+        trashCan.name = "trashCan"
+        self.addChild(trashCan)
+        
+        craneHook.anchorPoint = CGPointMake(1.0, 5.0)
+        craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75),
+            CGRectGetMaxY(self.frame))
+        craneHook.size = CGSize(width: 60.0, height: 100.0)
+        self.addChild(craneHook)
     }
     
 }
