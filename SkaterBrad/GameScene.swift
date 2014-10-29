@@ -14,6 +14,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var road = SKSpriteNode()
     // Factor to set entry X position for hero
     let heroPositionX : CGFloat = 0.2
+    
+    // Background Movement [Tina]
+    var backgroundSpeed : CGFloat = 1.0
+    var roadSpeed : CGFloat = 3.0
+    var roadSize : CGSize?
+    
+    // Score [Kevin]
+    let scoreText = SKLabelNode(fontNamed: "Chalkduster")
+    var score = 0
 
     // Jump Properties [Tuan/Vincent]
     var currentTime = 0.0
@@ -46,10 +55,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //let craneHook = SKSpriteNode(imageNamed: "crane.gif")
         //brian notes
         let block1 = SKSpriteNode(imageNamed: "block1")
-        
-        
-
-        // Swipe Up Recognizer  [Tuan/Vincent]
+      
+        // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         self.view?.addGestureRecognizer(swipeUpRecognizer)
@@ -85,6 +92,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Hero [Kevin/Tina]
+        var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
+        var bradJumpTexture = SKTexture(imageNamed: "")
+        var bradDuckTexture = SKTexture(imageNamed: "")
+
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
         bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
@@ -258,7 +269,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.jumpNumber = 0
         case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
             println("Hero hit obstacle")
-            default:
+        default:
             println("Trash hit...obstacle?")
         }
     }
