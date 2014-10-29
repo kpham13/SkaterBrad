@@ -31,6 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let obstacleCategory = 0x1 << 3
   
   
+  
   override func didMoveToView(view: SKView) {
     
     
@@ -41,10 +42,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         //spawns a trashcan every 2 seconds -kori/brian
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
-        let spawnObstacles = SKAction.runBlock({() in self.spawntrashCan()})
+        let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
         let craneHook = SKAction.runBlock({() in self.spawnCrane()})
         let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-        let spawnThenDelay = SKAction.sequence([spawnBench,delay,delay,spawnObstacles,delay, delay, craneHook])
+        let spawnThenDelay = SKAction.sequence([spawnBench,delay,delay,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         self.runAction(spawnThenDelayForever)
 
@@ -186,13 +187,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   }
   
 
-  func spawntrashCan(){
+  func spawnTrashcan(){
     
     var randX: Float = Float(arc4random_uniform(500) + 100)
     //var anotherFloat: Float = Float(randX)
     
     
     //kori/brian
+//    let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
     let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
 
     trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 75)
@@ -204,7 +206,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     trashCan.physicsBody?.node?.name = "trashCan"
     trashCan.zPosition = 12
     trashCan.name = "trashCan"
-    self.addChild(trashCan)
+    addChild(trashCan)
       }
   
   
