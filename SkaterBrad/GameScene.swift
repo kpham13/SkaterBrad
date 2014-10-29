@@ -37,15 +37,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
         // Texture Variables
 
-        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
-        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+//        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+//        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
     //brian notes
         let block1 = SKSpriteNode(imageNamed: "block1")
         
         var bradJumpTexture = SKTexture(imageNamed: "")
         var bradDuckTexture = SKTexture(imageNamed: "")
 
-        //spawns a trashcan every 2 seconds -kori/brian
+        //spawns a obstacles every 2 seconds -kori/brian
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
         let craneHook = SKAction.runBlock({() in self.spawnCrane()})
