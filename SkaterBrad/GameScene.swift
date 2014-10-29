@@ -11,6 +11,9 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var hero = SKSpriteNode()
+    var road = SKSpriteNode()
+    // Factor to set entry X position for hero
+    let heroPositionX : CGFloat = 0.2
     
     // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
@@ -36,6 +39,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
     let obstacleCategory = 0x1 << 3
+    
+    // Texture Variables [Tina]
+    var bradJumpTexture = SKTexture(imageNamed: "test.jpg")
+    var bradTexture = SKTexture(imageNamed: "hero.jpg")
+    var bradDuckTexture = SKTexture(imageNamed: "test2.jpg")
+    
+    
   
     override func didMoveToView(view: SKView) {
     
@@ -72,12 +82,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Roads [Tina]
         for var index = 0; index < 2; ++index {
-            let road = SKSpriteNode(imageNamed: "road.jpg")
-            road.anchorPoint = CGPointZero
-            road.position = CGPoint(x: index * Int(road.size.width), y: 0)
-            road.name = "road"
+            self.road = SKSpriteNode(imageNamed: "road.jpg")
+            self.road.anchorPoint = CGPointZero
+            self.road.position = CGPoint(x: index * Int(self.road.size.width), y: 0)
+            self.road.name = "road"
             self.roadSize = road.size
-            self.addChild(road)
+           // println(roadSize)
+            self.addChild(self.road)
         }
         
         // Hero [Kevin/Tina]
@@ -92,7 +103,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hero.name = "Brad"
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
-        hero.position = CGPoint(x: self.frame.size.width * 0.20, y: self.frame.size.height * 0.5) // Change y to ground level
+        hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
         hero.anchorPoint = CGPointZero
         
         // Physics Body Around Hero
@@ -107,8 +118,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
         ground.name = "Ground"
         ground.hidden = true
-        ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
-        ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
+        //ground.position = CGPoint(x: 0, y: 0)
+        ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!, center: CGPoint(x: self.roadSize!.width * 0.5, y: self.roadSize!.height * 0.5))
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
@@ -136,7 +147,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
   
     override func update(currentTime: CFTimeInterval) {
-
+        
+        // lock hero's x position
+        self.hero.position.x = self.frame.size.width * self.heroPositionX
+        
         // Moving Background [Kevin/Tina]
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
             if let bg = node as? SKSpriteNode {
@@ -213,10 +227,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println(self.jumpTime)
             println(self.deltaTime)
             
+            
             //         Jump Limit Logic ------ Uncomment to use.
             if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
                 self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 40))
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
+                self.hero.texture = self.bradDuckTexture
                 self.jumpNumber += 1
             }
         } else if self.duckMode == true {
