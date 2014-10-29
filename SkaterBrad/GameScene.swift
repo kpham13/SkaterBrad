@@ -20,9 +20,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var jumpTime = 0.0
     var jumpMode = false
     
-    // Speed Time
-    var speedTime = 0.0
-    var speedMode = false
+    // Duck Properties
+    var duckMode = false
 
     // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
@@ -46,15 +45,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bradJumpTexture = SKTexture(imageNamed: "")
         var bradDuckTexture = SKTexture(imageNamed: "")
 
-        // Swipe Recognizer Setup [Tuan/Vincent]
+        // Swipe Up Recognizer  [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         self.view?.addGestureRecognizer(swipeUpRecognizer)
         
-        //Swipe Left Recognizer
-        var swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeftAction:")
-        swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirection.Left
-        self.view?.addGestureRecognizer(swipeLeftRecognizer)
+        //Swipe Down Recognizer
+        var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
+        swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
+        self.view?.addGestureRecognizer(swipeDownRecognizer)
         
 //        self.addChild(obst2)
         
@@ -89,7 +88,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         
-        // Hero Jumping Texture [Tina]
+        bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
+        //Tina/ brad jumping texture
         bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
         
         // Hero Ducking Texture [Tina]
@@ -98,14 +99,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hero.name = "Brad"
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
-        hero.position = CGPoint(x: self.frame.size.width * 0.3, y: self.frame.size.height * 0.5) // Change y to ground level
+        hero.position = CGPoint(x: self.frame.size.width * 0.20, y: self.frame.size.height * 0.5) // Change y to ground level
+        hero.anchorPoint = CGPointZero
         
         // Physics Body Around Hero
-        hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
-
-        // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: hero.size.width, height: hero.size.height))
-
-        // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later [Vincent]
+        hero.physicsBody = SKPhysicsBody(rectangleOfSize: hero.size, center: CGPointMake(hero.frame.width / 2, hero.frame.height / 2))
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
@@ -120,9 +118,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
-
-        //println(self.frame.size.width)
-        //println(groundTexture.size().height * 2)
         
         self.addChild(ground)
         
@@ -144,21 +139,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //                println("REsTART gAME")
 //            }
         }
-    }
-  
-    func swipeAction(swipe: UISwipeGestureRecognizer) {
-        self.jumpMode = true
-        self.jumpTime = 0.0
-        println(self.jumpNumber)
-        println(self.jumpTime)
-        println(self.deltaTime)
-        
-        // Jump Limit Logic ------ Uncomment to use.
-//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
-            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 60))
-            self.jumpNumber += 1
-//        }
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -213,63 +193,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // [Tuan/Vincent]
     
     func swipeUpAction(swipe: UISwipeGestureRecognizer) {
-        self.jumpMode = true
-        self.jumpTime = 0.0
-        println(self.jumpNumber)
-        println(self.jumpTime)
-        println(self.deltaTime)
-        
-        //         Jump Limit Logic ------ Uncomment to use.
-        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
-            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
-            self.jumpNumber += 1
+        if self.duckMode == false {
+            self.jumpMode = true
+            self.jumpTime = 0.0
+            println(self.jumpNumber)
+            println(self.jumpTime)
+            println(self.deltaTime)
+            
+            //         Jump Limit Logic ------ Uncomment to use.
+            if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+                self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
+                self.jumpNumber += 1
+            }
+        }
+        else if self.duckMode == true {
+            let originalHeight = hero.frame.height * 2
+            let stand = SKAction.resizeToHeight(originalHeight, duration: 0.5)
+            self.hero.runAction(stand)
+            println(hero.physicsBody!.area)
+            self.duckMode = false
         }
     }
     
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
-        println("Swipe down")
-        let wait = SKAction.waitForDuration(1.0)
+        if duckMode == false {
+            println("Swipe down")
+            
+            let originalHeight = hero.frame.height
+            let duckHeight = originalHeight / 2
+            
+            let duck = SKAction.resizeToHeight(duckHeight, duration: 0.5)
+            
+            self.hero.runAction(duck)
+            println(hero.physicsBody!.area)
+            self.duckMode = true
+        }
+
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
         
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-//        switch contactMask {
-//        case UInt32(self.heroCategory) | UInt32(self.groundCategory):
-//            println("Hero hit Ground")
-//            self.jumpNumber = 0
-//        case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
-//            println("Hero hit obstacle")
-//            self.roadSpeed = 0
-//            self.backgroundSpeed = 0
-//            
-//            let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
-//            button.position.x = button.position.x - button.frame.width / 2
-//            button.fillColor = SKColor.blueColor()
-//            button.name = "RestartButton"
-//            println(button.position)
-//            println(button.frame.width)
-//            println(CGRectGetMaxX(self.frame))
-//            println(self.frame.width)
-//            self.addChild(button)
-//            
-//            
-//        default:
-//            println("Trash hit...obstacle?")
-//        }
-        
-//        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
-//            println("A > B")
-//        }
-//        else {
-//            firstBody = contact.bodyB
-////            secondBody = contact.bodyA
-//        }
-//        println(contact.bodyA.node!.name)
-//        println(contact.bodyB.node!.name)
-        
+        switch contactMask {
+        case UInt32(self.heroCategory) | UInt32(self.groundCategory):
+            println("Hero hit Ground")
+            self.jumpNumber = 0
+        case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
+            println("Hero hit obstacle")
+            self.roadSpeed = 0
+            self.backgroundSpeed = 0
+            
+            let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
+            button.position.x = button.position.x - button.frame.width / 2
+            button.fillColor = SKColor.blueColor()
+            button.name = "RestartButton"
+            println(button.position)
+            println(button.frame.width)
+            println(CGRectGetMaxX(self.frame))
+            println(self.frame.width)
+            self.addChild(button)
+        default:
+            println("Trash hit...obstacle?")
+        }
     }
     
     // MARK: - OBSTACLES
