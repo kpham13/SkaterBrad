@@ -11,6 +11,7 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var hero = SKSpriteNode()
+    var road = SKSpriteNode()
 
     // Jump Properties [Tuan/Vincent]
     var currentTime = 0.0
@@ -28,14 +29,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
-  
+    
+    // Texture Variables [Tina]
+    var bradJumpTexture = SKTexture(imageNamed: "test.jpg")
+    var bradTexture = SKTexture(imageNamed: "hero.jpg")
+    var bradDuckTexture = SKTexture(imageNamed: "test2.jpg")
+    
     override func didMoveToView(view: SKView) {
     
         // Texture Variables
         let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
         let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-        var bradJumpTexture = SKTexture(imageNamed: "")
-        var bradDuckTexture = SKTexture(imageNamed: "")
+        
+        
 
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
@@ -62,16 +68,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Roads [Tina]
         for var index = 0; index < 2; ++index {
-            let road = SKSpriteNode(imageNamed: "road.jpg")
-            road.anchorPoint = CGPointZero
-            road.position = CGPoint(x: index * Int(road.size.width), y: 0)
-            road.name = "road"
+            self.road = SKSpriteNode(imageNamed: "road.jpg")
+            self.road.anchorPoint = CGPointZero
+            self.road.position = CGPoint(x: index * Int(self.road.size.width), y: 0)
+            self.road.name = "road"
             self.roadSize = road.size
-            self.addChild(road)
+           // println(roadSize)
+            self.addChild(self.road)
         }
         
         // Hero [Kevin/Tina]
-        var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         
         // Hero Jumping Texture [Tina]
@@ -82,7 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
-        hero.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.5) // Change y to ground level
+        hero.position = CGPoint(x: self.frame.size.width * 0.25, y: self.frame.size.height * 0.5) // Change y to ground level
         
         // Physics Body Around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
@@ -95,8 +101,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Ground [Kevin/Tina]
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
         ground.hidden = true
-        ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
-        ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
+        //ground.position = CGPoint(x: 0, y: 0)
+        ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!, center: CGPoint(x: self.roadSize!.width * 0.5, y: self.roadSize!.height * 0.5))
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
 
@@ -132,6 +138,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        
+        self.hero.position.x = self.frame.size.width * 0.25
         
         // Moving Background [Kevin/Tina]
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
@@ -188,8 +196,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
             self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
             self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
+            
+            //self.hero.texture = self.bradDuckTexture
             self.jumpNumber += 1
+            
         }
+        
+        //self.hero.texture = self.bradTexture
+        
     }
     
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
