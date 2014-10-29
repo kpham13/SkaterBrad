@@ -56,6 +56,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirection.Left
         self.view?.addGestureRecognizer(swipeLeftRecognizer)
         
+//        self.addChild(obst2)
+        
+        
         // Physics - setting gravity to game world
 
         // Physics - Setting Gravity to Game World

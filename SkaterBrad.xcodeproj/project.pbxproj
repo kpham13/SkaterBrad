@@ -237,6 +237,7 @@
 				45DAB90C1A015C4300A3920D /* coast.gif in Resources */,
 				92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
+				45537FB51A001A1100A9EFE0 /* crane.png in Resources */,
 				0A5479C019FEE4F500D697D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
