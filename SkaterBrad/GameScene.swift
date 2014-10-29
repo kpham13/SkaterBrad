@@ -350,7 +350,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
             println("Hero hit obstacle")
             self.showGameOver()
-
+//test
             
         default:
             println("Trash hit...obstacle?")
