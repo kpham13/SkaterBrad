@@ -49,7 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
   
     // Screen Buttons [Sam]
-    var playButton = SKSpriteNode(imageNamed: "playnow.png")
+    var playButton = SKSpriteNode(imageNamed: "playNow.png")
     var menuButton = SKSpriteNode(imageNamed: "menu.png")
     var backgroundMusicPlayer : AVAudioPlayer!
     
@@ -216,8 +216,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playButton.zPosition = 5
         self.addChild(self.playButton)
     }
-  
-  }
   
   //kori/brian
   func spawnCrane(){
@@ -546,3 +544,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.name = "trashCan"
         addChild(trashCan)
     }
+}
