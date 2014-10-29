@@ -134,6 +134,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
 
+        //println(self.frame.size.width)
+        //println(groundTexture.size().height * 2)
+        
+        self.addChild(ground)
+
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -250,28 +255,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func playGame() {
         playButton.removeFromParent()
 
-        //Spawns a Trash Can Every 2 Seconds [Brian/Kori]
-        let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
-        let delay = SKAction.waitForDuration(NSTimeInterval(1.5))
-        let spawnThenDelay = SKAction.sequence([spawn, delay])
+        // Obstacles Spawn, every 2 seconds [Brian/Kori]
+        let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
+        let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
+        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
+        let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
+        let spawnThenDelay = SKAction.sequence([spawnBench,delay,spawnTrashcan,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         self.runAction(spawnThenDelayForever)
 
-    }
-    
-    func swipeAction(swipe: UISwipeGestureRecognizer) {
-        self.jumpMode = true
-        self.jumpTime = 0.0
-        println(self.jumpNumber)
-        println(self.jumpTime)
-        println(self.deltaTime)
-        
-        // Jump Limit Logic ------ Uncomment to use.
-//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
-            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 60))
-            self.jumpNumber += 1
-//        }
     }
     
     override func update(currentTime: CFTimeInterval) {

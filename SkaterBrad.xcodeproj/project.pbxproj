@@ -16,6 +16,10 @@
 		0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */; };
 		0A5479D119FEE4F500D697D8 /* SkaterBradTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */; };
 		0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0AE34DD419FEFD8600E83179 /* hero.jpg */; };
+		45DAB90A1A015C4300A3920D /* duck2.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45DAB9071A015C4300A3920D /* duck2.gif */; };
+		45DAB90B1A015C4300A3920D /* duck1.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45DAB9081A015C4300A3920D /* duck1.gif */; };
+		45DAB90C1A015C4300A3920D /* coast.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45DAB9091A015C4300A3920D /* coast.gif */; };
+		45DAB90E1A015E0000A3920D /* chain.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45DAB90D1A015E0000A3920D /* chain.gif */; };
 		52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52348A941A00584A0054E55A /* bgMusic.mp3 */; };
 		52348A9B1A00584A0054E55A /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52348A961A00584A0054E55A /* lose.wav */; };
 		52348A9D1A00584A0054E55A /* win.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52348A981A00584A0054E55A /* win.wav */; };
@@ -53,6 +57,10 @@
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkaterBradTests.swift; sourceTree = "<group>"; };
 		0AE34DD419FEFD8600E83179 /* hero.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hero.jpg; sourceTree = "<group>"; };
+		45DAB9071A015C4300A3920D /* duck2.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = duck2.gif; sourceTree = "<group>"; };
+		45DAB9081A015C4300A3920D /* duck1.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = duck1.gif; sourceTree = "<group>"; };
+		45DAB9091A015C4300A3920D /* coast.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = coast.gif; sourceTree = "<group>"; };
+		45DAB90D1A015E0000A3920D /* chain.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = chain.gif; sourceTree = "<group>"; };
 		52348A941A00584A0054E55A /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgMusic.mp3; path = SkaterBrad/bgMusic.mp3; sourceTree = "<group>"; };
 		52348A961A00584A0054E55A /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = lose.wav; path = SkaterBrad/lose.wav; sourceTree = "<group>"; };
 		52348A981A00584A0054E55A /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = win.wav; path = SkaterBrad/win.wav; sourceTree = "<group>"; };
@@ -409,7 +417,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SkaterBrad/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -420,7 +428,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SkaterBrad/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
