@@ -35,11 +35,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   
     override func didMoveToView(view: SKView) {
     
-    
-    var bradJumpTexture = SKTexture(imageNamed: "")
-    var bradDuckTexture = SKTexture(imageNamed: "")
-    
-       
+        // Texture Variables
+
+        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+    //brian notes
+        let block1 = SKSpriteNode(imageNamed: "block1")
+        
+        var bradJumpTexture = SKTexture(imageNamed: "")
+        var bradDuckTexture = SKTexture(imageNamed: "")
 
         //spawns a trashcan every 2 seconds -kori/brian
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
