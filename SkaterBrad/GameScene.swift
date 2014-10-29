@@ -388,30 +388,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //        println(contact.bodyB.node!.name)
         
     }
-    
-    // MARK: - OBSTACLES
-    // [Brian/Kori]
-    
-    func spawnObstacles(){
-        
-        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
-        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-        
-        trashCan.position = CGPointMake(/*CGRectGetMinX(self.frame) +*/ self.frame.width, 75)
-        trashCan.size = CGSize(width: 35, height: 40)
-        trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
-        trashCan.physicsBody?.dynamic = false
-        trashCan.zPosition = 12
-        trashCan.name = "trashCan"
-        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        self.addChild(trashCan)
-        
-        craneHook.anchorPoint = CGPointMake(1.0, 5.0)
-        craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75),
-            CGRectGetMaxY(self.frame))
-        craneHook.size = CGSize(width: 60.0, height: 100.0)
-        self.addChild(craneHook)
-    }
-    
+       
 }
 
