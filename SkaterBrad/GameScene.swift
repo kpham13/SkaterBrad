@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
@@ -47,8 +48,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     
   
-    override func didMoveToView(view: SKView) {
+    // Screen Buttons [Sam]
+    var playButton = SKSpriteNode(imageNamed: "playnow.png")
+    var menuButton = SKSpriteNode(imageNamed: "menu.png")
+    var backgroundMusicPlayer : AVAudioPlayer!
     
+    override func didMoveToView(view: SKView) {
+        self.registerAppTransitionObservers() 
+        self.playBackgroundMusic("bgMusic.mp3")
+        
+        self.createPlayButton()
+      
         // Texture Variables
 
         //let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
@@ -124,6 +134,121 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
 
+    }
+    
+    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        var touch = touches.anyObject() as UITouch
+        var location = touch.locationInNode(self)
+        
+        if self.nodeAtPoint(location) == self.playButton {
+            self.runAction(SKAction.runBlock({ () -> Void in
+                self.playButton.removeFromParent()
+                self.playGame()
+            }))
+        }
+        
+        if self.nodeAtPoint(location) == self.menuButton {
+            self.runAction(SKAction.runBlock({ () -> Void in
+                self.menuButton.removeFromParent()
+                self.restartGame()
+            }))
+        }
+    }
+    
+    func registerAppTransitionObservers() {
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
+    }
+    
+    func applicationWillResignActive() {
+        backgroundMusicPlayer.stop()
+        self.scene?.paused = true
+    }
+    
+    func applicationDidEnterBackground() {
+        backgroundMusicPlayer.stop()
+        self.scene?.paused = true
+    }
+    
+    func applicationWillEnterForeground() {
+        self.scene?.paused = false
+        backgroundMusicPlayer.play()
+    }
+    
+    func playBackgroundMusic(filename: String) {
+        let url = NSBundle.mainBundle().URLForResource(
+            filename, withExtension: nil)
+        if (url == nil) {
+            println("Could not find file: \(filename)")
+            return
+        }
+        
+        var error: NSError? = nil
+        backgroundMusicPlayer =
+            AVAudioPlayer(contentsOfURL: url, error: &error)
+        if backgroundMusicPlayer == nil {
+            println("Could not create audio player: \(error!)")
+            return
+        }
+        
+        backgroundMusicPlayer.numberOfLoops = -1
+        backgroundMusicPlayer.prepareToPlay()
+        backgroundMusicPlayer.play()
+    }
+    
+    func createPlayButton() {
+        playButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 80)
+        playButton.zPosition = 5
+        self.addChild(self.playButton)
+    }
+    
+    func createMenuButton() {
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30 )
+        menuButton.zPosition = 5
+        
+        self.addChild(self.menuButton)
+    }
+    
+    func showGameOver() {
+        backgroundMusicPlayer.stop()
+        self.hero.physicsBody?.dynamic = false
+        self.roadSpeed = 0
+        self.backgroundSpeed = 0
+
+        self.createMenuButton()
+        
+        let label = SKLabelNode(fontNamed: "Chalkduster")
+        label.text = "Game Over"
+        label.fontSize = 40
+        label.fontColor = SKColor.blackColor()
+        label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 100 )
+        addChild(label)
+        
+        let grayScreen = SKSpriteNode()
+        grayScreen.size = CGSize(width: CGRectGetMaxX(self.frame), height: CGRectGetMaxY(self.frame))
+        grayScreen.position = CGPointMake((CGRectGetMaxX(self.frame)/2),
+            CGRectGetMaxY(self.frame)/2)
+        grayScreen.color = SKColor.blackColor()
+        grayScreen.alpha = 0.5
+        self.addChild(grayScreen)
+
+    }
+    
+    func restartGame() {
+        self.roadSpeed = 5.0
+        self.backgroundSpeed = 1.0
+        
+        var scene = GameScene(size: self.size)
+        let skView = self.view! as SKView
+        skView.ignoresSiblingOrder = true
+        scene.scaleMode = .ResizeFill
+        scene.size = skView.bounds.size
+        skView.presentScene(scene)
+    }
+    
+    func playGame() {
         // Obstacles Spawn, every 2 seconds [Brian/Kori]
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
@@ -135,17 +260,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     }
     
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        for touch: AnyObject in touches {
-            let location = touch.locationInNode(self)
-            let node = nodeAtPoint(location)
-            
-//            if node.name! == "RestartButton" {
-//                println("REsTART gAME")
-//            }
-        }
-    }
-  
     override func update(currentTime: CFTimeInterval) {
         
         // lock hero's x position
@@ -253,7 +367,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
-        
+//        println("bodyA is \(contact.bodyA.node?.name) ")
+//        println("bodyB is \(contact.bodyB.node?.name) ")
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         switch contactMask {
         case UInt32(self.heroCategory) | UInt32(self.groundCategory):
@@ -268,6 +383,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
         case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
             println("Hero hit obstacle")
+            self.showGameOver()
+//test
+            
         default:
             println("Trash hit...obstacle?")
         }
