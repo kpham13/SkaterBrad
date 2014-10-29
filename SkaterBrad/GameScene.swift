@@ -134,11 +134,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
 
-        //println(self.frame.size.width)
-        //println(groundTexture.size().height * 2)
-        
-        self.addChild(ground)
-
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
