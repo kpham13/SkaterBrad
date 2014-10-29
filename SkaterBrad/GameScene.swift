@@ -34,8 +34,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let groundCategory = 0x1 << 2
     let obstacleCategory = 0x1 << 3
   
-  
-  
     override func didMoveToView(view: SKView) {
     
     
@@ -55,6 +53,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
       
 
+        // Swipe Recognizer Setup
+        var swipeRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeAction:")
+        swipeRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeRecognizer)
+        
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
@@ -150,6 +153,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 println("REsTART gAME")
             }
         }
+    }
   
   //kori and brian
   func spawnBench(){
@@ -231,6 +235,33 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        
+        // Moving Background [Kevin/Tina]
+        self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
+            if let bg = node as? SKSpriteNode {
+                bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
+                
+                if bg.position.x <= -bg.size.width {
+                    bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
+                    
+                }
+            }
+        })
+        
+        if self.hero.position.x <= 0 {
+            println("Offscreen")
+    
+        }
+        
+        self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
+            if let road = node as? SKSpriteNode {
+                road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
+                
+                if road.position.x <= -road.size.width {
+                    road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
+                }
+            }
+        })
       
       
       //kori and brian
