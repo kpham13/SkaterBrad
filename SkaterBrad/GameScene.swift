@@ -47,7 +47,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
         let craneHook = SKAction.runBlock({() in self.spawnCrane()})
         let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-        let spawnThenDelay = SKAction.sequence([spawnBench,delay,delay,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
+        let spawnThenDelay = SKAction.sequence([spawnBench,delay,spawnTrashcan,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         self.runAction(spawnThenDelayForever)
 
@@ -359,8 +359,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.jumpNumber = 0
         case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
             println("Hero hit obstacle")
-            self.roadSpeed = 0
-            self.backgroundSpeed = 0
+            //  self.roadSpeed = 0
+            //  self.backgroundSpeed = 0
             
             let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
             button.position.x = button.position.x - button.frame.width / 2
