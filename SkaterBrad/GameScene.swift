@@ -102,26 +102,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Hero [Kevin/Tina]
-        var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
-        var bradJumpTexture = SKTexture(imageNamed: "")
-        var bradDuckTexture = SKTexture(imageNamed: "")
+
 
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
         bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
         
-        hero.name = "Brad"
-        hero = SKSpriteNode(texture: bradTexture)
-        hero.setScale(0.5)
-        hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
-        hero.anchorPoint = CGPointZero
+        self.hero.name = "Brad"
+        self.hero = SKSpriteNode(texture: bradTexture)
+        self.hero.setScale(0.5)
+        self.hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
+        self.hero.anchorPoint = CGPointZero
         
         // Physics Body Around Hero
-        hero.physicsBody = SKPhysicsBody(rectangleOfSize: hero.size, center: CGPointMake(hero.frame.width / 2, hero.frame.height / 2))
-        hero.physicsBody?.dynamic = true
-        hero.physicsBody?.allowsRotation = false
-        hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
-        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory)
+        self.hero.physicsBody = SKPhysicsBody(rectangleOfSize: hero.size, center: CGPointMake(hero.frame.width / 2, hero.frame.height / 2))
+        self.hero.physicsBody?.dynamic = true
+        self.hero.physicsBody?.allowsRotation = false
+        self.hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
+        self.hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory)
         self.addChild(hero)
         
         // Ground [Kevin/Tina]
