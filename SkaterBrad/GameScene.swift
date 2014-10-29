@@ -70,6 +70,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         
+        var bradDuckTexture = SKTexture(imageNamed: "") // VINCENT - DUCK IMAGE NEEDED
+        bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
         //Tina/ brad jumping texture
         bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
         
@@ -164,6 +167,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let originalHeight = hero.frame.height
         let duckHeight = originalHeight / 2
+        
+        self.hero.frame.height = 4.0
         
         let duck = SKAction.resizeToHeight(duckHeight, duration: 0.5)
         let duckMove = SKAction.moveToY(50.0, duration: 0.5)
