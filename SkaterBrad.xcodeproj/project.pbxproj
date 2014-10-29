@@ -237,6 +237,8 @@
 				8B8CF4871A00469C00DA7F28 /* crane.gif in Resources */,
 				92CBF7B01A00D15D0071E392 /* test.jpg in Resources */,
 				926821251A015C40009C3022 /* test2.jpg in Resources */,
+				45DAB90B1A015C4300A3920D /* duck1.gif in Resources */,
+				45DAB90E1A015E0000A3920D /* chain.gif in Resources */,
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
 				0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */,
 				926821231A015AB2009C3022 /* test1.jpg in Resources */,
@@ -247,7 +249,6 @@
 				45DAB90C1A015C4300A3920D /* coast.gif in Resources */,
 				92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
-				45537FB51A001A1100A9EFE0 /* crane.png in Resources */,
 				0A5479C019FEE4F500D697D8 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -392,7 +393,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SkaterBrad/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
@@ -403,7 +404,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				INFOPLIST_FILE = SkaterBrad/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
