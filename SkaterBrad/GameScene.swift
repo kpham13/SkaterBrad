@@ -11,9 +11,29 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var hero = SKSpriteNode()
-    let obst2 = SKSpriteNode()
-//    obst2 = SKSpriteNode(imageNamed: "crane.png")
+
+    // Jump Properties [Tuan/Vincent]
+    var currentTime = 0.0
+    var previousTime = 0.0
+    var deltaTime = 0.0
+    var jumpNumber = 0
+    var jumpTime = 0.0
+    var jumpMode = false
     
+    // Speed Time
+    var speedTime = 0.0
+    var speedMode = false
+
+    // Background Movement [Tina]
+    var backgroundSpeed : CGFloat = 1.0
+    var roadSpeed : CGFloat = 5.0
+    var roadSize : CGSize?
+    
+    // Node Categories [Tuan/Vincent]
+    let heroCategory = 0x1 << 1
+    let groundCategory = 0x1 << 2
+    let obstacleCategory = 0x1 << 3
+  
     override func didMoveToView(view: SKView) {
     
         // Texture Variables
@@ -22,11 +42,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var bradJumpTexture = SKTexture(imageNamed: "")
         var bradDuckTexture = SKTexture(imageNamed: "")
 
-        //obstacles
+        // Swipe Recognizer Setup [Tuan/Vincent]
+        var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
+        swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
+        self.view?.addGestureRecognizer(swipeUpRecognizer)
         
-//        obst2 = SKSpriteNode(imageNamed: "crane.png")
+        //Swipe Left Recognizer
+        var swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeftAction:")
+        swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+        self.view?.addGestureRecognizer(swipeLeftRecognizer)
         
-        self.addChild(obst2)
+//        self.addChild(obst2)
         
         
         // Physics - setting gravity to game world
@@ -82,20 +108,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory)
         self.addChild(hero)
         
-        // Ground
-        var groundTexture = SKTexture(imageNamed: "") // Add 336x112 image
-        
-        var sprite = SKSpriteNode(texture: groundTexture)
-        
-        sprite.setScale(1.0)
-        sprite.position = CGPointMake(self.size.width / 3, sprite.size.height / 2)
-
-        self.addChild(sprite)
-        
-        var ground = SKNode()
-        
-        ground.position = CGPointMake(0, groundTexture.size().height)
-        ground.physicsBody = SKPhysicsBody(rectangleOfSize: CGSizeMake(self.frame.size.width, groundTexture.size().height * 2))
+        // Ground [Kevin/Tina]
+        var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
+        ground.name = "Ground"
+        ground.hidden = true
+        ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
+        ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
 
