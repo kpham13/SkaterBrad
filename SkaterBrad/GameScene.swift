@@ -155,10 +155,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     //kori/brian
     let bench = SKSpriteNode(imageNamed: "bench")
     
-    bench.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 75)
+    bench.position = CGPointMake(CGRectGetMaxX(self.frame), 75)
     bench.size = CGSize(width: 105, height: 30)
     bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 30))
-    bench.physicsBody?.dynamic = true
+    bench.physicsBody?.dynamic = false
     bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
     bench.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
     bench.physicsBody?.node?.name = "bench"
@@ -239,6 +239,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
       })
       
+      self.enumerateChildNodesWithName("bench", usingBlock: { (node, stop) -> Void in
+        if let craneHook = node as? SKSpriteNode {
+          craneHook.position = CGPoint(x: craneHook.position.x - (self.roadSpeed), y: craneHook.position.y)
+          if craneHook.position.x < 0 {
+            craneHook.removeFromParent()
+            
+          }
+        }
+        
+      })
+
 
       self.enumerateChildNodesWithName("craneHook", usingBlock: { (node, stop) -> Void in
         if let craneHook = node as? SKSpriteNode {
