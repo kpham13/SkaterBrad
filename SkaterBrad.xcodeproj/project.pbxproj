@@ -19,9 +19,7 @@
 		52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52348A941A00584A0054E55A /* bgMusic.mp3 */; };
 		52348A9B1A00584A0054E55A /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52348A961A00584A0054E55A /* lose.wav */; };
 		52348A9D1A00584A0054E55A /* win.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52348A981A00584A0054E55A /* win.wav */; };
-		52348AA11A008C570054E55A /* pause.png in Resources */ = {isa = PBXBuildFile; fileRef = 52348A9F1A008C570054E55A /* pause.png */; };
-		52348AA21A008C570054E55A /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = 52348AA01A008C570054E55A /* replay.png */; };
-		52CCFD561A01553100DF5374 /* playNow.png in Resources */ = {isa = PBXBuildFile; fileRef = 52CCFD551A01553100DF5374 /* playNow.png */; };
+		52CCFD5A1A01800A00DF5374 /* menu.png in Resources */ = {isa = PBXBuildFile; fileRef = 52CCFD591A01800A00DF5374 /* menu.png */; };
 		8B8CF4851A003D2200DA7F28 /* trashCan.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8B8CF4841A003D2200DA7F28 /* trashCan.gif */; };
 		8B8CF4871A00469C00DA7F28 /* crane.gif in Resources */ = {isa = PBXBuildFile; fileRef = 8B8CF4861A00469C00DA7F28 /* crane.gif */; };
 		92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 92A49ADB1A00127C00EEDF39 /* background.jpg */; };
@@ -55,9 +53,7 @@
 		52348A941A00584A0054E55A /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgMusic.mp3; path = SkaterBrad/bgMusic.mp3; sourceTree = "<group>"; };
 		52348A961A00584A0054E55A /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = lose.wav; path = SkaterBrad/lose.wav; sourceTree = "<group>"; };
 		52348A981A00584A0054E55A /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = win.wav; path = SkaterBrad/win.wav; sourceTree = "<group>"; };
-		52348A9F1A008C570054E55A /* pause.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pause.png; sourceTree = "<group>"; };
-		52348AA01A008C570054E55A /* replay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay.png; sourceTree = "<group>"; };
-		52CCFD551A01553100DF5374 /* playNow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playNow.png; sourceTree = "<group>"; };
+		52CCFD591A01800A00DF5374 /* menu.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = menu.png; sourceTree = "<group>"; };
 		8B8CF4841A003D2200DA7F28 /* trashCan.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = trashCan.gif; sourceTree = "<group>"; };
 		8B8CF4861A00469C00DA7F28 /* crane.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = crane.gif; sourceTree = "<group>"; };
 		92A49ADB1A00127C00EEDF39 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
@@ -104,7 +100,7 @@
 		0A5479B319FEE4F500D697D8 /* SkaterBrad */ = {
 			isa = PBXGroup;
 			children = (
-				52CCFD551A01553100DF5374 /* playNow.png */,
+				52CCFD591A01800A00DF5374 /* menu.png */,
 				0A5479B619FEE4F500D697D8 /* AppDelegate.swift */,
 				0A5479B819FEE4F500D697D8 /* GameScene.sks */,
 				0A5479BA19FEE4F500D697D8 /* GameScene.swift */,
@@ -150,8 +146,6 @@
 		52348A9E1A00588D0054E55A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				52348A9F1A008C570054E55A /* pause.png */,
-				52348AA01A008C570054E55A /* replay.png */,
 				52348A941A00584A0054E55A /* bgMusic.mp3 */,
 				52348A961A00584A0054E55A /* lose.wav */,
 				52348A981A00584A0054E55A /* win.wav */,
@@ -240,13 +234,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B8CF4871A00469C00DA7F28 /* crane.gif in Resources */,
-				52348AA11A008C570054E55A /* pause.png in Resources */,
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
 				0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */,
-				52348AA21A008C570054E55A /* replay.png in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
+				52CCFD5A1A01800A00DF5374 /* menu.png in Resources */,
 				0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */,
-				52CCFD561A01553100DF5374 /* playNow.png in Resources */,
 				8B8CF4851A003D2200DA7F28 /* trashCan.gif in Resources */,
 				92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,

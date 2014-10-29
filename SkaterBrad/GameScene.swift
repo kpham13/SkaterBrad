@@ -36,9 +36,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
   
     // Screen Buttons [Sam]
     var playButton = SKSpriteNode(imageNamed: "playnow.png")
-    var pauseButton = SKSpriteNode(imageNamed: "pause.png")
-    var isGamePaused = false
-    var isGameStarted = false
+    var menuButton = SKSpriteNode(imageNamed: "menu.png")
     
     override func didMoveToView(view: SKView) {
         self.createPlayButton()
@@ -125,77 +123,74 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //println(groundTexture.size().height * 2)
         
         self.addChild(ground)
-        
-        if self.isGameStarted && !self.isGamePaused {
-            // Spawns a Trash Can Every 2 Seconds [Brian/Kori]
-            let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
-            let delay = SKAction.waitForDuration(NSTimeInterval(1.5))
-            let spawnThenDelay = SKAction.sequence([spawn, delay])
-            let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-            self.runAction(spawnThenDelayForever)
-        }
 
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         var touch = touches.anyObject() as UITouch
-        var locationPause = touch.locationInNode(self)
+        var location = touch.locationInNode(self)
         
-        if self.nodeAtPoint(locationPause) == self.pauseButton {
+        if self.nodeAtPoint(location) == self.playButton {
             self.runAction(SKAction.runBlock({ () -> Void in
-                self.pauseGame()
+                self.playGame()
             }))
         }
         
-        if self.nodeAtPoint(locationPause) == self.playButton {
-            if self.isGameStarted {
-                self.resumeGame()
-            } else {
-                self.startNewGame()
-            }
+        if self.nodeAtPoint(location) == self.menuButton {
+            self.runAction(SKAction.runBlock({ () -> Void in
+                self.restartGame()
+            }))
         }
-        
     }
     
     func createPlayButton() {
-        playButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+        playButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 80)
         playButton.zPosition = 5
         self.addChild(self.playButton)
     }
     
-    func createPauseButton() {
-        pauseButton.position = CGPointMake(10, CGRectGetMidY(self.frame) + 300)
-        pauseButton.zPosition = 5
-        self.addChild(pauseButton)
+    func createMenuButton() {
+        menuButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30 )
+        menuButton.zPosition = 5
+        self.addChild(self.menuButton)
     }
     
-    func startNewGame() {
-        self.isGameStarted = true
+    func showGameOver() {
+        self.roadSpeed = 0
+        self.backgroundSpeed = 0
+
+        self.createMenuButton()
         
+        let label = SKLabelNode(fontNamed: "Chalkduster")
+        label.text = "Game Over"
+        label.fontSize = 40
+        label.fontColor = SKColor.blackColor()
+        label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 100 )
+        addChild(label)
+
+    }
+    
+    func restartGame() {
+        self.roadSpeed = 5.0
+        self.backgroundSpeed = 1.0
+        
+        var scene = GameScene(size: self.size)
+        let skView = self.view! as SKView
+        skView.ignoresSiblingOrder = true
+        scene.scaleMode = .ResizeFill
+        scene.size = skView.bounds.size
+        skView.presentScene(scene)
+    }
+    
+    func playGame() {
         playButton.removeFromParent()
-        self.createPauseButton()
-        // Spawns a Trash Can Every 2 Seconds [Brian/Kori]
+
+        //Spawns a Trash Can Every 2 Seconds [Brian/Kori]
         let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
         let delay = SKAction.waitForDuration(NSTimeInterval(1.5))
         let spawnThenDelay = SKAction.sequence([spawn, delay])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         self.runAction(spawnThenDelayForever)
-    }
-    
-    func pauseGame() {
-        pauseButton.removeFromParent()
-        self.addChild(playButton)
-
-        isGamePaused = true
-        self.view?.paused = true
-    }
-  
-    func resumeGame() {
-        playButton.removeFromParent()
-        self.addChild(pauseButton)
-        
-        isGamePaused = false
-        self.view?.paused = false
     }
     
     func swipeAction(swipe: UISwipeGestureRecognizer) {
@@ -294,19 +289,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.jumpNumber = 0
         case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
             println("Hero hit obstacle")
-            self.roadSpeed = 0
-            self.backgroundSpeed = 0
-            
-            let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
-            button.position.x = button.position.x - button.frame.width / 2
-            button.fillColor = SKColor.blueColor()
-            button.name = "RestartButton"
-            println(button.position)
-            println(button.frame.width)
-            println(CGRectGetMaxX(self.frame))
-            println(self.frame.width)
-            self.addChild(button)
-            
+            self.showGameOver()
+
             
         default:
             println("Trash hit...obstacle?")
