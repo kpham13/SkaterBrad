@@ -10,8 +10,9 @@ import SpriteKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
-    
-    // Jump Properties
+    var hero = SKSpriteNode()
+
+    // Jump Properties [Tuan/Vincent]
     var currentTime = 0.0
     var previousTime = 0.0
     var deltaTime = 0.0
@@ -23,14 +24,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var speedTime = 0.0
     var speedMode = false
 
-    var hero = SKSpriteNode()
+    // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
     var roadSpeed : CGFloat = 5.0
     var roadSize : CGSize?
     
+    // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
-
+  
     override func didMoveToView(view: SKView) {
         
         // Swipe Up Recognizer
@@ -48,15 +50,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
         self.physicsWorld.contactDelegate = self
         
+        // City Background [Tina]
         for var index = 0; index < 2; ++index {
             let bg = SKSpriteNode(imageNamed: "bg\(index).jpg")
             bg.anchorPoint = CGPointZero
             bg.position = CGPoint(x: index * Int(bg.size.width), y: 0)
             bg.name = "background"
             self.addChild(bg)
+
         }
         
-        // Roads
+        // Roads [Tina]
         for var index = 0; index < 2; ++index {
             let road = SKSpriteNode(imageNamed: "road.jpg")
             road.anchorPoint = CGPointZero
@@ -65,17 +69,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.roadSize = road.size
             self.addChild(road)
         }
-
         
-        // Hero
+        // Hero [Kevin/Tina]
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
+        // Hero Jumping Texture [Tina]
+        bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
+        
+        // Hero Ducking Texture [Tina]
+        bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
         
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
         hero.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.5) // Change y to ground level
         
-        // Determine physics body around Hero
+        // Physics Body Around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
 
         // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: hero.size.width, height: hero.size.height))
@@ -85,13 +94,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
         hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory)
-
-        
         self.addChild(hero)
         
-        // Ground
-        var groundTexture = SKTexture(imageNamed: "") // Add 336x112 image
-  
+        // Ground [Kevin/Tina]
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
         ground.hidden = true
         ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
@@ -99,10 +104,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
 
-        println(self.frame.size.width)
-        println(groundTexture.size().height * 2)
+        //println(self.frame.size.width)
+        //println(groundTexture.size().height * 2)
         
-
         self.addChild(ground)
     }
     
@@ -150,15 +154,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func update(currentTime: CFTimeInterval) {
+        
+        // Moving Background [Kevin/Tina]
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
             if let bg = node as? SKSpriteNode {
                 bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
+                
                 if bg.position.x <= -bg.size.width {
                     bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
                     
                 }
             }
-            
         })
         
         if self.hero.position.x <= 0 {
@@ -168,11 +174,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
             if let road = node as? SKSpriteNode {
                 road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
+                
                 if road.position.x <= -road.size.width {
                     road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
                 }
             }
-            
         })
 
         
@@ -180,5 +186,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.deltaTime = self.currentTime - self.previousTime
             self.previousTime = currentTime
     }
+    
+    func swipeDownAction(swipe: UISwipeGestureRecognizer) {
+        println("Swipe down")
+        let wait = SKAction.waitForDuration(1.0)
+    }
+    
+    func didBeginContact(contact: SKPhysicsContact) {
+        println("Contact occured")
+        self.jumpNumber = 0
+    }
+    
+    // MARK: - OBSTACLES
+    // [Brian/Kori]
+    
+    func spawnObstacles(){
+        
+        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        
+        trashCan.position = CGPointMake(/*CGRectGetMinX(self.frame) +*/ self.frame.width, 75)
+        trashCan.size = CGSize(width: 35, height: 40)
+        trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
+        trashCan.physicsBody?.dynamic = false
+        trashCan.zPosition = 12
+        trashCan.name = "trashCan"
+        self.addChild(trashCan)
+        
+        craneHook.anchorPoint = CGPointMake(1.0, 5.0)
+        craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75),
+            CGRectGetMaxY(self.frame))
+        craneHook.size = CGSize(width: 60.0, height: 100.0)
+        self.addChild(craneHook)
+    }
+    
 }
 
