@@ -139,6 +139,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
+        
+        // Game Score [Kevin]
+        
 
     }
     
