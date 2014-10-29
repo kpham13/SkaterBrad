@@ -137,9 +137,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.locationInNode(self)
             let node = nodeAtPoint(location)
             
-            if node.name! == "RestartButton" {
-                println("REsTART gAME")
-            }
+//            if node.name! == "RestartButton" {
+//                println("REsTART gAME")
+//            }
         }
     }
   
@@ -233,29 +233,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         println("Contact occured")
         
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        switch contactMask {
-        case UInt32(self.heroCategory) | UInt32(self.groundCategory):
-            println("Hero hit Ground")
-            self.jumpNumber = 0
-        case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
-            println("Hero hit obstacle")
-            self.roadSpeed = 0
-            self.backgroundSpeed = 0
-            
-            let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
-            button.position.x = button.position.x - button.frame.width / 2
-            button.fillColor = SKColor.blueColor()
-            button.name = "RestartButton"
-            println(button.position)
-            println(button.frame.width)
-            println(CGRectGetMaxX(self.frame))
-            println(self.frame.width)
-            self.addChild(button)
-            
-            
-        default:
-            println("Trash hit...obstacle?")
-        }
+//        switch contactMask {
+//        case UInt32(self.heroCategory) | UInt32(self.groundCategory):
+//            println("Hero hit Ground")
+//            self.jumpNumber = 0
+//        case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
+//            println("Hero hit obstacle")
+//            self.roadSpeed = 0
+//            self.backgroundSpeed = 0
+//            
+//            let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
+//            button.position.x = button.position.x - button.frame.width / 2
+//            button.fillColor = SKColor.blueColor()
+//            button.name = "RestartButton"
+//            println(button.position)
+//            println(button.frame.width)
+//            println(CGRectGetMaxX(self.frame))
+//            println(self.frame.width)
+//            self.addChild(button)
+//            
+//            
+//        default:
+//            println("Trash hit...obstacle?")
+//        }
         
 //        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
 //            println("A > B")
@@ -275,9 +275,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func spawnObstacles(){
         
         let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
-        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        let craneAndHook = SKSpriteNode(imageNamed: "crane.gif")
         
-        trashCan.position = CGPointMake(/*CGRectGetMinX(self.frame) +*/ self.frame.width, 75)
+        trashCan.position = CGPointMake(CGRectGetMinX(self.frame) + self.frame.width, 75)
         trashCan.size = CGSize(width: 35, height: 40)
         trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
         trashCan.physicsBody?.dynamic = false
@@ -286,7 +286,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         self.addChild(trashCan)
         
-        craneHook.anchorPoint = CGPointMake(1.0, 5.0)
+        craneHook.anchorPoint = CGPointMake(1.0, 1.0)
         craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75),
             CGRectGetMaxY(self.frame))
         craneHook.size = CGSize(width: 60.0, height: 100.0)
