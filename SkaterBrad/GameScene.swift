@@ -117,12 +117,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.addChild(ground)
         
-        // Spawns a Trash Can Every 2 Seconds [Brian/Kori]
-        let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
-        let delay = SKAction.waitForDuration(NSTimeInterval(1.5))
-        let spawnThenDelay = SKAction.sequence([spawn, delay])
-        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-        self.runAction(spawnThenDelayForever)
     }
     
     
@@ -135,6 +129,85 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //                println("REsTART gAME")
 //            }
         }
+    }
+  
+  //kori and brian
+  func spawnBench(){
+    
+    var randX: Float = Float(arc4random_uniform(300) + 1)
+    //var anotherFloat: Float = Float(randX)
+    
+    
+    //kori/brian
+    let bench = SKSpriteNode(imageNamed: "bench")
+    
+    bench.position = CGPointMake(CGRectGetMaxX(self.frame), 75)
+    bench.size = CGSize(width: 105, height: 30)
+    bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 30))
+    bench.physicsBody?.dynamic = false
+    bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+    bench.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+    bench.physicsBody?.node?.name = "bench"
+    bench.zPosition = 0
+    bench.name = "bench"
+    self.addChild(bench)
+    
+    
+    
+  }
+  
+  func spawnCrane(){
+    var randX = arc4random_uniform(300) + 100
+    let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+    
+    craneHook.anchorPoint = CGPointMake(1.0, 1.0)
+    craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX),
+      CGRectGetMaxY(self.frame))
+    craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 60, height: 100))
+    craneHook.physicsBody?.dynamic = false
+    craneHook.size = CGSize(width: 60.0, height: 100.0)
+    craneHook.name = "craneHook"
+    self.addChild(craneHook)
+
+  }
+  
+
+  func spawnTrashcan(){
+    
+    var randX: Float = Float(arc4random_uniform(500) + 100)
+    //var anotherFloat: Float = Float(randX)
+    
+    
+    //kori/brian
+//    let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+    let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+
+    trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 75)
+    trashCan.size = CGSize(width: 35, height: 40)
+    trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
+    trashCan.physicsBody?.dynamic = false
+    trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+    trashCan.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+    trashCan.physicsBody?.node?.name = "trashCan"
+    trashCan.zPosition = 12
+    trashCan.name = "trashCan"
+    addChild(trashCan)
+      }
+  
+  
+    func swipeAction(swipe: UISwipeGestureRecognizer) {
+        self.jumpMode = true
+        self.jumpTime = 0.0
+        println(self.jumpNumber)
+        println(self.jumpTime)
+        println(self.deltaTime)
+        
+        // Jump Limit Logic ------ Uncomment to use.
+//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 60))
+            self.jumpNumber += 1
+//        }
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -166,24 +239,74 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
         })
       
-        //kori and brian
-        self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
-            if let trash = node as? SKSpriteNode {
-                trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
-                
-                if trash.position.x < 0 {
-                    trash.removeFromParent()
-                }
+      
+      //kori and brian
+      
+      self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
+        if let trash = node as? SKSpriteNode {
+          trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
+          if trash.position.x < 0 {
+            trash.removeFromParent()
+            
+          }
+        }
+        
+      })
+      
+      self.enumerateChildNodesWithName("bench", usingBlock: { (node, stop) -> Void in
+        if let craneHook = node as? SKSpriteNode {
+          craneHook.position = CGPoint(x: craneHook.position.x - (self.roadSpeed), y: craneHook.position.y)
+          if craneHook.position.x < 0 {
+            craneHook.removeFromParent()
+            
+          }
+        }
+        
+      })
+
+
+      self.enumerateChildNodesWithName("craneHook", usingBlock: { (node, stop) -> Void in
+        if let craneHook = node as? SKSpriteNode {
+          craneHook.position = CGPoint(x: craneHook.position.x - (self.roadSpeed/2), y: craneHook.position.y)
+          if craneHook.position.x < 0 {
+            craneHook.removeFromParent()
+            
+          }
+        }
+        
+      })
+
+      
+      //Kevin-Tina/ Moving background
+      self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
+          if let bg = node as? SKSpriteNode {
+              bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
+              if bg.position.x <= -bg.size.width {
+                  bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
+              }
+          }
           
-                if self.jumpMode == true {
-                    self.currentTime = currentTime
-                    self.deltaTime = self.currentTime - self.previousTime
-                    self.previousTime = currentTime
-                    self.jumpTime = self.jumpTime + self.deltaTime
-                }
-            }
-        })
-    }
+      })
+    
+      
+      //Kevin-Tina/ Moving road
+      self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
+        if let road = node as? SKSpriteNode {
+          road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
+          if road.position.x <= -road.size.width {
+            road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
+          }
+          
+        
+          if self.jumpMode == true {
+              self.currentTime = currentTime
+              self.deltaTime = self.currentTime - self.previousTime
+              self.previousTime = currentTime
+              self.jumpTime = self.jumpTime + self.deltaTime
+          }
+        }
+     })
+  }
     
     // MARK: - HERO ACTIONS
     // [Tuan/Vincent]
@@ -238,8 +361,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.jumpNumber = 0
         case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
             println("Hero hit obstacle")
-            self.roadSpeed = 0
-            self.backgroundSpeed = 0
+            //  self.roadSpeed = 0
+            //  self.backgroundSpeed = 0
             
             let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
             button.position.x = button.position.x - button.frame.width / 2
@@ -254,37 +377,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("Trash hit...obstacle?")
         }
     }
-    
-    // MARK: - OBSTACLES
-    // [Brian/Kori]
-    
-    func spawnObstacles(){
-        
-        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
-        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-        let chain = SKSpriteNode(imageNamed: "chain.gif")
-        
-        trashCan.position = CGPointMake(CGRectGetMinX(self.frame) + self.frame.width, 75)
-        trashCan.size = CGSize(width: 35, height: 40)
-        trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
-        trashCan.physicsBody?.dynamic = false
-        trashCan.zPosition = 12
-        trashCan.name = "trashCan"
-        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        self.addChild(trashCan)
-        
-        
-        chain.anchorPoint = CGPointMake(1.0, 1.0)
-        chain.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75), CGRectGetMaxY(self.frame))
-        chain.size = CGSize(width: 20, height: 420)
-        
-        craneHook.anchorPoint = CGPointMake(1.0, 1.0)
-        craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75 + 39),
-            CGRectGetMaxY(self.frame) * 0.38)
-        craneHook.size = CGSize(width: 100.0, height: 100.0)
-        self.addChild(chain)
-        self.addChild(craneHook)
-    }
-
+  
 }
 
