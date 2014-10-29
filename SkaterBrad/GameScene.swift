@@ -11,6 +11,15 @@ import SpriteKit
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
     var hero = SKSpriteNode()
+    
+    // Background Movement [Tina]
+    var backgroundSpeed : CGFloat = 1.0
+    var roadSpeed : CGFloat = 5.0
+    var roadSize : CGSize?
+    
+    // Score [Kevin]
+    let scoreText = SKLabelNode(fontNamed: "Chalkduster")
+    var score = 0
 
     // Jump Properties [Tuan/Vincent]
     var currentTime = 0.0
@@ -22,11 +31,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Duck Properties
     var duckMode = false
-
-    // Background Movement [Tina]
-    var backgroundSpeed : CGFloat = 1.0
-    var roadSpeed : CGFloat = 5.0
-    var roadSize : CGSize?
     
     // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
@@ -36,30 +40,22 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
     
         // Texture Variables
-
         let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
         let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-    //brian notes
+        //brian notes
         let block1 = SKSpriteNode(imageNamed: "block1")
         
-        var bradJumpTexture = SKTexture(imageNamed: "")
-        var bradDuckTexture = SKTexture(imageNamed: "")
-
-        // Swipe Up Recognizer  [Tuan/Vincent]
+        // Swipe Recognizers [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         self.view?.addGestureRecognizer(swipeUpRecognizer)
         
-        //Swipe Down Recognizer
         var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
         swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
         self.view?.addGestureRecognizer(swipeDownRecognizer)
         
-//        self.addChild(obst2)
+        // self.addChild(obst2)
         
-        
-        // Physics - setting gravity to game world
-
         // Physics - Setting Gravity to Game World
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
         self.physicsWorld.contactDelegate = self
@@ -71,7 +67,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bg.position = CGPoint(x: index * Int(bg.size.width), y: 0)
             bg.name = "background"
             self.addChild(bg)
-
         }
         
         // Roads [Tina]
@@ -86,8 +81,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Hero [Kevin/Tina]
         var bradTexture = SKTexture(imageNamed: "hero.jpg") // Change 90x90 image
+        var bradJumpTexture = SKTexture(imageNamed: "")
+        var bradDuckTexture = SKTexture(imageNamed: "")
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
-        
         bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
         
         //Tina/ brad jumping texture
