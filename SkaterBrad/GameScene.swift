@@ -177,12 +177,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
                 
                 
-                if self.jumpMode == true {
-                    self.currentTime = currentTime
-                    self.deltaTime = self.currentTime - self.previousTime
-                    self.previousTime = currentTime
-                    self.jumpTime = self.jumpTime + self.deltaTime
-                }
+                self.currentTime = currentTime
+                self.deltaTime = self.currentTime - self.previousTime
+                self.previousTime = currentTime
+                self.jumpTime = self.jumpTime + self.deltaTime
             }
         })
         
@@ -221,43 +219,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func swipeUpAction(swipe: UISwipeGestureRecognizer) {
         if self.duckMode == false {
+            if self.jumpMode == false {
+                self.jumpTime = 0.0
+            }
             self.jumpMode = true
-            self.jumpTime = 0.0
-            println(self.jumpNumber)
-            println(self.jumpTime)
-            println(self.deltaTime)
-            
-            
             //         Jump Limit Logic ------ Uncomment to use.
             if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
                 self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
-                self.hero.texture = self.bradDuckTexture
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 40))
+                self.hero.texture = self.bradJumpTexture
                 self.jumpNumber += 1
             }
-        } else if self.duckMode == true {
-            let originalHeight = hero.frame.height * 2
-            let stand = SKAction.resizeToHeight(originalHeight, duration: 0.5)
-            self.hero.runAction(stand)
-            println(hero.physicsBody!.area)
+        }
+        else if self.duckMode == true {
+            self.hero.yScale = 0.5
+            self.hero.texture = bradTexture
             self.duckMode = false
         }
     }
     
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
-        if duckMode == false {
+        if duckMode == false && self.jumpMode == false{
             println("Swipe down")
-            
-            let originalHeight = hero.frame.height
-            let duckHeight = originalHeight / 2
-            
-            let duck = SKAction.resizeToHeight(duckHeight, duration: 0.5)
-            
-            self.hero.runAction(duck)
-            println(hero.physicsBody!.area)
+            self.hero.yScale = 0.25
+            self.hero.texture = bradDuckTexture
             self.duckMode = true
         }
+        
     }
+    
+    
+    
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
@@ -266,7 +258,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         switch contactMask {
         case UInt32(self.heroCategory) | UInt32(self.groundCategory):
             println("Hero hit Ground")
+            self.duckMode == true
             self.jumpNumber = 0
+            if self.hero.texture != bradDuckTexture {
+                self.hero.texture = bradTexture
+            }
+            
+            self.jumpMode = false
+            
         case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
             println("Hero hit obstacle")
         default:
