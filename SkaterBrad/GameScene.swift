@@ -46,8 +46,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bradTexture = SKTexture(imageNamed: "hero.jpg")
     var bradDuckTexture = SKTexture(imageNamed: "test2.jpg")
     
-    
-  
     // Screen Buttons [Sam]
     var playButton = SKSpriteNode(imageNamed: "playNow.png")
     var menuButton = SKSpriteNode(imageNamed: "menu.png")
@@ -114,8 +112,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Hero [Kevin/Tina]
-
-
         bradTexture.filteringMode = SKTextureFilteringMode.Nearest
         bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
         bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
@@ -315,23 +311,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.runAction(spawnThenDelayForever)
     }
   
-  
-    func swipeAction(swipe: UISwipeGestureRecognizer) {
-        self.jumpMode = true
-        self.jumpTime = 0.0
-        println(self.jumpNumber)
-        println(self.jumpTime)
-        println(self.deltaTime)
-        
-        // Jump Limit Logic ------ Uncomment to use.
-//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
-            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 60))
-            self.jumpNumber += 1
-//        }
-
-    }
-    
     override func update(currentTime: CFTimeInterval) {
         
         // lock hero's x position
@@ -369,8 +348,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.jumpTime = self.jumpTime + self.deltaTime
             }
         })
-      //kori and brian
       
+      // Moving Obstacles [Brian/Kori]
       self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
         if let trash = node as? SKSpriteNode {
           trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
@@ -379,16 +358,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
           }
         }
-        })
-        
-        // Moving Obstacles [Brian/Kori]
-        self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
-            if let trash = node as? SKSpriteNode {
-                trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
-                if trash.position.x < 0 {
-                    trash.removeFromParent()
-                }
-            }
         })
       
       self.enumerateChildNodesWithName("bench", usingBlock: { (node, stop) -> Void in
