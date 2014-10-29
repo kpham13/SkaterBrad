@@ -29,8 +29,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
   
-    override func didMoveToView(view: SKView) {
+    // Sam Wong: pause label action
+    var pauseButton = SKSpriteNode(imageNamed: "pause.png")
+    var gameOverButton = SKSpriteNode(imageNamed: "gameover")
+    var isGamePaused = false as Bool
     
+    override func didMoveToView(view: SKView) {
+        self.createPauseButton()
+        
         // Texture Variables
         let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
         let craneHook = SKSpriteNode(imageNamed: "crane.gif")
@@ -114,8 +120,49 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
+        var touch = touches.anyObject() as UITouch
+        var locationPause = touch.locationInNode(self)
+        
+        if self.nodeAtPoint(locationPause) == self.pauseButton {
+            //self.addChild(pauseText)
+            //pauseButton.removeFromParent()
+            self.runAction(SKAction.runBlock({ () -> Void in
+                if !self.isGamePaused {
+                   self.pauseGame()
+                } else {
+                   self.resumeGame()
+                }
+            }))
+        }
+    }
+    
+    func createGameOverButton() {
+        
+    }
+    
+    func createPauseButton() {
+        pauseButton.position = CGPointMake(10, 100)
+        pauseButton.zPosition = 5
+        pauseButton.name = "pauseButton"
+        pauseButton.size = CGSizeMake(80, 80)
+        self.addChild(pauseButton)
+    }
+    
+    func pauseGame() {
+        if !isGamePaused {
+            isGamePaused = !isGamePaused
+            //pauseButton.runAction(SKAction.)
+            self.view?.paused = true
+        }
     }
   
+    func resumeGame() {
+        if isGamePaused {
+            isGamePaused = !isGamePaused
+            self.view?.paused = false
+        }
+    }
+    
     func swipeAction(swipe: UISwipeGestureRecognizer) {
         self.jumpMode = true
         self.jumpTime = 0.0
