@@ -36,8 +36,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     override func didMoveToView(view: SKView) {
     
         // Texture Variables
+
         let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
         let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+    //brian notes
+        let block1 = SKSpriteNode(imageNamed: "block1")
+        
         var bradJumpTexture = SKTexture(imageNamed: "")
         var bradDuckTexture = SKTexture(imageNamed: "")
 
@@ -50,6 +54,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
         swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
         self.view?.addGestureRecognizer(swipeDownRecognizer)
+        
+//        self.addChild(obst2)
+        
         
         // Physics - setting gravity to game world
 
@@ -128,9 +135,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.locationInNode(self)
             let node = nodeAtPoint(location)
             
-            if node.name! == "RestartButton" {
-                println("REsTART gAME")
-            }
+//            if node.name! == "RestartButton" {
+//                println("REsTART gAME")
+//            }
         }
     }
     
@@ -259,8 +266,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
         let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        let chain = SKSpriteNode(imageNamed: "chain.gif")
         
-        trashCan.position = CGPointMake(/*CGRectGetMinX(self.frame) +*/ self.frame.width, 75)
+        trashCan.position = CGPointMake(CGRectGetMinX(self.frame) + self.frame.width, 75)
         trashCan.size = CGSize(width: 35, height: 40)
         trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
         trashCan.physicsBody?.dynamic = false
@@ -269,12 +277,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         self.addChild(trashCan)
         
-        craneHook.anchorPoint = CGPointMake(1.0, 5.0)
-        craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75),
-            CGRectGetMaxY(self.frame))
-        craneHook.size = CGSize(width: 60.0, height: 100.0)
+        
+        chain.anchorPoint = CGPointMake(1.0, 1.0)
+        chain.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75), CGRectGetMaxY(self.frame))
+        chain.size = CGSize(width: 20, height: 420)
+        
+        craneHook.anchorPoint = CGPointMake(1.0, 1.0)
+        craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) * 0.75 + 39),
+            CGRectGetMaxY(self.frame) * 0.38)
+        craneHook.size = CGSize(width: 100.0, height: 100.0)
+        self.addChild(chain)
         self.addChild(craneHook)
     }
-    
+
 }
 
