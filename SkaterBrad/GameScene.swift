@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
 
@@ -37,8 +38,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Screen Buttons [Sam]
     var playButton = SKSpriteNode(imageNamed: "playnow.png")
     var menuButton = SKSpriteNode(imageNamed: "menu.png")
+    var backgroundMusicPlayer : AVAudioPlayer!
     
     override func didMoveToView(view: SKView) {
+        self.registerAppTransitionObservers() 
+        self.playBackgroundMusic("bgMusic.mp3")
+        
         self.createPlayButton()
       
         // Texture Variables
@@ -143,6 +148,51 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    func registerAppTransitionObservers() {
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
+        
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
+
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
+    }
+    
+    func applicationWillResignActive() {
+        backgroundMusicPlayer.stop()
+        self.scene?.paused = true
+    }
+    
+    func applicationDidEnterBackground() {
+        backgroundMusicPlayer.stop()
+        self.scene?.paused = true
+    }
+    
+    func applicationWillEnterForeground() {
+        self.scene?.paused = false
+        backgroundMusicPlayer.play()
+    }
+    
+    func playBackgroundMusic(filename: String) {
+        let url = NSBundle.mainBundle().URLForResource(
+            filename, withExtension: nil)
+        if (url == nil) {
+            println("Could not find file: \(filename)")
+            return
+        }
+        
+        var error: NSError? = nil
+        backgroundMusicPlayer =
+            AVAudioPlayer(contentsOfURL: url, error: &error)
+        if backgroundMusicPlayer == nil {
+            println("Could not create audio player: \(error!)")
+            return
+        }
+        
+        backgroundMusicPlayer.numberOfLoops = -1
+        backgroundMusicPlayer.prepareToPlay()
+        backgroundMusicPlayer.play()
+    }
+    
     func createPlayButton() {
         playButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 80)
         playButton.zPosition = 5
@@ -156,6 +206,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func showGameOver() {
+        backgroundMusicPlayer.stop()
+
         self.roadSpeed = 0
         self.backgroundSpeed = 0
 
@@ -167,6 +219,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         label.fontColor = SKColor.blackColor()
         label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 100 )
         addChild(label)
+        
+        let grayScreen = SKSpriteNode()
+        grayScreen.size = CGSize(width: CGRectGetMaxX(self.frame), height: CGRectGetMaxY(self.frame))
+        grayScreen.position = CGPointMake((CGRectGetMaxX(self.frame)/2),
+            CGRectGetMaxY(self.frame)/2)
+        grayScreen.color = SKColor.blackColor()
+        grayScreen.alpha = 0.5
+        self.addChild(grayScreen)
 
     }
     
