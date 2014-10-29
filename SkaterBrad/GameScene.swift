@@ -18,6 +18,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var jumpNumber = 0
     var jumpTime = 0.0
     var jumpMode = false
+    
+    // Speed Time
+    var speedTime = 0.0
+    var speedMode = false
 
     var hero = SKSpriteNode()
     var backgroundSpeed : CGFloat = 1.0
@@ -29,16 +33,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     override func didMoveToView(view: SKView) {
         
-        // Swipe Recognizer Setup
+        // Swipe Up Recognizer
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         self.view?.addGestureRecognizer(swipeUpRecognizer)
         
-        var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
-        swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
-        self.view?.addGestureRecognizer(swipeDownRecognizer)
-
+        //Swipe Left Recognizer
+        var swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeftAction:")
+        swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+        self.view?.addGestureRecognizer(swipeLeftRecognizer)
+        
         // Physics - setting gravity to game world
+
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
         self.physicsWorld.contactDelegate = self
         
@@ -72,9 +78,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Determine physics body around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
 
-        //  hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: hero.size.width, height: hero.size.height))
+        // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: hero.size.width, height: hero.size.height))
 
-        //hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later
+        // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
@@ -98,27 +104,39 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
 
         self.addChild(ground)
-        
     }
     
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-
     }
 
     func swipeUpAction(swipe: UISwipeGestureRecognizer) {
-
-        self.jumpMode = true
-        self.jumpTime = 0.0
-        println(self.jumpNumber)
-        println(self.jumpTime)
-        println(self.deltaTime)
-//         Jump Limit Logic ------ Uncomment to use.
-        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
-            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
-            self.jumpNumber += 1
+            self.jumpMode = true
+            self.jumpTime = 0.0
+            println(self.jumpNumber)
+            println(self.jumpTime)
+            println(self.deltaTime)
+            //         Jump Limit Logic ------ Uncomment to use.
+            if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+                self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
+                self.jumpNumber += 1
         }
     }
+    
+//    func swipeLeftAction(swipe: UISwipeGestureRecognizer) {
+//        self.speedMode = true
+//        self.speedTime = 1.0
+//        self.speedTime -= self.deltaTime
+//        println(self.speedTime)
+//        if self.speedTime <= 0 {
+//            
+//        }
+//        self.speedTime = 1.0
+//     
+//
+//        
+//    }
     
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
         println("Swipe down")
@@ -137,10 +155,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
                 if bg.position.x <= -bg.size.width {
                     bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
+                    
                 }
             }
             
         })
+        
+        if self.hero.position.x <= 0 {
+            println("HIT")
+        }
         
         self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
             if let road = node as? SKSpriteNode {
@@ -151,15 +174,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
         })
+
         
-        if self.jumpMode == true {
             self.currentTime = currentTime
             self.deltaTime = self.currentTime - self.previousTime
             self.previousTime = currentTime
-            self.jumpTime = self.jumpTime + self.deltaTime
-        }
     }
 }
-//test
 
-//test
