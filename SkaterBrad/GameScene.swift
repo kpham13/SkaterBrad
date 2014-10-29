@@ -32,10 +32,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
+    let obstacleCategory = 0x1 << 3
   
     override func didMoveToView(view: SKView) {
-        
-        // Swipe Up Recognizer
+    
+        // Texture Variables
+        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        var bradJumpTexture = SKTexture(imageNamed: "")
+        var bradDuckTexture = SKTexture(imageNamed: "")
+
+        // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         self.view?.addGestureRecognizer(swipeUpRecognizer)
@@ -47,6 +54,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Physics - setting gravity to game world
 
+        // Physics - Setting Gravity to Game World
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
         self.physicsWorld.contactDelegate = self
         
@@ -80,6 +88,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Hero Ducking Texture [Tina]
         bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
         
+        hero.name = "Brad"
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
         hero.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.5) // Change y to ground level
@@ -89,15 +98,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
         // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: hero.size.width, height: hero.size.height))
 
-        // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later
+        // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later [Vincent]
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
-        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory)
+        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory)
         self.addChild(hero)
         
         // Ground [Kevin/Tina]
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
+        ground.name = "Ground"
         ground.hidden = true
         ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
         ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
@@ -108,49 +118,40 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //println(groundTexture.size().height * 2)
         
         self.addChild(ground)
+        
+        // Spawns a Trash Can Every 2 Seconds [Brian/Kori]
+        let spawn  = SKAction.runBlock({() in self.spawnObstacles()})
+        let delay = SKAction.waitForDuration(NSTimeInterval(1.5))
+        let spawnThenDelay = SKAction.sequence([spawn, delay])
+        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
+        self.runAction(spawnThenDelayForever)
     }
     
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-    }
-
-    func swipeUpAction(swipe: UISwipeGestureRecognizer) {
-            self.jumpMode = true
-            self.jumpTime = 0.0
-            println(self.jumpNumber)
-            println(self.jumpTime)
-            println(self.deltaTime)
-            //         Jump Limit Logic ------ Uncomment to use.
-            if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
-                self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
-                self.jumpNumber += 1
+        for touch: AnyObject in touches {
+            let location = touch.locationInNode(self)
+            let node = nodeAtPoint(location)
+            
+            if node.name! == "RestartButton" {
+                println("REsTART gAME")
+            }
         }
     }
-    
-//    func swipeLeftAction(swipe: UISwipeGestureRecognizer) {
-//        self.speedMode = true
-//        self.speedTime = 1.0
-//        self.speedTime -= self.deltaTime
-//        println(self.speedTime)
-//        if self.speedTime <= 0 {
-//            
-//        }
-//        self.speedTime = 1.0
-//     
-//
-//        
-//    }
-    
-    func swipeDownAction(swipe: UISwipeGestureRecognizer) {
-        println("Swipe down")
-        let wait = SKAction.waitForDuration(1.0)
+  
+    func swipeAction(swipe: UISwipeGestureRecognizer) {
+        self.jumpMode = true
+        self.jumpTime = 0.0
+        println(self.jumpNumber)
+        println(self.jumpTime)
+        println(self.deltaTime)
         
-    }
-    
-    func didBeginContact(contact: SKPhysicsContact) {
-        println("Contact occured")
-        self.jumpNumber = 0
+        // Jump Limit Logic ------ Uncomment to use.
+//        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 60))
+            self.jumpNumber += 1
+//        }
     }
     
     override func update(currentTime: CFTimeInterval) {
@@ -168,7 +169,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         })
         
         if self.hero.position.x <= 0 {
-            println("HIT")
+            println("Offscreen")
+    
         }
         
         self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
@@ -180,11 +182,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         })
-
+      
+        //kori and brian
+        self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
+            if let trash = node as? SKSpriteNode {
+                trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
+                
+                if trash.position.x < 0 {
+                    trash.removeFromParent()
+                }
+          
+                if self.jumpMode == true {
+                    self.currentTime = currentTime
+                    self.deltaTime = self.currentTime - self.previousTime
+                    self.previousTime = currentTime
+                    self.jumpTime = self.jumpTime + self.deltaTime
+                }
+            }
+        })
+    }
+    
+    // MARK: - HERO ACTIONS
+    // [Tuan/Vincent]
+    
+    func swipeUpAction(swipe: UISwipeGestureRecognizer) {
+        self.jumpMode = true
+        self.jumpTime = 0.0
+        println(self.jumpNumber)
+        println(self.jumpTime)
+        println(self.deltaTime)
         
-            self.currentTime = currentTime
-            self.deltaTime = self.currentTime - self.previousTime
-            self.previousTime = currentTime
+        //         Jump Limit Logic ------ Uncomment to use.
+        if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+            self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+            self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 35))
+            self.jumpNumber += 1
+        }
     }
     
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
@@ -194,7 +227,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
-        self.jumpNumber = 0
+        
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        switch contactMask {
+        case UInt32(self.heroCategory) | UInt32(self.groundCategory):
+            println("Hero hit Ground")
+            self.jumpNumber = 0
+        case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
+            println("Hero hit obstacle")
+            self.roadSpeed = 0
+            self.backgroundSpeed = 0
+            
+            let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
+            button.position.x = button.position.x - button.frame.width / 2
+            button.fillColor = SKColor.blueColor()
+            button.name = "RestartButton"
+            println(button.position)
+            println(button.frame.width)
+            println(CGRectGetMaxX(self.frame))
+            println(self.frame.width)
+            self.addChild(button)
+            
+            
+        default:
+            println("Trash hit...obstacle?")
+        }
+        
+//        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+//            println("A > B")
+//        }
+//        else {
+//            firstBody = contact.bodyB
+////            secondBody = contact.bodyA
+//        }
+//        println(contact.bodyA.node!.name)
+//        println(contact.bodyB.node!.name)
+        
     }
     
     // MARK: - OBSTACLES
@@ -211,6 +279,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.physicsBody?.dynamic = false
         trashCan.zPosition = 12
         trashCan.name = "trashCan"
+        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         self.addChild(trashCan)
         
         craneHook.anchorPoint = CGPointMake(1.0, 5.0)
