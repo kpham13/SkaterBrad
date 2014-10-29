@@ -19,6 +19,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var jumpNumber = 0
     var jumpTime = 0.0
     var jumpMode = false
+    
+    // Speed Time
+    var speedTime = 0.0
+    var speedMode = false
 
     // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
@@ -28,6 +32,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
+    let obstacleCategory = 0x1 << 3
   
     // Screen Buttons [Sam]
     var playButton = SKSpriteNode(imageNamed: "playnow.png")
@@ -49,9 +54,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
         self.view?.addGestureRecognizer(swipeUpRecognizer)
         
-        var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
-        swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
-        self.view?.addGestureRecognizer(swipeDownRecognizer)
+        //Swipe Left Recognizer
+        var swipeLeftRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeLeftAction:")
+        swipeLeftRecognizer.direction = UISwipeGestureRecognizerDirection.Left
+        self.view?.addGestureRecognizer(swipeLeftRecognizer)
+        
+        // Physics - setting gravity to game world
 
         // Physics - Setting Gravity to Game World
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
@@ -87,20 +95,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Hero Ducking Texture [Tina]
         bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
         
+        hero.name = "Brad"
         hero = SKSpriteNode(texture: bradTexture)
         hero.setScale(0.5)
         hero.position = CGPoint(x: self.frame.size.width * 0.35, y: self.frame.size.height * 0.5) // Change y to ground level
         
         // Physics Body Around Hero
         hero.physicsBody = SKPhysicsBody(circleOfRadius: hero.size.height / 2)
+
+        // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: hero.size.width, height: hero.size.height))
+
+        // hero.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize) // look at later [Vincent]
         hero.physicsBody?.dynamic = true
         hero.physicsBody?.allowsRotation = false
         hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
-        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory)
+        hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory)
         self.addChild(hero)
         
         // Ground [Kevin/Tina]
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
+        ground.name = "Ground"
         ground.hidden = true
         ground.position = CGPoint(x: 0, y: self.roadSize!.height * 0.5)
         ground.physicsBody = SKPhysicsBody(rectangleOfSize: self.roadSize!)
@@ -208,11 +222,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 
                 if bg.position.x <= -bg.size.width {
                     bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
+                    
                 }
             }
         })
         
-        // Moving Road [Kevin/Tina]
+        if self.hero.position.x <= 0 {
+            println("Offscreen")
+    
+        }
+        
         self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
             if let road = node as? SKSpriteNode {
                 road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
@@ -267,7 +286,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
-        self.jumpNumber = 0
+        
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        switch contactMask {
+        case UInt32(self.heroCategory) | UInt32(self.groundCategory):
+            println("Hero hit Ground")
+            self.jumpNumber = 0
+        case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
+            println("Hero hit obstacle")
+            self.roadSpeed = 0
+            self.backgroundSpeed = 0
+            
+            let button = SKShapeNode(ellipseInRect: CGRect(x: CGRectGetMaxX(self.frame)/2, y: CGRectGetMaxY(self.frame)/2, width: 100, height: 100))
+            button.position.x = button.position.x - button.frame.width / 2
+            button.fillColor = SKColor.blueColor()
+            button.name = "RestartButton"
+            println(button.position)
+            println(button.frame.width)
+            println(CGRectGetMaxX(self.frame))
+            println(self.frame.width)
+            self.addChild(button)
+            
+            
+        default:
+            println("Trash hit...obstacle?")
+        }
+        
+//        if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+//            println("A > B")
+//        }
+//        else {
+//            firstBody = contact.bodyB
+////            secondBody = contact.bodyA
+//        }
+//        println(contact.bodyA.node!.name)
+//        println(contact.bodyB.node!.name)
+        
     }
     
     // MARK: - OBSTACLES
@@ -284,6 +338,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.physicsBody?.dynamic = false
         trashCan.zPosition = 12
         trashCan.name = "trashCan"
+        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         self.addChild(trashCan)
         
         craneHook.anchorPoint = CGPointMake(1.0, 5.0)
@@ -294,3 +349,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
 }
+
