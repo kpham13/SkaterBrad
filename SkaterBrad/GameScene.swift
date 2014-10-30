@@ -318,9 +318,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bench.physicsBody?.node?.name = "bench"
         vertical.addChild(bench)
         
-        let benchScoreContact = SKSpriteNode()
-        benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
-        benchScoreContact.color = SKColor.redColor()
+        let benchScoreContact = SKNode()
+//        benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+//        benchScoreContact.color = SKColor.redColor()
         benchScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
         benchScoreContact.zPosition = 105
         benchScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
