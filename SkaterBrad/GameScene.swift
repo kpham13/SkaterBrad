@@ -331,7 +331,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         benchLoseContact.size = CGSize(width: 1, height: bench.size.height)
         benchLoseContact.color = SKColor.blackColor() // Delete later
         benchLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - bench.size.width / 2, self.roadSize!.height + bench.size.height / 2)
-        benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: bench.size.height))
+        benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: bench.size.height * 0.8))
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(benchLoseContact)
