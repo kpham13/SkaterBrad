@@ -10,7 +10,7 @@ import SpriteKit
 import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-
+    
     var hero = SKSpriteNode()
     var road = SKSpriteNode()
     // Factor to set entry X position for hero
@@ -24,7 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Score [Kevin]
     let scoreText = SKLabelNode(fontNamed: "Chalkduster")
     var score = 0
-
+    
     // Jump Properties [Tuan/Vincent]
     var currentTime = 0.0
     var previousTime = 0.0
@@ -43,9 +43,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let scoreCategory = 0x1 << 4
     
     // Texture Variables [Tina]
-    var bradJumpTexture = SKTexture(imageNamed: "test.jpg")
-    var bradTexture = SKTexture(imageNamed: "hero.jpg")
-    var bradDuckTexture = SKTexture(imageNamed: "test2.jpg")
+    var bradJumpTexture = SKTexture(imageNamed: "jump.jpg")
+    var bradTexture = SKTexture(imageNamed: "normal.jpg")
+    var bradDuckTexture = SKTexture(imageNamed: "duck.jpg")
+    var bradJumpDownTexture = SKTexture(imageNamed: "jump2.jpg")
     
     // Screen Buttons [Sam]
     var playButton = SKSpriteNode(imageNamed: "playNow.png")
@@ -53,20 +54,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var backgroundMusicPlayer : AVAudioPlayer!
     
     override func didMoveToView(view: SKView) {
-        self.registerAppTransitionObservers() 
+        self.registerAppTransitionObservers()
         self.playBackgroundMusic("bgMusic.mp3")
         
         self.createPlayButton()
 
-        //spawns a obstacles every 2 seconds -kori/brian
-//        let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
-//        let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
-//        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
-//        let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-//        let spawnThenDelay = SKAction.sequence([spawnBench,delay,spawnTrashcan,delay, delay, craneHook])
-//        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-//        self.runAction(spawnThenDelayForever)
-      
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
@@ -83,10 +75,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         
         // City Background [Tina]
+        
         for var index = 0; index < 2; ++index {
             let bg = SKSpriteNode(imageNamed: "bg\(index).jpg")
             bg.anchorPoint = CGPointZero
-            bg.position = CGPoint(x: index * Int(bg.size.width), y: 0)
+            bg.position = CGPoint(x: index * Int(bg.size.width), y: 110)
             bg.name = "background"
             self.addChild(bg)
         }
@@ -98,18 +91,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.road.position = CGPoint(x: index * Int(self.road.size.width), y: 0)
             self.road.name = "road"
             self.roadSize = road.size
-           // println(roadSize)
+            // println(roadSize)
             self.addChild(self.road)
         }
         
         // Hero [Kevin/Tina]
-        bradTexture.filteringMode = SKTextureFilteringMode.Nearest
-        bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
-        bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
+        self.bradTexture.filteringMode = SKTextureFilteringMode.Nearest
+        self.bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
+        self.bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
+        self.bradJumpDownTexture.filteringMode = SKTextureFilteringMode.Nearest
         
         self.hero.name = "Brad"
         self.hero = SKSpriteNode(texture: bradTexture)
-        self.hero.setScale(0.5)
+        self.hero.setScale(2.0)
         self.hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
         self.hero.anchorPoint = CGPointZero
         
@@ -182,6 +176,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         })
+        self.currentTime = currentTime
+        self.deltaTime = self.currentTime - self.previousTime
+        self.previousTime = currentTime
+        self.jumpTime = self.jumpTime + self.deltaTime
+        
+        if self.jumpTime >= 0.5 && self.jumpMode == true {
+            self.hero.texture = self.bradJumpDownTexture
+        }
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -205,13 +207,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
-        //        println("bodyA is \(contact.bodyA.node?.name) ")
-        //        println("bodyB is \(contact.bodyB.node?.name) ")
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         switch contactMask {
         case UInt32(self.heroCategory) | UInt32(self.groundCategory):
             println("Hero hit Ground")
-            self.duckMode == true
             self.jumpNumber = 0
             if self.hero.texture != bradDuckTexture {
                 self.hero.texture = bradTexture
@@ -239,19 +238,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if self.jumpMode == false {
                 self.jumpTime = 0.0
             }
-            
             self.jumpMode = true
-            
             //         Jump Limit Logic ------ Uncomment to use.
             if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
                 self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 40))
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 50))
                 self.hero.texture = self.bradJumpTexture
                 self.jumpNumber += 1
             }
-            
-        } else if self.duckMode == true {
-            self.hero.yScale = 0.5
+        }
+        else if self.duckMode == true {
+            self.hero.yScale = 2.0
             self.hero.texture = bradTexture
             self.duckMode = false
         }
@@ -260,7 +257,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
         if duckMode == false && self.jumpMode == false{
             println("Swipe down")
-            self.hero.yScale = 0.25
+            self.hero.yScale = 1.33
             self.hero.texture = bradDuckTexture
             self.duckMode = true
         }
@@ -379,13 +376,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         craneScoreContact.physicsBody?.node?.name = "benchScoreContact"
         vertical.addChild(craneScoreContact)
         
-//        let contactNode = SKSpriteNode()
-//        contactNode.size = CGSize(width: 130, height: 165)
-//        contactNode.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX) + 40),
-//            CGRectGetMaxY(self.frame) * 0.38)
-//        contactNode.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-//        contactNode.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
-//        addChild(contactNode)
     }
     
     // MARK: - Menu Screens
@@ -493,5 +483,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.scene?.paused = false
         backgroundMusicPlayer.play()
     }
-    
 }
