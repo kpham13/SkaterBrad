@@ -40,6 +40,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
     let obstacleCategory = 0x1 << 3
+    let scoreCategory = 0x1 << 4
     
     // Texture Variables [Tina]
     var bradJumpTexture = SKTexture(imageNamed: "jump.jpg")
@@ -57,26 +58,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.playBackgroundMusic("bgMusic.mp3")
         
         self.createPlayButton()
-        
-        // Texture Variables
-        
-        //        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
-        //        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-        //    //brian notes
-        //        let block1 = SKSpriteNode(imageNamed: "block1")
-        
-        //        var bradJumpTexture = SKTexture(imageNamed: "")
-        //        var bradDuckTexture = SKTexture(imageNamed: "")
-        
-        //spawns a obstacles every 2 seconds -kori/brian
-        //        let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
-        //        let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
-        //        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
-        //        let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-        //        let spawnThenDelay = SKAction.sequence([spawnBench,delay,spawnTrashcan,delay, delay, craneHook])
-        //        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-        //        self.runAction(spawnThenDelayForever)
-        
+
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
@@ -143,6 +125,65 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
         
+        // Game Score [Kevin]
+        self.scoreText.text = "0"
+        self.scoreText.fontSize = 42
+        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+        self.scoreText.zPosition = 100
+        self.addChild(self.scoreText)
+    }
+    
+    override func update(currentTime: CFTimeInterval) {
+        // Lock Hero's X Position [Tina]
+        self.hero.position.x = self.frame.size.width * self.heroPositionX
+        
+        // Moving Background [Kevin/Tina]
+        self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
+            if let bg = node as? SKSpriteNode {
+                bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
+                
+                if bg.position.x <= -bg.size.width {
+                    bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
+                }
+            }
+        })
+        
+        if self.hero.position.x <= 0 {
+            println("Offscreen")
+        }
+        
+        // Moving Road [Kevin/Tina, updated by Vincent]
+        self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
+            if let road = node as? SKSpriteNode {
+                road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
+                if road.position.x <= -road.size.width {
+                    road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
+                }
+                
+                self.currentTime = currentTime
+                self.deltaTime = self.currentTime - self.previousTime
+                self.previousTime = currentTime
+                self.jumpTime = self.jumpTime + self.deltaTime
+            }
+        })
+        
+        // Moving Obstacles [Brian/Kori, updated by Kevin]
+        self.enumerateChildNodesWithName("vertical", usingBlock: { (node, stop) -> Void in
+            if let vertical = node as SKNode? {
+                vertical.position = CGPoint(x: vertical.position.x-self.roadSpeed, y: vertical.position.y)
+                if vertical.position.x <= -self.frame.size.width * 3 {
+                    vertical.removeFromParent()
+                }
+            }
+        })
+        self.currentTime = currentTime
+        self.deltaTime = self.currentTime - self.previousTime
+        self.previousTime = currentTime
+        self.jumpTime = self.jumpTime + self.deltaTime
+        
+        if self.jumpTime >= 0.5 && self.jumpMode == true {
+            self.hero.texture = self.bradJumpDownTexture
+        }
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -164,116 +205,181 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
-    
-    override func update(currentTime: CFTimeInterval) {
-        
-        // lock hero's x position
-        self.hero.position.x = self.frame.size.width * self.heroPositionX
-        
-        // Moving Background [Kevin/Tina]
-        self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
-            if let bg = node as? SKSpriteNode {
-                bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
-                
-                if bg.position.x <= -bg.size.width {
-                    bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
-                    
-                }
+    func didBeginContact(contact: SKPhysicsContact) {
+        println("Contact occured")
+        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
+        switch contactMask {
+        case UInt32(self.heroCategory) | UInt32(self.groundCategory):
+            println("Hero hit Ground")
+            self.jumpNumber = 0
+            if self.hero.texture != bradDuckTexture {
+                self.hero.texture = bradTexture
             }
-        })
-        
-        if self.hero.position.x <= 0 {
-            println("Offscreen")
             
+            self.jumpMode = false
+            
+        case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
+            println("Hero hit obstacle")
+            self.showGameOver()
+        case UInt32(self.heroCategory) | UInt32(self.scoreCategory):
+            println("Score!")
+            self.score += 1
+            self.scoreText.text = String(self.score)
+        default:
+            println("Trash hit...obstacle?")
         }
-        
-        // Moving Road [Kevin/Tina, updated by Vincent]
-        self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
-            if let road = node as? SKSpriteNode {
-                road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
-                if road.position.x <= -road.size.width {
-                    road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
-                }
+    }
+
+    // MARK: - HERO ACTIONS
+    // [Tuan/Vincent]
+    
+    func swipeUpAction(swipe: UISwipeGestureRecognizer) {
+        if self.duckMode == false {
+            if self.jumpMode == false {
+                self.jumpTime = 0.0
             }
-        })
-        
-        // Moving Obstacles [Brian/Kori]
-        self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
-            if let trash = node as? SKSpriteNode {
-                trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
-                if trash.position.x < -25 {
-                    trash.removeFromParent()
-                    
-                }
+            self.jumpMode = true
+            //         Jump Limit Logic ------ Uncomment to use.
+            if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
+                self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 50))
+                self.hero.texture = self.bradJumpTexture
+                self.jumpNumber += 1
             }
-        })
-        
-        self.enumerateChildNodesWithName("bench", usingBlock: { (node, stop) -> Void in
-            if let bench = node as? SKSpriteNode {
-                bench.position = CGPoint(x: bench.position.x - (self.roadSpeed), y: bench.position.y)
-                if bench.position.x < -25 {
-                    bench.removeFromParent()
-                    
-                }
-            }
-            
-        })
-        
-        
-        self.enumerateChildNodesWithName("craneHook", usingBlock: { (node, stop) -> Void in
-            if let craneHook = node as? SKSpriteNode {
-                craneHook.position = CGPoint(x: craneHook.position.x - (self.roadSpeed/2), y: craneHook.position.y)
-                if craneHook.position.x < -25 {
-                    craneHook.removeFromParent()
-                    
-                }
-            }
-            
-        })
-        
-        self.enumerateChildNodesWithName("chain", usingBlock: { (node, stop) -> Void in
-            if let chain = node as? SKSpriteNode {
-                chain.position = CGPoint(x: chain.position.x - (self.roadSpeed/2), y: chain.position.y)
-                if chain.position.x < -25 {
-                    chain.removeFromParent()
-                    
-                }
-            }
-        })
-        self.currentTime = currentTime
-        self.deltaTime = self.currentTime - self.previousTime
-        self.previousTime = currentTime
-        self.jumpTime = self.jumpTime + self.deltaTime
-        
-        if self.jumpTime >= 0.5 && self.jumpMode == true {
-            self.hero.texture = self.bradJumpDownTexture
+        }
+        else if self.duckMode == true {
+            self.hero.yScale = 2.0
+            self.hero.texture = bradTexture
+            self.duckMode = false
         }
     }
     
+    func swipeDownAction(swipe: UISwipeGestureRecognizer) {
+        if duckMode == false && self.jumpMode == false{
+            println("Swipe down")
+            self.hero.yScale = 1.33
+            self.hero.texture = bradDuckTexture
+            self.duckMode = true
+        }
+    }
     
+    // MARK: - OBSTACLES
+    // [Brian/Kori]
     
-    func registerAppTransitionObservers() {
+    func spawnBench(){
+        var randX: Float = Float(arc4random_uniform(300) + 1)
+        //var anotherFloat: Float = Float(randX)
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
+        // Vertical Nodes for Game Score [Kevin]
+        let vertical = SKNode()
+        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 0)
+        vertical.zPosition = 100
+        vertical.name = "vertical"
+        self.addChild(vertical)
+        
+        let bench = SKSpriteNode(imageNamed: "bench.gif")
+        bench.size = CGSize(width: 105, height: 60)
+        bench.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), (self.roadSize!.height + (bench.size.height / 2)))
+        bench.zPosition = 110
+        bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 30))
+        bench.physicsBody?.dynamic = false
+        // bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        // bench.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+        bench.physicsBody?.node?.name = "bench"
+        vertical.addChild(bench)
+        
+        let benchScoreContact = SKSpriteNode()
+        benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+        benchScoreContact.color = SKColor.redColor()
+        benchScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
+        benchScoreContact.zPosition = 105
+        benchScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
+        benchScoreContact.physicsBody?.dynamic = false
+        benchScoreContact.physicsBody?.categoryBitMask = UInt32(self.scoreCategory)
+        benchScoreContact.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.scoreCategory)
+        benchScoreContact.physicsBody?.node?.name = "benchScoreContact"
+        vertical.addChild(benchScoreContact)
     }
     
-    func applicationWillResignActive() {
-        backgroundMusicPlayer.stop()
-        self.scene?.paused = true
+    func spawnTrashcan() {
+        var randX: Float = Float(arc4random_uniform(500) + 100)
+        //var anotherFloat: Float = Float(randX)
+        
+        // Vertical Nodes for Game Score [Kevin]
+        let vertical = SKNode()
+        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 0)
+        vertical.zPosition = 100
+        vertical.name = "vertical"
+        self.addChild(vertical)
+
+        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        trashCan.size = CGSize(width: 35, height: 40)
+        trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), (self.roadSize!.height + (trashCan.size.height / 2)))
+        trashCan.zPosition = 110
+        trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
+        trashCan.physicsBody?.dynamic = false
+        // trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        // trashCan.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+        trashCan.physicsBody?.node?.name = "trashCan"
+        vertical.addChild(trashCan)
+        
+        let trashScoreContact = SKSpriteNode()
+        trashScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+        trashScoreContact.color = SKColor.blueColor()
+        trashScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
+        trashScoreContact.zPosition = 105
+        trashScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
+        trashScoreContact.physicsBody?.dynamic = false
+        trashScoreContact.physicsBody?.categoryBitMask = UInt32(self.scoreCategory)
+        trashScoreContact.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.scoreCategory)
+        trashScoreContact.physicsBody?.node?.name = "trashScoreContact"
+        vertical.addChild(trashScoreContact)
     }
     
-    func applicationDidEnterBackground() {
-        backgroundMusicPlayer.stop()
-        self.scene?.paused = true
+    func spawnCrane(){
+        var randX = arc4random_uniform(300) + 100
+        
+        // Vertical Nodes for Game Score [Kevin]
+        let vertical = SKNode()
+        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 0)
+        vertical.zPosition = 100
+        vertical.name = "vertical"
+        self.addChild(vertical)
+        
+        let chain = SKSpriteNode(imageNamed: "chain.png")
+        chain.size = CGSize(width: 10, height: 350)
+        chain.anchorPoint = CGPointMake(0.5, 1.0)
+        chain.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMaxY(self.frame))
+        chain.zPosition = 110
+        vertical.addChild(chain)
+        
+        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        craneHook.size = CGSize(width: 100.0, height: 100.0)
+        craneHook.anchorPoint = CGPointMake(0.5, 1.0)
+        craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMaxY(self.frame) - chain.size.height)
+        craneHook.zPosition = 110
+        craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 130, height: 165))
+        craneHook.physicsBody?.dynamic = false
+        //craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        //craneHook.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+        vertical.addChild(craneHook)
+        
+        let craneScoreContact = SKSpriteNode()
+        craneScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+        craneScoreContact.color = SKColor.blueColor()
+        craneScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
+        craneScoreContact.zPosition = 105
+        craneScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
+        craneScoreContact.physicsBody?.dynamic = false
+        craneScoreContact.physicsBody?.categoryBitMask = UInt32(self.scoreCategory)
+        craneScoreContact.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.scoreCategory)
+        craneScoreContact.physicsBody?.node?.name = "benchScoreContact"
+        vertical.addChild(craneScoreContact)
+        
     }
     
-    func applicationWillEnterForeground() {
-        self.scene?.paused = false
-        backgroundMusicPlayer.play()
-    }
-    
+    // MARK: - Menu Screens
+    // [Sam]
     
     func playBackgroundMusic(filename: String) {
         let url = NSBundle.mainBundle().URLForResource(
@@ -300,41 +406,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 80)
         playButton.zPosition = 5
         self.addChild(self.playButton)
-    }
-    
-    //kori/brian
-    func spawnCrane(){
-        var randX = arc4random_uniform(300) + 100
-        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-        let chain = SKSpriteNode(imageNamed: "chain.png")
-        let contactNode = SKSpriteNode()
-        
-        
-        chain.anchorPoint = CGPointMake(1.0, 1.0)
-        chain.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX)), CGRectGetMaxY(self.frame))
-        chain.size = CGSize(width: 10, height: 420)
-        chain.name = "chain"
-        
-        craneHook.anchorPoint = CGPointMake(1.0, 1.0)
-        craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX) + 45),
-            CGRectGetMaxY(self.frame) * 0.38)
-        craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 130, height: 165))
-        
-        craneHook.zPosition = 12
-        craneHook.physicsBody?.dynamic = false
-        craneHook.size = CGSize(width: 100.0, height: 100.0)
-        craneHook.name = "craneHook"
-        
-        contactNode.size = CGSize(width: 130, height: 165)
-        contactNode.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX) + 40),
-            CGRectGetMaxY(self.frame) * 0.38)
-        contactNode.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        contactNode.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
-        
-        addChild(contactNode)
-        self.addChild(chain)
-        self.addChild(craneHook)
-        
     }
     
     func createMenuButton() {
@@ -392,109 +463,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.runAction(spawnThenDelayForever)
     }
     
-    
-    
-    // MARK: - HERO ACTIONS
-    // [Tuan/Vincent]
-    
-    func swipeUpAction(swipe: UISwipeGestureRecognizer) {
-        if self.duckMode == false {
-            if self.jumpMode == false {
-                self.jumpTime = 0.0
-            }
-            self.jumpMode = true
-            //         Jump Limit Logic ------ Uncomment to use.
-            if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
-                self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 50))
-                self.hero.texture = self.bradJumpTexture
-                self.jumpNumber += 1
-            }
-        }
-        else if self.duckMode == true {
-            self.hero.yScale = 2.0
-            self.hero.texture = bradTexture
-            self.duckMode = false
-        }
+    func registerAppTransitionObservers() {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
-    func swipeDownAction(swipe: UISwipeGestureRecognizer) {
-        if duckMode == false && self.jumpMode == false{
-            println("Swipe down")
-            self.hero.yScale = 1.33
-            self.hero.texture = bradDuckTexture
-            self.duckMode = true
-        }
-        
+    func applicationWillResignActive() {
+        backgroundMusicPlayer.stop()
+        self.scene?.paused = true
     }
     
-    
-    
-    
-    func didBeginContact(contact: SKPhysicsContact) {
-        println("Contact occured")
-        //        println("bodyA is \(contact.bodyA.node?.name) ")
-        //        println("bodyB is \(contact.bodyB.node?.name) ")
-        let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
-        switch contactMask {
-        case UInt32(self.heroCategory) | UInt32(self.groundCategory):
-            println("Hero hit Ground")
-            self.duckMode == true
-            self.jumpNumber = 0
-            if self.hero.texture != bradDuckTexture {
-                self.hero.texture = bradTexture
-            }
-            
-            self.jumpMode = false
-            
-        case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
-            println("Hero hit obstacle")
-            self.showGameOver()
-        default:
-            println("Trash hit...obstacle?")
-        }
+    func applicationDidEnterBackground() {
+        backgroundMusicPlayer.stop()
+        self.scene?.paused = true
     }
     
-    // MARK: - OBSTACLES
-    // [Brian/Kori]
-    
-    func spawnBench(){
-        var randX: Float = Float(arc4random_uniform(300) + 1)
-        //var anotherFloat: Float = Float(randX)
-        let bench = SKSpriteNode(imageNamed: "bench.gif")
-        
-        bench.position = CGPointMake(CGRectGetMaxX(self.frame), 75)
-        bench.size = CGSize(width: 105, height: 60)
-        bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 30))
-        bench.physicsBody?.dynamic = false
-        // bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        // bench.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
-        bench.physicsBody?.node?.name = "bench"
-        bench.zPosition = 0
-        bench.name = "bench"
-        self.addChild(bench)
-        
-    }
-    
-    
-    
-    
-    func spawnTrashcan(){
-        var randX: Float = Float(arc4random_uniform(500) + 100)
-        //var anotherFloat: Float = Float(randX)
-        
-        //    let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
-        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
-        
-        trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 75)
-        trashCan.size = CGSize(width: 35, height: 40)
-        trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
-        trashCan.physicsBody?.dynamic = false
-        //        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        trashCan.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
-        trashCan.physicsBody?.node?.name = "trashCan"
-        trashCan.zPosition = 12
-        trashCan.name = "trashCan"
-        addChild(trashCan)
+    func applicationWillEnterForeground() {
+        self.scene?.paused = false
+        backgroundMusicPlayer.play()
     }
 }
