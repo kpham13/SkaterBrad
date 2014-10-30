@@ -41,6 +41,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let groundCategory = 0x1 << 2
     let obstacleCategory = 0x1 << 3
     let scoreCategory = 0x1 << 4
+    let contactCategory = 0x1 << 5
     
     // Texture Variables [Tina]
     var bradJumpTexture = SKTexture(imageNamed: "jump.jpg")
@@ -206,7 +207,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func didBeginContact(contact: SKPhysicsContact) {
-        println("Contact occured")
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         switch contactMask {
         case UInt32(self.heroCategory) | UInt32(self.groundCategory):
@@ -215,16 +215,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             if self.hero.texture != bradDuckTexture {
                 self.hero.texture = bradTexture
             }
-            
             self.jumpMode = false
-            
         case UInt32(self.heroCategory) | UInt32(self.obstacleCategory):
             println("Hero hit obstacle")
-            self.showGameOver()
+            self.jumpNumber = 0
+            if self.hero.texture != bradDuckTexture {
+                self.hero.texture = bradTexture
+            }
+            self.jumpMode = false
         case UInt32(self.heroCategory) | UInt32(self.scoreCategory):
             println("Score!")
             self.score += 1
             self.scoreText.text = String(self.score)
+        case UInt32(self.heroCategory) | UInt32(self.contactCategory):
+            println("Hero hit contact node")
+            self.showGameOver()
         default:
             println("Trash hit...obstacle?")
         }
@@ -283,8 +288,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bench.zPosition = 110
         bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 30))
         bench.physicsBody?.dynamic = false
-        // bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        // bench.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+         bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+         bench.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
         bench.physicsBody?.node?.name = "bench"
         vertical.addChild(bench)
         
@@ -318,8 +323,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.zPosition = 110
         trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
         trashCan.physicsBody?.dynamic = false
-        // trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        // trashCan.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+         trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+         trashCan.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
         trashCan.physicsBody?.node?.name = "trashCan"
         vertical.addChild(trashCan)
         
@@ -360,8 +365,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         craneHook.zPosition = 110
         craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 130, height: 165))
         craneHook.physicsBody?.dynamic = false
-        //craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        //craneHook.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+        craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        craneHook.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
         vertical.addChild(craneHook)
         
         let craneScoreContact = SKSpriteNode()
