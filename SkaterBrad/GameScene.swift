@@ -558,6 +558,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.scene?.paused = false
         backgroundMusicPlayer.play()
     }
-    
-    //test
 }
