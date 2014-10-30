@@ -57,15 +57,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.playBackgroundMusic("bgMusic.mp3")
         
         self.createPlayButton()
-
-        //spawns a obstacles every 2 seconds -kori/brian
-//        let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
-//        let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
-//        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
-//        let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-//        let spawnThenDelay = SKAction.sequence([spawnBench,delay,spawnTrashcan,delay, delay, craneHook])
-//        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-//        self.runAction(spawnThenDelayForever)
       
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
@@ -379,13 +370,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         craneScoreContact.physicsBody?.node?.name = "benchScoreContact"
         vertical.addChild(craneScoreContact)
         
-//        let contactNode = SKSpriteNode()
-//        contactNode.size = CGSize(width: 130, height: 165)
-//        contactNode.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX) + 40),
-//            CGRectGetMaxY(self.frame) * 0.38)
-//        contactNode.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-//        contactNode.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
-//        addChild(contactNode)
     }
     
     // MARK: - Menu Screens
