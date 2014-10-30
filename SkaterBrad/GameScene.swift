@@ -139,6 +139,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: - UPDATE
+    
     override func update(currentTime: CFTimeInterval) {
         // Lock Hero's X Position [Tina]
         self.hero.position.x = self.frame.size.width * self.heroPositionX
@@ -203,6 +204,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: - TOUCHES BEGAN
+    
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
         var touch = touches.anyObject() as UITouch
         var location = touch.locationInNode(self)
@@ -311,7 +313,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bench.zPosition = 110
         bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 30))
         bench.physicsBody?.dynamic = false
-         bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         bench.physicsBody?.node?.name = "bench"
         vertical.addChild(bench)
         
@@ -330,7 +332,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         benchLoseContact.size = CGSize(width: 1, height: bench.size.height)
         benchLoseContact.color = SKColor.blackColor() // Delete later
         benchLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - bench.size.width / 2, self.roadSize!.height + bench.size.height / 2)
-        benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: bench.size.height * 0.8))
+        benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: bench.size.height))
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(benchLoseContact)
@@ -354,7 +356,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.zPosition = 110
         trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
         trashCan.physicsBody?.dynamic = false
-         trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         trashCan.physicsBody?.node?.name = "trashCan"
         vertical.addChild(trashCan)
         
