@@ -42,9 +42,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let obstacleCategory = 0x1 << 3
     
     // Texture Variables [Tina]
-    var bradJumpTexture = SKTexture(imageNamed: "test.jpg")
-    var bradTexture = SKTexture(imageNamed: "hero.jpg")
-    var bradDuckTexture = SKTexture(imageNamed: "test2.jpg")
+    var bradJumpTexture = SKTexture(imageNamed: "jump.jpg")
+    var bradTexture = SKTexture(imageNamed: "normal.jpg")
+    var bradDuckTexture = SKTexture(imageNamed: "duck.jpg")
+    var bradJumpDownTexture = SKTexture(imageNamed: "jump2.jpg")
     
     // Screen Buttons [Sam]
     var playButton = SKSpriteNode(imageNamed: "playNow.png")
@@ -92,10 +93,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         
         // City Background [Tina]
+        
         for var index = 0; index < 2; ++index {
             let bg = SKSpriteNode(imageNamed: "bg\(index).jpg")
             bg.anchorPoint = CGPointZero
-            bg.position = CGPoint(x: index * Int(bg.size.width), y: 0)
+            bg.position = CGPoint(x: index * Int(bg.size.width), y: 110)
             bg.name = "background"
             self.addChild(bg)
         }
@@ -112,13 +114,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         // Hero [Kevin/Tina]
-        bradTexture.filteringMode = SKTextureFilteringMode.Nearest
-        bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
-        bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
+        self.bradTexture.filteringMode = SKTextureFilteringMode.Nearest
+        self.bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
+        self.bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
+        self.bradJumpDownTexture.filteringMode = SKTextureFilteringMode.Nearest
         
         self.hero.name = "Brad"
         self.hero = SKSpriteNode(texture: bradTexture)
-        self.hero.setScale(0.5)
+        self.hero.setScale(2.0)
         self.hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
         self.hero.anchorPoint = CGPointZero
         
@@ -340,12 +343,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if road.position.x <= -road.size.width {
                     road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
                 }
-                
-                
-                self.currentTime = currentTime
-                self.deltaTime = self.currentTime - self.previousTime
-                self.previousTime = currentTime
-                self.jumpTime = self.jumpTime + self.deltaTime
             }
         })
       
@@ -391,8 +388,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             
           }
         }
-        
       })
+        self.currentTime = currentTime
+        self.deltaTime = self.currentTime - self.previousTime
+        self.previousTime = currentTime
+        self.jumpTime = self.jumpTime + self.deltaTime
+        
+        if self.jumpTime >= 0.5 && self.jumpMode == true {
+            self.hero.texture = self.bradJumpDownTexture
+        }
     }
     
     // MARK: - HERO ACTIONS
@@ -407,13 +411,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //         Jump Limit Logic ------ Uncomment to use.
             if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
                 self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 40))
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 50))
                 self.hero.texture = self.bradJumpTexture
                 self.jumpNumber += 1
             }
         }
         else if self.duckMode == true {
-            self.hero.yScale = 0.5
+            self.hero.yScale = 2.0
             self.hero.texture = bradTexture
             self.duckMode = false
         }
@@ -422,7 +426,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
         if duckMode == false && self.jumpMode == false{
             println("Swipe down")
-            self.hero.yScale = 0.25
+            self.hero.yScale = 1.33
             self.hero.texture = bradDuckTexture
             self.duckMode = true
         }
@@ -503,7 +507,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.size = CGSize(width: 35, height: 40)
         trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
         trashCan.physicsBody?.dynamic = false
-        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+//        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         trashCan.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
         trashCan.physicsBody?.node?.name = "trashCan"
         trashCan.zPosition = 12

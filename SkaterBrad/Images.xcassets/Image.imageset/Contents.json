@@ -6,13 +6,11 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "2x",
-      "filename" : "newRoad@2x.jpg"
+      "scale" : "2x"
     },
     {
       "idiom" : "universal",
-      "scale" : "3x",
-      "filename" : "newRoad@3x.jpg"
+      "scale" : "3x"
     }
   ],
   "info" : {
