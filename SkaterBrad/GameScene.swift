@@ -10,7 +10,7 @@ import SpriteKit
 import AVFoundation
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
-
+    
     var hero = SKSpriteNode()
     var road = SKSpriteNode()
     // Factor to set entry X position for hero
@@ -24,7 +24,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Score [Kevin]
     let scoreText = SKLabelNode(fontNamed: "Chalkduster")
     var score = 0
-
+    
     // Jump Properties [Tuan/Vincent]
     var currentTime = 0.0
     var previousTime = 0.0
@@ -53,30 +53,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var backgroundMusicPlayer : AVAudioPlayer!
     
     override func didMoveToView(view: SKView) {
-        self.registerAppTransitionObservers() 
+        self.registerAppTransitionObservers()
         self.playBackgroundMusic("bgMusic.mp3")
         
         self.createPlayButton()
-      
+        
         // Texture Variables
-      
-//        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
-//        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-//    //brian notes
-//        let block1 = SKSpriteNode(imageNamed: "block1")
-      
-//        var bradJumpTexture = SKTexture(imageNamed: "")
-//        var bradDuckTexture = SKTexture(imageNamed: "")
-
+        
+        //        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        //        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        //    //brian notes
+        //        let block1 = SKSpriteNode(imageNamed: "block1")
+        
+        //        var bradJumpTexture = SKTexture(imageNamed: "")
+        //        var bradDuckTexture = SKTexture(imageNamed: "")
+        
         //spawns a obstacles every 2 seconds -kori/brian
-//        let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
-//        let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
-//        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
-//        let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-//        let spawnThenDelay = SKAction.sequence([spawnBench,delay,spawnTrashcan,delay, delay, craneHook])
-//        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-//        self.runAction(spawnThenDelayForever)
-      
+        //        let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
+        //        let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
+        //        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
+        //        let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
+        //        let spawnThenDelay = SKAction.sequence([spawnBench,delay,spawnTrashcan,delay, delay, craneHook])
+        //        let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
+        //        self.runAction(spawnThenDelayForever)
+        
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
@@ -109,7 +109,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.road.position = CGPoint(x: index * Int(self.road.size.width), y: 0)
             self.road.name = "road"
             self.roadSize = road.size
-           // println(roadSize)
+            // println(roadSize)
             self.addChild(self.road)
         }
         
@@ -142,7 +142,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.dynamic = false
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
-
+        
     }
     
     override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
@@ -163,9 +163,97 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }))
         }
     }
-
+    
+    
+    override func update(currentTime: CFTimeInterval) {
+        
+        // lock hero's x position
+        self.hero.position.x = self.frame.size.width * self.heroPositionX
+        
+        // Moving Background [Kevin/Tina]
+        self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
+            if let bg = node as? SKSpriteNode {
+                bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
+                
+                if bg.position.x <= -bg.size.width {
+                    bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
+                    
+                }
+            }
+        })
+        
+        if self.hero.position.x <= 0 {
+            println("Offscreen")
+            
+        }
+        
+        // Moving Road [Kevin/Tina, updated by Vincent]
+        self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
+            if let road = node as? SKSpriteNode {
+                road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
+                if road.position.x <= -road.size.width {
+                    road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
+                }
+            }
+        })
+        
+        // Moving Obstacles [Brian/Kori]
+        self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
+            if let trash = node as? SKSpriteNode {
+                trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
+                if trash.position.x < -25 {
+                    trash.removeFromParent()
+                    
+                }
+            }
+        })
+        
+        self.enumerateChildNodesWithName("bench", usingBlock: { (node, stop) -> Void in
+            if let bench = node as? SKSpriteNode {
+                bench.position = CGPoint(x: bench.position.x - (self.roadSpeed), y: bench.position.y)
+                if bench.position.x < -25 {
+                    bench.removeFromParent()
+                    
+                }
+            }
+            
+        })
+        
+        
+        self.enumerateChildNodesWithName("craneHook", usingBlock: { (node, stop) -> Void in
+            if let craneHook = node as? SKSpriteNode {
+                craneHook.position = CGPoint(x: craneHook.position.x - (self.roadSpeed/2), y: craneHook.position.y)
+                if craneHook.position.x < -25 {
+                    craneHook.removeFromParent()
+                    
+                }
+            }
+            
+        })
+        
+        self.enumerateChildNodesWithName("chain", usingBlock: { (node, stop) -> Void in
+            if let chain = node as? SKSpriteNode {
+                chain.position = CGPoint(x: chain.position.x - (self.roadSpeed/2), y: chain.position.y)
+                if chain.position.x < -25 {
+                    chain.removeFromParent()
+                    
+                }
+            }
+        })
+        self.currentTime = currentTime
+        self.deltaTime = self.currentTime - self.previousTime
+        self.previousTime = currentTime
+        self.jumpTime = self.jumpTime + self.deltaTime
+        
+        if self.jumpTime >= 0.5 && self.jumpMode == true {
+            self.hero.texture = self.bradJumpDownTexture
+        }
+    }
+    
+    
+    
     func registerAppTransitionObservers() {
-
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
@@ -185,7 +273,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.scene?.paused = false
         backgroundMusicPlayer.play()
     }
-
+    
     
     func playBackgroundMusic(filename: String) {
         let url = NSBundle.mainBundle().URLForResource(
@@ -213,52 +301,42 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         playButton.zPosition = 5
         self.addChild(self.playButton)
     }
-  
-  //kori/brian
-  func spawnCrane(){
-    var randX = arc4random_uniform(300) + 100
-    let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-    let chain = SKSpriteNode(imageNamed: "chain.png")
-    let contactNode = SKSpriteNode()
     
+    //kori/brian
+    func spawnCrane(){
+        var randX = arc4random_uniform(300) + 100
+        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        let chain = SKSpriteNode(imageNamed: "chain.png")
+        let contactNode = SKSpriteNode()
+        
+        
+        chain.anchorPoint = CGPointMake(1.0, 1.0)
+        chain.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX)), CGRectGetMaxY(self.frame))
+        chain.size = CGSize(width: 10, height: 420)
+        chain.name = "chain"
+        
+        craneHook.anchorPoint = CGPointMake(1.0, 1.0)
+        craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX) + 45),
+            CGRectGetMaxY(self.frame) * 0.38)
+        craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 130, height: 165))
+        
+        craneHook.zPosition = 12
+        craneHook.physicsBody?.dynamic = false
+        craneHook.size = CGSize(width: 100.0, height: 100.0)
+        craneHook.name = "craneHook"
+        
+        contactNode.size = CGSize(width: 130, height: 165)
+        contactNode.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX) + 40),
+            CGRectGetMaxY(self.frame) * 0.38)
+        contactNode.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        contactNode.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+        
+        addChild(contactNode)
+        self.addChild(chain)
+        self.addChild(craneHook)
+        
+    }
     
-    chain.anchorPoint = CGPointMake(1.0, 1.0)
-    chain.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX)), CGRectGetMaxY(self.frame))
-    chain.size = CGSize(width: 10, height: 420)
-    chain.name = "chain"
-    
-    craneHook.anchorPoint = CGPointMake(1.0, 1.0)
-    craneHook.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX) + 45),
-      CGRectGetMaxY(self.frame) * 0.38)
-    craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 130, height: 165))
-
-    craneHook.zPosition = 12
-    craneHook.physicsBody?.dynamic = false
-    craneHook.size = CGSize(width: 100.0, height: 100.0)
-    craneHook.name = "craneHook"
-    
-    contactNode.size = CGSize(width: 130, height: 165)
-    contactNode.position = CGPointMake((CGRectGetMaxX(self.frame) + CGFloat(randX) + 40),
-      CGRectGetMaxY(self.frame) * 0.38)
-    contactNode.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-    contactNode.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
-
-    addChild(contactNode)
-    self.addChild(chain)
-    self.addChild(craneHook)
-    
-    
-//    craneHook.anchorPoint = CGPointMake(1.0, 1.0)
-//    craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX),
-//      CGRectGetMaxY(self.frame))
-//    craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 60, height: 100))
-//    craneHook.physicsBody?.dynamic = false
-//    craneHook.size = CGSize(width: 60.0, height: 100.0)
-//    craneHook.name = "craneHook"
-//    self.addChild(craneHook)
-
-  }
-
     func createMenuButton() {
         menuButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30 )
         menuButton.zPosition = 5
@@ -271,7 +349,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.hero.physicsBody?.dynamic = false
         self.roadSpeed = 0
         self.backgroundSpeed = 0
-
+        
         self.createMenuButton()
         
         let label = SKLabelNode(fontNamed: "Chalkduster")
@@ -288,7 +366,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         grayScreen.color = SKColor.blackColor()
         grayScreen.alpha = 0.5
         self.addChild(grayScreen)
-
+        
     }
     
     func restartGame() {
@@ -313,91 +391,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         self.runAction(spawnThenDelayForever)
     }
-  
-    override func update(currentTime: CFTimeInterval) {
-        
-        // lock hero's x position
-        self.hero.position.x = self.frame.size.width * self.heroPositionX
-        
-        // Moving Background [Kevin/Tina]
-        self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
-            if let bg = node as? SKSpriteNode {
-                bg.position = CGPoint(x: bg.position.x-self.backgroundSpeed, y: bg.position.y)
-                
-                if bg.position.x <= -bg.size.width {
-                    bg.position = CGPoint(x: bg.position.x+bg.size.width * 2, y: bg.position.y)
-                    
-                }
-            }
-        })
-        
-        if self.hero.position.x <= 0 {
-            println("Offscreen")
     
-        }
-        
-        // Moving Road [Kevin/Tina, updated by Vincent]
-        self.enumerateChildNodesWithName("road", usingBlock: { (node, stop) -> Void in
-            if let road = node as? SKSpriteNode {
-                road.position = CGPoint(x: road.position.x-self.roadSpeed, y: road.position.y)
-                if road.position.x <= -road.size.width {
-                    road.position = CGPoint(x: road.position.x+road.size.width * 2, y: road.position.y)
-                }
-            }
-        })
-      
-      // Moving Obstacles [Brian/Kori]
-      self.enumerateChildNodesWithName("trashCan", usingBlock: { (node, stop) -> Void in
-        if let trash = node as? SKSpriteNode {
-          trash.position = CGPoint(x: trash.position.x-self.roadSpeed, y: trash.position.y)
-          if trash.position.x < -25 {
-            trash.removeFromParent()
-            
-          }
-        }
-        })
-      
-      self.enumerateChildNodesWithName("bench", usingBlock: { (node, stop) -> Void in
-        if let bench = node as? SKSpriteNode {
-          bench.position = CGPoint(x: bench.position.x - (self.roadSpeed), y: bench.position.y)
-          if bench.position.x < -25 {
-            bench.removeFromParent()
-            
-          }
-        }
-        
-      })
-
-
-      self.enumerateChildNodesWithName("craneHook", usingBlock: { (node, stop) -> Void in
-        if let craneHook = node as? SKSpriteNode {
-          craneHook.position = CGPoint(x: craneHook.position.x - (self.roadSpeed/2), y: craneHook.position.y)
-          if craneHook.position.x < -25 {
-            craneHook.removeFromParent()
-            
-          }
-        }
-        
-      })
-      
-      self.enumerateChildNodesWithName("chain", usingBlock: { (node, stop) -> Void in
-        if let chain = node as? SKSpriteNode {
-          chain.position = CGPoint(x: chain.position.x - (self.roadSpeed/2), y: chain.position.y)
-          if chain.position.x < -25 {
-            chain.removeFromParent()
-            
-          }
-        }
-      })
-        self.currentTime = currentTime
-        self.deltaTime = self.currentTime - self.previousTime
-        self.previousTime = currentTime
-        self.jumpTime = self.jumpTime + self.deltaTime
-        
-        if self.jumpTime >= 0.5 && self.jumpMode == true {
-            self.hero.texture = self.bradJumpDownTexture
-        }
-    }
+    
     
     // MARK: - HERO ACTIONS
     // [Tuan/Vincent]
@@ -438,8 +433,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func didBeginContact(contact: SKPhysicsContact) {
         println("Contact occured")
-//        println("bodyA is \(contact.bodyA.node?.name) ")
-//        println("bodyB is \(contact.bodyB.node?.name) ")
+        //        println("bodyA is \(contact.bodyA.node?.name) ")
+        //        println("bodyB is \(contact.bodyB.node?.name) ")
         let contactMask = contact.bodyA.categoryBitMask | contact.bodyB.categoryBitMask
         switch contactMask {
         case UInt32(self.heroCategory) | UInt32(self.groundCategory):
@@ -466,35 +461,23 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func spawnBench(){
         var randX: Float = Float(arc4random_uniform(300) + 1)
         //var anotherFloat: Float = Float(randX)
-      let bench = SKSpriteNode(imageNamed: "bench.gif")
-      
-      bench.position = CGPointMake(CGRectGetMaxX(self.frame), 75)
-      bench.size = CGSize(width: 105, height: 60)
-      bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 30))
-      bench.physicsBody?.dynamic = false
-      // bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-      // bench.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
-      bench.physicsBody?.node?.name = "bench"
-      bench.zPosition = 0
-      bench.name = "bench"
-      self.addChild(bench)
-      
+        let bench = SKSpriteNode(imageNamed: "bench.gif")
+        
+        bench.position = CGPointMake(CGRectGetMaxX(self.frame), 75)
+        bench.size = CGSize(width: 105, height: 60)
+        bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 30))
+        bench.physicsBody?.dynamic = false
+        // bench.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        // bench.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
+        bench.physicsBody?.node?.name = "bench"
+        bench.zPosition = 0
+        bench.name = "bench"
+        self.addChild(bench)
+        
     }
     
-//    func spawnCrane(){
-//        var randX = arc4random_uniform(300) + 100
-//        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
-//        
-//        craneHook.anchorPoint = CGPointMake(1.0, 1.0)
-//        craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX),
-//            CGRectGetMaxY(self.frame))
-//        craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 60, height: 100))
-//        craneHook.physicsBody?.dynamic = false
-//        craneHook.size = CGSize(width: 60.0, height: 100.0)
-//        craneHook.name = "craneHook"
-//        self.addChild(craneHook)
-//    }
-
+    
+    
     
     func spawnTrashcan(){
         var randX: Float = Float(arc4random_uniform(500) + 100)
@@ -507,7 +490,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.size = CGSize(width: 35, height: 40)
         trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
         trashCan.physicsBody?.dynamic = false
-//        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        //        trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         trashCan.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
         trashCan.physicsBody?.node?.name = "trashCan"
         trashCan.zPosition = 12
