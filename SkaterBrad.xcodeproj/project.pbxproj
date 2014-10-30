@@ -36,6 +36,11 @@
 		92CE648B1A02A28C0091704C /* jump.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 92CE648A1A02A28C0091704C /* jump.jpg */; };
 		92CE648D1A02A2940091704C /* jump2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 92CE648C1A02A2940091704C /* jump2.jpg */; };
 		92CE648F1A02A29C0091704C /* normal.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 92CE648E1A02A29C0091704C /* normal.jpg */; };
+		E1C2D3031A02E886000EF20B /* taco.gif in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3021A02E886000EF20B /* taco.gif */; };
+		E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3041A02E895000EF20B /* Getitnexttime.wav */; };
+		E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3051A02E895000EF20B /* Goseahawks.wav */; };
+		E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3061A02E895000EF20B /* Ohdamn.wav */; };
+		E1C2D30B1A02E895000EF20B /* Twitterrocks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3071A02E895000EF20B /* Twitterrocks.wav */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -82,6 +87,11 @@
 		92CE648A1A02A28C0091704C /* jump.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jump.jpg; sourceTree = "<group>"; };
 		92CE648C1A02A2940091704C /* jump2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = jump2.jpg; sourceTree = "<group>"; };
 		92CE648E1A02A29C0091704C /* normal.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = normal.jpg; sourceTree = "<group>"; };
+		E1C2D3021A02E886000EF20B /* taco.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = taco.gif; sourceTree = "<group>"; };
+		E1C2D3041A02E895000EF20B /* Getitnexttime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Getitnexttime.wav; sourceTree = "<group>"; };
+		E1C2D3051A02E895000EF20B /* Goseahawks.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Goseahawks.wav; sourceTree = "<group>"; };
+		E1C2D3061A02E895000EF20B /* Ohdamn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Ohdamn.wav; sourceTree = "<group>"; };
+		E1C2D3071A02E895000EF20B /* Twitterrocks.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Twitterrocks.wav; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -149,6 +159,7 @@
 		0A5479B419FEE4F500D697D8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				E1C2D3021A02E886000EF20B /* taco.gif */,
 				0AA17ADB1A02D6680003C7F5 /* bench.gif */,
 				8B2C04A51A018E4200464B06 /* chain.png */,
 				45DAB9071A015C4300A3920D /* duck2.gif */,
@@ -182,6 +193,10 @@
 		52348A9E1A00588D0054E55A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				E1C2D3041A02E895000EF20B /* Getitnexttime.wav */,
+				E1C2D3051A02E895000EF20B /* Goseahawks.wav */,
+				E1C2D3061A02E895000EF20B /* Ohdamn.wav */,
+				E1C2D3071A02E895000EF20B /* Twitterrocks.wav */,
 				52348A941A00584A0054E55A /* bgMusic.mp3 */,
 				52348A961A00584A0054E55A /* lose.wav */,
 				52348A981A00584A0054E55A /* win.wav */,
@@ -270,18 +285,21 @@
 			buildActionMask = 2147483647;
 			files = (
 				8B8CF4871A00469C00DA7F28 /* crane.gif in Resources */,
+				E1C2D30B1A02E895000EF20B /* Twitterrocks.wav in Resources */,
 				92CBF7B01A00D15D0071E392 /* test.jpg in Resources */,
 				926821251A015C40009C3022 /* test2.jpg in Resources */,
 				45DAB90B1A015C4300A3920D /* duck1.gif in Resources */,
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
 				0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */,
 				92CE648F1A02A29C0091704C /* normal.jpg in Resources */,
+				E1C2D3031A02E886000EF20B /* taco.gif in Resources */,
 				92CE648D1A02A2940091704C /* jump2.jpg in Resources */,
 				926821231A015AB2009C3022 /* test1.jpg in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
 				92CE64891A02A2690091704C /* duck.jpg in Resources */,
 				8B2C04A61A018E4200464B06 /* chain.png in Resources */,
 				0AA17ADC1A02D6680003C7F5 /* bench.gif in Resources */,
+				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
 				52CCFD5A1A01800A00DF5374 /* menu.png in Resources */,
 				0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */,
 				8B8CF4851A003D2200DA7F28 /* trashCan.gif in Resources */,
@@ -289,7 +307,9 @@
 				45DAB90C1A015C4300A3920D /* coast.gif in Resources */,
 				92CE648B1A02A28C0091704C /* jump.jpg in Resources */,
 				92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */,
+				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
+				E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */,
 				52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */,
 				52348A9D1A00584A0054E55A /* win.wav in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
