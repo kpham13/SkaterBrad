@@ -33,6 +33,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var jumpTime = 0.0
     var jumpMode = false
     
+    // Coin spritenode [Tuan]
+    let coin = SKSpriteNode(imageNamed: "taco.gif")
+    
     // Duck Properties
     var duckMode = false
     
@@ -41,6 +44,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let groundCategory = 0x1 << 2
     let obstacleCategory = 0x1 << 3
     let scoreCategory = 0x1 << 4
+    let coinCategory = 0x1 << 5
     
     // Texture Variables [Tina]
     var bradJumpTexture = SKTexture(imageNamed: "jump.jpg")
@@ -176,6 +180,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 }
             }
         })
+        
+        self.enumerateChildNodesWithName("coin", usingBlock: { (node, stop) -> Void in
+            if let coin = node as? SKSpriteNode {
+                coin.position = CGPoint(x: coin.position.x-self.roadSpeed, y: coin.position.y)
+                if coin.position.x < 0 {
+                    coin.removeFromParent()
+                }
+            }
+        })
+        
         self.currentTime = currentTime
         self.deltaTime = self.currentTime - self.previousTime
         self.previousTime = currentTime
@@ -225,6 +239,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("Score!")
             self.score += 1
             self.scoreText.text = String(self.score)
+            
+        case UInt32(self.heroCategory) | UInt32(self.coinCategory):
+            println("CHA CHING")
+            self.coin.removeFromParent()
+            runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
+            self.score += 10
+            self.scoreText.text = String(self.score)
+            
         default:
             println("Trash hit...obstacle?")
         }
@@ -378,6 +400,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
     }
     
+    // Spawn coin [Tuan]
+    func spawnCoin() {
+        var randX = arc4random_uniform(100)
+        self.coin
+        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 250)
+        coin.size = CGSize(width: 30, height: 30)
+        
+        coin.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1 , height: 1))
+        coin.physicsBody?.dynamic = false
+        
+        coin.physicsBody?.categoryBitMask = UInt32(self.coinCategory)
+        coin.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.coinCategory)
+        coin.zPosition = 12
+        coin.physicsBody?.node?.name = "coin"
+        coin.name = "coin"
+        addChild(coin)
+    }
+    
     // MARK: - Menu Screens
     // [Sam]
     
@@ -436,6 +476,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             CGRectGetMaxY(self.frame)/2)
         grayScreen.color = SKColor.blackColor()
         grayScreen.alpha = 0.5
+        
+        //brad soundbite [Tuan]
+        runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
+
         self.addChild(grayScreen)
         
     }
@@ -456,9 +500,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Obstacles Spawn, every 2 seconds [Brian/Kori]
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
+        // Coin [Tuan]
+        let spawnCoin = SKAction.runBlock({() in self.spawnCoin()})
+        
         let craneHook = SKAction.runBlock({() in self.spawnCrane()})
         let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-        let spawnThenDelay = SKAction.sequence([spawnBench,delay,spawnTrashcan,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
+        let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench,delay,spawnTrashcan,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         self.runAction(spawnThenDelayForever)
     }
