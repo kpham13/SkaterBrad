@@ -271,8 +271,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.hero.texture = self.bradJumpTexture
                 self.jumpNumber += 1
             }
-        }
-        else if self.duckMode == true {
+        } else if self.duckMode == true {
             self.hero.yScale = 2.0
             self.hero.texture = bradTexture
             self.duckMode = false
@@ -313,9 +312,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         bench.physicsBody?.node?.name = "bench"
         vertical.addChild(bench)
         
-        let benchScoreContact = SKSpriteNode()
-        benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
-        benchScoreContact.color = SKColor.redColor()
+        let benchScoreContact = SKNode()
+        //benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+        //benchScoreContact.color = SKColor.redColor()
         benchScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
         benchScoreContact.zPosition = 105
         benchScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
@@ -348,9 +347,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.physicsBody?.node?.name = "trashCan"
         vertical.addChild(trashCan)
         
-        let trashScoreContact = SKSpriteNode()
-        trashScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
-        trashScoreContact.color = SKColor.blueColor()
+        let trashScoreContact = SKNode()
+        //trashScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+        //trashScoreContact.color = SKColor.blueColor()
         trashScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
         trashScoreContact.zPosition = 105
         trashScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
@@ -389,9 +388,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         craneHook.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.obstacleCategory)
         vertical.addChild(craneHook)
         
-        let craneScoreContact = SKSpriteNode()
-        craneScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
-        craneScoreContact.color = SKColor.blueColor()
+        let craneScoreContact = SKNode()
+        //craneScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+        //craneScoreContact.color = SKColor.blueColor()
         craneScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
         craneScoreContact.zPosition = 105
         craneScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
@@ -400,7 +399,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         craneScoreContact.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.scoreCategory)
         craneScoreContact.physicsBody?.node?.name = "benchScoreContact"
         vertical.addChild(craneScoreContact)
-        
     }
     
     // Spawn coin [Tuan]
@@ -484,7 +482,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
 
         self.addChild(grayScreen)
-        
     }
     
     func restartGame() {
@@ -534,5 +531,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         backgroundMusicPlayer.play()
     }
     
-    //test
 }
