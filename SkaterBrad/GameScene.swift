@@ -340,12 +340,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("Score!")
             self.score += 1
             self.scoreText.text = String(self.score)
+            self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
+            self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.coinCategory):
             println("CHA CHING")
             self.coin.removeFromParent()
             runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
             self.score += 10
             self.scoreText.text = String(self.score)
+            self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
+            self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
             runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
