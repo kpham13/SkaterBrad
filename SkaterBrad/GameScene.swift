@@ -335,7 +335,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: bench.size.height))
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
-        vertical.addChild(benchLoseContact)
+//        vertical.addChild(benchLoseContact)
+        
     }
     
     func spawnTrashcan() {
@@ -377,7 +378,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: trashCan.size.height))
         trashLoseContact.physicsBody?.dynamic = false
         trashLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
-        vertical.addChild(trashLoseContact)
+//        vertical.addChild(trashLoseContact)
     }
     
     func spawnCrane(){
