@@ -26,13 +26,14 @@ class NewGameNode: SKNode {
         self.titleLabel = SKLabelNode(text: "SkaterBrad")
         self.titleLabel.fontName = "Chalkduster"
         self.titleLabel.fontSize = 40
-        self.titleLabel.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMidY(scene.frame) +  100 )
+        self.titleLabel.position = CGPointMake(CGRectGetMidX(scene.frame), scene.frame.size.height * 0.7)
+        self.titleLabel.zPosition = 5
         self.addChild(self.titleLabel)
         
         // new game button
         self.playButton = SKSpriteNode(imageNamed: "playNow.png")
         self.playButton.name = "PlayNow"
-        self.playButton.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMidY(scene.frame) + 30 )
+        self.playButton.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMidY(scene.frame))
         self.playButton.zPosition = 5
         self.addChild(self.playButton)
         
