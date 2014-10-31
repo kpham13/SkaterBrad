@@ -88,7 +88,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.physicsWorld.contactDelegate = self
         
         // City Background [Tina]
-        
         for var index = 0; index < 2; ++index {
             let bg = SKSpriteNode(imageNamed: "bg\(index).jpg")
             bg.anchorPoint = CGPointZero
@@ -142,9 +141,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Game Score [Kevin]
         self.scoreText.text = "0"
-        self.scoreText.fontSize = 42
-        self.scoreText.color = UIColor.grayColor()
-        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + CGRectGetMidY(self.frame) / 1.5)
+        self.scoreText.fontSize = 50
+        self.scoreText.color = UIColor.blackColor()
+        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.07)
         self.scoreText.zPosition = 100
         self.addChild(self.scoreText)
     }
@@ -344,11 +343,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.coinCategory):
             println("CHA CHING")
             self.coin.removeFromParent()
-            runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
+            runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
             self.score += 10
             self.scoreText.text = String(self.score)
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
+            runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
             self.endGame()
         default:
             println("Hero hit something...not given a category....should not happen....")
@@ -527,7 +527,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Spawn coin [Tuan]
     func spawnCoin() {
         var randX = arc4random_uniform(100)
-        self.coin
+        
         coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
         coin.size = CGSize(width: 30, height: 30)
         
@@ -559,7 +559,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.showGameOverMenu = true
         self.showNewGameMenu = false
         
-        self.scene?.paused = true
+//        self.scene?.paused = true
+//        self.coin.removeFromParent()
+        
+        self.scene?.removeActionForKey("startSpawn")
     }
     
     // [Sam]
@@ -585,13 +588,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
         // Coin [Tuan]
+        
         let spawnCoin = SKAction.runBlock({() in self.spawnCoin()})
         
         let craneHook = SKAction.runBlock({() in self.spawnCrane()})
         let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
         let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench,delay,spawnTrashcan,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
-        self.runAction(spawnThenDelayForever)
+        
+        self.runAction(spawnThenDelayForever, withKey: "startSpawn")
     }
     
     // MARK: - APP TRANSITION OBSERVERS
@@ -632,14 +637,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.gameOverLabel = SKLabelNode(text: "Game Over")
         self.gameOverLabel.fontName = "Chalkduster"
         self.gameOverLabel.fontSize = 40
-        self.gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 100 )
+        self.gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.7)
         self.addChild(self.gameOverLabel)
         
         // reply button
         self.replayButton = SKSpriteNode(imageNamed: "replay")
         self.replayButton.name = "Replay"
         self.replayButton.size = CGSize(width: 60.0, height: 60.0)
-        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30)
+        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.55)
         self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
     }
