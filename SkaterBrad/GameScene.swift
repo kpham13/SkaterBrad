@@ -123,7 +123,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Physics Body Around Hero
         self.hero.physicsBody = SKPhysicsBody(rectangleOfSize: hero.size, center: CGPointMake(hero.frame.width / 2, hero.frame.height / 2))
-        self.hero.physicsBody?.dynamic = false
+        //self.hero.physicsBody?.dynamic = false
         self.hero.physicsBody?.allowsRotation = false
         self.hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
         self.hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory) | UInt32(self.contactCategory) | UInt32(self.scoreCategory)
@@ -528,7 +528,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func spawnCoin() {
         var randX = arc4random_uniform(100)
         self.coin
-        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 250)
+        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
         coin.size = CGSize(width: 30, height: 30)
         
         coin.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1 , height: 1))
@@ -640,7 +640,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.replayButton.name = "Replay"
         self.replayButton.size = CGSize(width: 60.0, height: 60.0)
         self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30)
-        self.replayButton.zPosition = 1
+        self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
     }
     
