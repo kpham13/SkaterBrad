@@ -250,7 +250,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.coinCategory):
             println("CHA CHING")
             self.coin.removeFromParent()
-            runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
+            runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
             self.score += 10
             self.scoreText.text = String(self.score)
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
