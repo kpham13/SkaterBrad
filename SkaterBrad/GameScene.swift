@@ -49,6 +49,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let scoreCategory = 0x1 << 4
     let coinCategory = 0x1 << 5
     let contactCategory = 0x1 << 6
+    let hookCategory = 0x1 << 7
     
     // Texture Variables [Tina]
     var bradJumpTexture = SKTexture(imageNamed: "jump.jpg")
@@ -527,7 +528,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(vertical)
         
         let chain = SKSpriteNode(imageNamed: "chain.png")
-        chain.size = CGSize(width: 10, height: 350)
+        chain.size = CGSize(width: 3, height: 350)
         chain.anchorPoint = CGPointMake(0.5, 1.0)
         chain.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMaxY(self.frame))
         chain.zPosition = -5
@@ -560,7 +561,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         beemLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
 
         if randX < 300 {
-            //craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+            craneHook.physicsBody?.categoryBitMask = UInt32(self.hookCategory)
             vertical.addChild(craneHook)
             vertical.addChild(beem)
             vertical.addChild(beemLoseContact)
