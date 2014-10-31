@@ -515,12 +515,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(craneScoreContact)
         
         let craneHookLoseContact = SKSpriteNode()
-        craneHook.size = CGSize(width: 1, height: craneHook.size.height)
-        craneHook.color = SKColor.blackColor() // Delete Later
-        craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - craneHook.size.width / 2, self.roadSize!.height + craneHook.size.height / 2)
-        craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: craneHook.size.height))
-        craneHook.physicsBody?.dynamic = false
-        craneHook.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
+        craneHookLoseContact.size = CGSize(width: 1, height: craneHook.size.height)
+        craneHookLoseContact.color = SKColor.blackColor() // Delete Later
+        craneHookLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - craneHook.size.width / 2, self.roadSize!.height + craneHook.size.height / 2)
+        craneHookLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: craneHook.size.height))
+        craneHookLoseContact.physicsBody?.dynamic = false
+        craneHookLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(craneHookLoseContact)
     }
     
