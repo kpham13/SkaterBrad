@@ -24,6 +24,8 @@ class SoundNode : SKNode {
         self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
         self.audioPlayer.prepareToPlay()
         self.audioPlayer.play()
+        self.audioPlayer.numberOfLoops = 100
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
