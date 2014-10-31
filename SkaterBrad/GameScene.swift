@@ -60,7 +60,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func didMoveToView(view: SKView) {
         self.registerAppTransitionObservers()
-        self.playBackgroundMusic("bgMusic.mp3")
+        self.playBackgroundMusic("music.mp3")
         
         self.createPlayButton()
 
