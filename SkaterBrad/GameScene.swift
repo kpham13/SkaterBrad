@@ -53,11 +53,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bradDuckTexture = SKTexture(imageNamed: "duck.jpg")
     var bradJumpDownTexture = SKTexture(imageNamed: "jump2.jpg")
     
-//    // Screen Buttons [Sam]
-//    var playButton = SKSpriteNode(imageNamed: "playNow.png")
-//    var menuButton = SKSpriteNode(imageNamed: "replay.png")
-//    var backgroundMusicPlayer : AVAudioPlayer!
-    
     // Menu & Buttons
     var soundOption: SoundNode?
     var newGameMenu: NewGameNode?
@@ -66,11 +61,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var showGameOverMenu = false
     var playSound = true
     
-    // Buttons
-//    var pauseButton: SKSpriteNode?
-//    var resumeButton: SKSpriteNode?
+    // Game Over Screen
+    var gameOverLabel: SKLabelNode!
+    var screenDimmerNode : SKSpriteNode!
+    var replayButton : SKSpriteNode!
    
-    
     override func didMoveToView(view: SKView) {
         self.registerAppTransitionObservers()
         self.soundOption = SoundNode()
@@ -289,12 +284,17 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // [Sam]
     func gameOverMenuTouches(touches: NSSet) {
         var touch = touches.anyObject() as UITouch
-        var location = touch.locationInNode(self.gameOverMenu)
+        var location = touch.locationInNode(self)
+//        var location = touch.locationInNode(self.gameOverMenu)
         
         println(" ")
-        println("reply button zposition : \(self.gameOverMenu?.replayButton.zPosition)")
-        println("reply button position x : \(self.gameOverMenu?.replayButton.position.x)")
-        println("reply button position y : \(self.gameOverMenu?.replayButton.position.y)")
+        println("replay button zposition : \(self.replayButton.zPosition)")
+        println("replay button position x : \(self.replayButton.position.x)")
+        println("replay button position y : \(self.replayButton.position.y)")
+        
+//        println("replay button zposition : \(self.gameOverMenu?.replayButton.zPosition)")
+//        println("replay button position x : \(self.gameOverMenu?.replayButton.position.x)")
+//        println("replay button position y : \(self.gameOverMenu?.replayButton.position.y)")
         
         println("node name : \(self.nodeAtPoint(location).name)")
         println("node zposition : \(self.nodeAtPoint(location).zPosition)")
@@ -554,7 +554,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.roadSpeed = 0
         self.backgroundSpeed = 0
         
-        self.gameOverMenu = GameOverNode(scene: self)
+//        self.gameOverMenu = GameOverNode(scene: self)
+        self.generateGameOverScreen()
         self.showGameOverMenu = true
         self.showNewGameMenu = false
         
@@ -615,6 +616,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func applicationWillEnterForeground() {
         self.scene?.paused = false
         self.soundOption!.audioPlayer.play()
+    }
+    
+    func generateGameOverScreen() {
+        // screen dimmer node
+        self.screenDimmerNode = SKSpriteNode()
+        self.screenDimmerNode.size = CGSize(width: self.frame.width, height: self.frame.height)
+        self.screenDimmerNode.position = CGPointMake((CGRectGetMaxX(self.frame)/2), CGRectGetMaxY(self.frame)/2)
+        self.screenDimmerNode.color = SKColor.blackColor()
+        self.screenDimmerNode.alpha = 0.5
+        //self.zPosition = 100
+        self.addChild(self.screenDimmerNode)
+        
+        // game over label
+        self.gameOverLabel = SKLabelNode(text: "Game Over")
+        self.gameOverLabel.fontName = "Chalkduster"
+        self.gameOverLabel.fontSize = 40
+        self.gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 100 )
+        self.addChild(self.gameOverLabel)
+        
+        // reply button
+        self.replayButton = SKSpriteNode(imageNamed: "replay")
+        self.replayButton.name = "Replay"
+        self.replayButton.size = CGSize(width: 60.0, height: 60.0)
+        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30)
+        self.replayButton.zPosition = 1
+        self.addChild(self.replayButton)
     }
     
 }
