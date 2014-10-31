@@ -118,6 +118,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.hero.physicsBody?.allowsRotation = false
         self.hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
         self.hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory) | UInt32(self.contactCategory) | UInt32(self.scoreCategory)
+        self.hero.physicsBody?.collisionBitMask = UInt32(self.groundCategory) | UInt32(self.obstacleCategory) | UInt32(self.contactCategory)
         self.addChild(hero)
         
         // Ground [Kevin/Tina]
@@ -318,14 +319,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(bench)
         
         let benchScoreContact = SKNode()
-        //benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
-        //benchScoreContact.color = SKColor.redColor()
+//        benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+//        benchScoreContact.color = SKColor.redColor()
         benchScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
         benchScoreContact.zPosition = 105
         benchScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
         benchScoreContact.physicsBody?.dynamic = false
         benchScoreContact.physicsBody?.categoryBitMask = UInt32(self.scoreCategory)
         benchScoreContact.physicsBody?.node?.name = "benchScoreContact"
+        benchScoreContact.physicsBody?.collisionBitMask = 0
         vertical.addChild(benchScoreContact)
         
         let benchLoseContact = SKSpriteNode()
@@ -336,6 +338,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(benchLoseContact)
+        
     }
     
     func spawnTrashcan() {
@@ -557,5 +560,4 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.scene?.paused = false
         backgroundMusicPlayer.play()
     }
-    
 }
