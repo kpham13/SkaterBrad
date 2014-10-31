@@ -18,7 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
-    var roadSpeed : CGFloat = 3.0
+    var roadSpeed : CGFloat = 6.0
     var roadSize : CGSize?
     
     // Score [Kevin]
@@ -382,7 +382,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // [Tuan/Vincent]
     
     func swipeUpAction(swipe: UISwipeGestureRecognizer) {
-        if self.duckMode == false {
+        if self.duckMode == false && self.fallMode == false {
             if self.jumpMode == false {
                 self.jumpTime = 0.0
             }
@@ -394,7 +394,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.hero.texture = self.bradJumpTexture
                 self.jumpNumber += 1
             }
-        } else if self.duckMode == true {
+        } else if self.duckMode == true && self.fallMode == false {
             self.hero.yScale = 2.0
             self.hero.texture = bradTexture
             self.duckMode = false
@@ -402,7 +402,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
-        if duckMode == false && self.jumpMode == false{
+        if self.duckMode == false && self.jumpMode == false && self.fallMode == false {
             println("Swipe down")
             self.hero.yScale = 1.33
             self.hero.texture = bradDuckTexture
@@ -413,13 +413,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func heroFallAnimation(completionHandler: () -> Void) {
         println("Fall animation")
         let fallAnimation = SKAction.animateWithTextures(self.bradFallTextures, timePerFrame: 0.1)
-        let moveUp = SKAction.moveBy(CGVector(dx: 125, dy: 150), duration: 0.3)
-        // Vector dy difference is due to the final image not being cropped with the body at the lowest point.
-        let moveDown = SKAction.moveBy(CGVector(dx: 125, dy: -160), duration: 0.5)
+        let moveUp = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.6, y: self.frame.height / 2), duration: 0.5)
+        let moveDown = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.8, y: self.roadSize!.height * 0.9), duration: 0.3)
         let upDown = SKAction.sequence([moveUp, moveDown])
+        
         self.hero.runAction(fallAnimation)
-        self.hero.runAction(upDown)
-        completionHandler()
+        self.hero.runAction(upDown, completion: { () -> Void in
+            completionHandler()
+        })
     }
     
     // MARK: - OBSTACLES
