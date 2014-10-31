@@ -370,7 +370,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.scoreText.text = String(self.score)
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
-            runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
+            let ranNum = arc4random_uniform(UInt32(2) + 1)
+            if ranNum == 1 {
+                runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
+            }
+            else if ranNum == 2 {
+                runAction(SKAction.playSoundFileNamed("5MinuteWaterBreak.mp3", waitForCompletion: false))
+            }
             self.fallMode = true
             self.endGame()
         default:
