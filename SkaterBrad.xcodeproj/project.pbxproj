@@ -44,6 +44,14 @@
 		E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3051A02E895000EF20B /* Goseahawks.wav */; };
 		E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3061A02E895000EF20B /* Ohdamn.wav */; };
 		E1C2D30B1A02E895000EF20B /* Twitterrocks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3071A02E895000EF20B /* Twitterrocks.wav */; };
+		EBD199DA1A03FFE700FBD60F /* Falling0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D21A03FFE700FBD60F /* Falling0.jpg */; };
+		EBD199DB1A03FFE700FBD60F /* Falling1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D31A03FFE700FBD60F /* Falling1.jpg */; };
+		EBD199DC1A03FFE700FBD60F /* Falling2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D41A03FFE700FBD60F /* Falling2.jpg */; };
+		EBD199DD1A03FFE700FBD60F /* Falling3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D51A03FFE700FBD60F /* Falling3.jpg */; };
+		EBD199DE1A03FFE700FBD60F /* Falling4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D61A03FFE700FBD60F /* Falling4.jpg */; };
+		EBD199DF1A03FFE700FBD60F /* Falling5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D71A03FFE700FBD60F /* Falling5.jpg */; };
+		EBD199E01A03FFE700FBD60F /* Falling6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D81A03FFE700FBD60F /* Falling6.jpg */; };
+		EBD199E11A03FFE700FBD60F /* Falling7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D91A03FFE700FBD60F /* Falling7.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -98,6 +106,14 @@
 		E1C2D3051A02E895000EF20B /* Goseahawks.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Goseahawks.wav; sourceTree = "<group>"; };
 		E1C2D3061A02E895000EF20B /* Ohdamn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Ohdamn.wav; sourceTree = "<group>"; };
 		E1C2D3071A02E895000EF20B /* Twitterrocks.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Twitterrocks.wav; sourceTree = "<group>"; };
+		EBD199D21A03FFE700FBD60F /* Falling0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling0.jpg; sourceTree = "<group>"; };
+		EBD199D31A03FFE700FBD60F /* Falling1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling1.jpg; sourceTree = "<group>"; };
+		EBD199D41A03FFE700FBD60F /* Falling2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling2.jpg; sourceTree = "<group>"; };
+		EBD199D51A03FFE700FBD60F /* Falling3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling3.jpg; sourceTree = "<group>"; };
+		EBD199D61A03FFE700FBD60F /* Falling4.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling4.jpg; sourceTree = "<group>"; };
+		EBD199D71A03FFE700FBD60F /* Falling5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling5.jpg; sourceTree = "<group>"; };
+		EBD199D81A03FFE700FBD60F /* Falling6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling6.jpg; sourceTree = "<group>"; };
+		EBD199D91A03FFE700FBD60F /* Falling7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling7.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -211,6 +227,14 @@
 				92CE648E1A02A29C0091704C /* normal.jpg */,
 				92CE64881A02A2690091704C /* duck.jpg */,
 				92CE648C1A02A2940091704C /* jump2.jpg */,
+				EBD199D21A03FFE700FBD60F /* Falling0.jpg */,
+				EBD199D31A03FFE700FBD60F /* Falling1.jpg */,
+				EBD199D41A03FFE700FBD60F /* Falling2.jpg */,
+				EBD199D51A03FFE700FBD60F /* Falling3.jpg */,
+				EBD199D61A03FFE700FBD60F /* Falling4.jpg */,
+				EBD199D71A03FFE700FBD60F /* Falling5.jpg */,
+				EBD199D81A03FFE700FBD60F /* Falling6.jpg */,
+				EBD199D91A03FFE700FBD60F /* Falling7.jpg */,
 				92CE648A1A02A28C0091704C /* jump.jpg */,
 				926821241A015C40009C3022 /* test2.jpg */,
 				926821221A015AB2009C3022 /* test1.jpg */,
@@ -305,12 +329,14 @@
 				E1C2D30B1A02E895000EF20B /* Twitterrocks.wav in Resources */,
 				92CBF7B01A00D15D0071E392 /* test.jpg in Resources */,
 				926821251A015C40009C3022 /* test2.jpg in Resources */,
+				EBD199DD1A03FFE700FBD60F /* Falling3.jpg in Resources */,
 				45DAB90B1A015C4300A3920D /* duck1.gif in Resources */,
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
 				0AE34DD519FEFD8600E83179 /* hero.jpg in Resources */,
 				92CE648F1A02A29C0091704C /* normal.jpg in Resources */,
 				E1C2D3031A02E886000EF20B /* taco.gif in Resources */,
 				92CE648D1A02A2940091704C /* jump2.jpg in Resources */,
+				EBD199DB1A03FFE700FBD60F /* Falling1.jpg in Resources */,
 				926821231A015AB2009C3022 /* test1.jpg in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
 				92CE64891A02A2690091704C /* duck.jpg in Resources */,
@@ -320,15 +346,21 @@
 				0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */,
 				8B8CF4851A003D2200DA7F28 /* trashCan.gif in Resources */,
 				45DAB90A1A015C4300A3920D /* duck2.gif in Resources */,
+				EBD199DC1A03FFE700FBD60F /* Falling2.jpg in Resources */,
 				52AF413D1A032F96000F5687 /* replay.png in Resources */,
 				45DAB90C1A015C4300A3920D /* coast.gif in Resources */,
 				92CE648B1A02A28C0091704C /* jump.jpg in Resources */,
+				EBD199E11A03FFE700FBD60F /* Falling7.jpg in Resources */,
 				92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */,
+				EBD199DF1A03FFE700FBD60F /* Falling5.jpg in Resources */,
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
 				E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */,
 				52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */,
+				EBD199E01A03FFE700FBD60F /* Falling6.jpg in Resources */,
+				EBD199DA1A03FFE700FBD60F /* Falling0.jpg in Resources */,
 				52348A9D1A00584A0054E55A /* win.wav in Resources */,
+				EBD199DE1A03FFE700FBD60F /* Falling4.jpg in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
 				0A5479C019FEE4F500D697D8 /* Main.storyboard in Resources */,
 			);

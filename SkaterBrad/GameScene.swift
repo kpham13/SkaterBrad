@@ -52,6 +52,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bradTexture = SKTexture(imageNamed: "normal.jpg")
     var bradDuckTexture = SKTexture(imageNamed: "duck.jpg")
     var bradJumpDownTexture = SKTexture(imageNamed: "jump2.jpg")
+    var bradFallTextures: Array<SKTexture> = [
+        SKTexture(imageNamed: "Falling0.jpg"),
+        SKTexture(imageNamed: "Falling1.jpg"),
+        SKTexture(imageNamed: "Falling2.jpg"),
+        SKTexture(imageNamed: "Falling3.jpg"),
+        SKTexture(imageNamed: "Falling4.jpg"),
+        SKTexture(imageNamed: "Falling5.jpg"),
+        SKTexture(imageNamed: "Falling6.jpg"),
+        SKTexture(imageNamed: "Falling7.jpg"),
+    ]
     
     // Menu & Buttons
     var soundOption: SoundNode?
@@ -66,6 +76,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var screenDimmerNode : SKSpriteNode!
     var replayButton : SKSpriteNode!
    
+    // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
         self.registerAppTransitionObservers()
         self.soundOption = SoundNode()
@@ -80,6 +91,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var swipeDownRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeDownAction:")
         swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
         self.view?.addGestureRecognizer(swipeDownRecognizer)
+        
         
         // self.addChild(obst2)
         
@@ -114,6 +126,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.bradJumpTexture.filteringMode = SKTextureFilteringMode.Nearest
         self.bradDuckTexture.filteringMode = SKTextureFilteringMode.Nearest
         self.bradJumpDownTexture.filteringMode = SKTextureFilteringMode.Nearest
+        for texture in self.bradFallTextures {
+            texture.filteringMode = SKTextureFilteringMode.Nearest
+        }
         
         self.hero.name = "Brad"
         self.hero = SKSpriteNode(texture: bradTexture)
@@ -123,7 +138,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Physics Body Around Hero
         self.hero.physicsBody = SKPhysicsBody(rectangleOfSize: hero.size, center: CGPointMake(hero.frame.width / 2, hero.frame.height / 2))
-        self.hero.physicsBody?.dynamic = false
+        self.hero.physicsBody?.dynamic = true
         self.hero.physicsBody?.allowsRotation = false
         self.hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
         self.hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory) | UInt32(self.contactCategory) | UInt32(self.scoreCategory)
@@ -386,6 +401,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.duckMode = true
         }
     }
+
+    func heroFallAnimation(completionHandler: () -> Void) {
+        println("Fall animation")
+        let fallAnimation = SKAction.animateWithTextures(self.bradFallTextures, timePerFrame: 0.3)
+        self.hero.runAction(fallAnimation)
+        completionHandler()
+    }
     
     // MARK: - OBSTACLES
     // [Brian/Kori]
@@ -554,12 +576,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.roadSpeed = 0
         self.backgroundSpeed = 0
         
-//        self.gameOverMenu = GameOverNode(scene: self)
-        self.generateGameOverScreen()
-        self.showGameOverMenu = true
-        self.showNewGameMenu = false
-        
-        self.scene?.paused = true
+        // hero fall animation - Vincent
+        self.heroFallAnimation { () -> Void in
+//            self.gameOverMenu = GameOverNode(scene: self)
+//            self.generateGameOverScreen()
+//            self.showGameOverMenu = true
+//            self.showNewGameMenu = false
+//            
+//            self.scene?.paused = true
+        }
     }
     
     // [Sam]
