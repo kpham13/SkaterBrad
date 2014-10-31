@@ -39,6 +39,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Duck Properties
     var duckMode = false
     
+    // FallAnimation Properties
+    var fallMode = false
+    
     // Node Categories [Tuan/Vincent]
     let heroCategory = 0x1 << 1
     let groundCategory = 0x1 << 2
@@ -168,7 +171,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     override func update(currentTime: CFTimeInterval) {
         // Lock Hero's X Position [Tina]
-        self.hero.position.x = self.frame.size.width * self.heroPositionX
+        if fallMode == false {
+            self.hero.position.x = self.frame.size.width * self.heroPositionX
+        }
+        
         
         // Moving Background [Kevin/Tina]
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
@@ -365,6 +371,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
             runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
+            self.fallMode = true
             self.endGame()
         default:
             println("Hero hit something...not given a category....should not happen....")
@@ -405,8 +412,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
     func heroFallAnimation(completionHandler: () -> Void) {
         println("Fall animation")
-        let fallAnimation = SKAction.animateWithTextures(self.bradFallTextures, timePerFrame: 0.3)
+        let fallAnimation = SKAction.animateWithTextures(self.bradFallTextures, timePerFrame: 0.1)
+        let moveUp = SKAction.moveBy(CGVector(dx: 125, dy: 150), duration: 0.3)
+        // Vector dy difference is due to the final image not being cropped with the body at the lowest point.
+        let moveDown = SKAction.moveBy(CGVector(dx: 125, dy: -160), duration: 0.5)
+        let upDown = SKAction.sequence([moveUp, moveDown])
         self.hero.runAction(fallAnimation)
+        self.hero.runAction(upDown)
         completionHandler()
     }
     
