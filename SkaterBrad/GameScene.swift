@@ -53,17 +53,26 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var bradDuckTexture = SKTexture(imageNamed: "duck.jpg")
     var bradJumpDownTexture = SKTexture(imageNamed: "jump2.jpg")
     
-    // Screen Buttons [Sam]
-    var playButton = SKSpriteNode(imageNamed: "playNow.png")
-    var menuButton = SKSpriteNode(imageNamed: "menu.png")
-    var backgroundMusicPlayer : AVAudioPlayer!
+    // Menu & Buttons
+    var soundOption: SoundNode?
+    var newGameMenu: NewGameNode?
+    var gameOverMenu: GameOverNode?
+    var showNewGameMenu = true
+    var showGameOverMenu = false
+    var playSound = true
     
+    // Game Over Screen
+    var gameOverLabel: SKLabelNode!
+    var screenDimmerNode : SKSpriteNode!
+    var replayButton : SKSpriteNode!
+   
     override func didMoveToView(view: SKView) {
         self.registerAppTransitionObservers()
-        self.playBackgroundMusic("music.mp3")
+//        self.playBackgroundMusic("music.mp3")
+        self.soundOption = SoundNode()
+        self.newGameMenu = NewGameNode(scene: self)
+        self.addChild(self.newGameMenu!)
         
-        self.createPlayButton()
-
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
@@ -86,6 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             bg.anchorPoint = CGPointZero
             bg.position = CGPoint(x: index * Int(bg.size.width), y: 110)
             bg.name = "background"
+            //bg.zPosition = 100
             self.addChild(bg)
         }
         
@@ -114,10 +124,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Physics Body Around Hero
         self.hero.physicsBody = SKPhysicsBody(rectangleOfSize: hero.size, center: CGPointMake(hero.frame.width / 2, hero.frame.height / 2))
-        self.hero.physicsBody?.dynamic = true
+        //self.hero.physicsBody?.dynamic = false
         self.hero.physicsBody?.allowsRotation = false
         self.hero.physicsBody?.categoryBitMask = UInt32(self.heroCategory)
         self.hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory) | UInt32(self.contactCategory) | UInt32(self.scoreCategory)
+        self.hero.physicsBody?.collisionBitMask = UInt32(self.groundCategory) | UInt32(self.obstacleCategory) | UInt32(self.contactCategory)
         self.addChild(hero)
         
         // Ground [Kevin/Tina]
@@ -133,7 +144,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Game Score [Kevin]
         self.scoreText.text = "0"
         self.scoreText.fontSize = 42
-        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
+        self.scoreText.color = UIColor.grayColor()
+        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + CGRectGetMidY(self.frame) / 1.5)
         self.scoreText.zPosition = 100
         self.addChild(self.scoreText)
     }
@@ -209,20 +221,103 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var touch = touches.anyObject() as UITouch
         var location = touch.locationInNode(self)
         
-        if self.nodeAtPoint(location) == self.playButton {
+        if self.showNewGameMenu == true {
+            self.newGameMenuTouches(touches)
+        }
+        
+        if self.showGameOverMenu == true {
+            self.gameOverMenuTouches(touches)
+        }
+        
+//        if self.nodeAtPoint(location) == self.playButton {
+//            self.runAction(SKAction.runBlock({ () -> Void in
+//                self.playButton.removeFromParent()
+//                self.playGame()
+//            }))
+//        }
+//        
+//        if self.nodeAtPoint(location) == self.menuButton {
+//            self.runAction(SKAction.runBlock({ () -> Void in
+//                self.menuButton.removeFromParent()
+//                self.restartGame()
+//            }))
+//        }
+    }
+    
+    // [Sam]
+    func newGameMenuTouches(touches: NSSet) {
+        
+        var touch = touches.anyObject() as UITouch
+        var location = touch.locationInNode(self.newGameMenu)
+        
+        println(" ")
+        println("playnow button zposition : \(self.newGameMenu?.playButton.zPosition)")
+        println("playnow button position x : \(self.newGameMenu?.playButton.position.x)")
+        println("playnow button position y : \(self.newGameMenu?.playButton.position.y)")
+        
+        println("node name : \(self.nodeAtPoint(location).name)")
+        println("node zposition : \(self.nodeAtPoint(location).zPosition)")
+        println("node position.x : \(self.nodeAtPoint(location).position.x)")
+        println("node position.y : \(self.nodeAtPoint(location).position.y)")
+        
+        println("tap location x : \(touch.locationInNode(self).x)")
+        println("tap location y : \(touch.locationInNode(self).y)")
+        
+        
+        if self.nodeAtPoint(location).name == "PlayNow" {
             self.runAction(SKAction.runBlock({ () -> Void in
-                self.playButton.removeFromParent()
-                self.playGame()
+                self.showNewGameMenu = false
+                self.showGameOverMenu = false
+                self.newGameMenu?.removeFromParent()
+                self.startSpawn()
             }))
         }
         
-        if self.nodeAtPoint(location) == self.menuButton {
-            self.runAction(SKAction.runBlock({ () -> Void in
-                self.menuButton.removeFromParent()
-                self.restartGame()
-            }))
+        if self.nodeAtPoint(location).name == "SoundOn" {
+            self.soundOption!.audioPlayer.stop()
+            self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.Off)
+        } else if self.nodeAtPoint(location).name == "SoundOff" {
+                self.soundOption!.audioPlayer.play()
+                self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
         }
     }
+    
+    // [Sam]
+    func gameOverMenuTouches(touches: NSSet) {
+        var touch = touches.anyObject() as UITouch
+        var location = touch.locationInNode(self)
+//        var location = touch.locationInNode(self.gameOverMenu)
+        
+        println(" ")
+        println("replay button zposition : \(self.replayButton.zPosition)")
+        println("replay button position x : \(self.replayButton.position.x)")
+        println("replay button position y : \(self.replayButton.position.y)")
+        
+//        println("replay button zposition : \(self.gameOverMenu?.replayButton.zPosition)")
+//        println("replay button position x : \(self.gameOverMenu?.replayButton.position.x)")
+//        println("replay button position y : \(self.gameOverMenu?.replayButton.position.y)")
+        
+        println("node name : \(self.nodeAtPoint(location).name)")
+        println("node zposition : \(self.nodeAtPoint(location).zPosition)")
+        println("node position.x : \(self.nodeAtPoint(location).position.x)")
+        println("node position.y : \(self.nodeAtPoint(location).position.y)")
+        
+        println("tap location x : \(touch.locationInNode(self).x)")
+        println("tap location y : \(touch.locationInNode(self).y)")
+        
+        if self.nodeAtPoint(location).name == "Replay" {
+                self.gameOverMenu?.removeFromParent()
+                self.restartGame()
+        }
+        
+//        if self.nodeAtPoint(location) == self.gameOverMenu?.replayButton {
+//            self.runAction(SKAction.runBlock({ () -> Void in
+//                self.gameOverMenu?.removeFromParent()
+//                self.restartGame()
+//            }))
+//        }
+    }
+    
     
     // MARK: - DID BEGIN CONTACT
     
@@ -255,7 +350,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.scoreText.text = String(self.score)
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
-            self.showGameOver()
+            self.endGame()
         default:
             println("Hero hit something...not given a category....should not happen....")
         }
@@ -318,14 +413,15 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(bench)
         
         let benchScoreContact = SKNode()
-        //benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
-        //benchScoreContact.color = SKColor.redColor()
+//        benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
+//        benchScoreContact.color = SKColor.redColor()
         benchScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
         benchScoreContact.zPosition = 105
         benchScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
         benchScoreContact.physicsBody?.dynamic = false
         benchScoreContact.physicsBody?.categoryBitMask = UInt32(self.scoreCategory)
         benchScoreContact.physicsBody?.node?.name = "benchScoreContact"
+        benchScoreContact.physicsBody?.collisionBitMask = 0
         vertical.addChild(benchScoreContact)
         
         let benchLoseContact = SKSpriteNode()
@@ -335,10 +431,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: bench.size.height))
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
-//        vertical.addChild(benchLoseContact)
-        
+        vertical.addChild(benchLoseContact)
     }
-    
     func spawnTrashcan() {
         var randX: Float = Float(arc4random_uniform(500) + 100)
         //var anotherFloat: Float = Float(randX)
@@ -474,7 +568,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func spawnCoin() {
         var randX = arc4random_uniform(100)
         self.coin
-        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 250)
+        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
         coin.size = CGSize(width: 30, height: 30)
         
         coin.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1 , height: 1))
@@ -491,68 +585,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - MENU SCREENS
     // [Sam]
     
-    func playBackgroundMusic(filename: String) {
-        let url = NSBundle.mainBundle().URLForResource(
-            filename, withExtension: nil)
-        if (url == nil) {
-            println("Could not find file: \(filename)")
-            return
-        }
+    func endGame() {
+        // stop audio
+        self.soundOption!.audioPlayer.stop()
         
-        var error: NSError? = nil
-        backgroundMusicPlayer =
-            AVAudioPlayer(contentsOfURL: url, error: &error)
-        if backgroundMusicPlayer == nil {
-            println("Could not create audio player: \(error!)")
-            return
-        }
-        
-        backgroundMusicPlayer.numberOfLoops = -1
-        backgroundMusicPlayer.prepareToPlay()
-        backgroundMusicPlayer.play()
-    }
-    
-    func createPlayButton() {
-        playButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 80)
-        playButton.zPosition = 5
-        self.addChild(self.playButton)
-    }
-    
-    func createMenuButton() {
-        menuButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30 )
-        menuButton.zPosition = 5
-        
-        self.addChild(self.menuButton)
-    }
-    
-    func showGameOver() {
-        backgroundMusicPlayer.stop()
+        // stop screen
         self.hero.physicsBody?.dynamic = false
         self.roadSpeed = 0
         self.backgroundSpeed = 0
         
-        self.createMenuButton()
+//        self.gameOverMenu = GameOverNode(scene: self)
+        self.generateGameOverScreen()
+        self.showGameOverMenu = true
+        self.showNewGameMenu = false
         
-        let label = SKLabelNode(fontNamed: "Chalkduster")
-        label.text = "Game Over"
-        label.fontSize = 40
-        label.fontColor = SKColor.blackColor()
-        label.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 100 )
-        addChild(label)
-        
-        let grayScreen = SKSpriteNode()
-        grayScreen.size = CGSize(width: CGRectGetMaxX(self.frame), height: CGRectGetMaxY(self.frame))
-        grayScreen.position = CGPointMake((CGRectGetMaxX(self.frame)/2),
-            CGRectGetMaxY(self.frame)/2)
-        grayScreen.color = SKColor.blackColor()
-        grayScreen.alpha = 0.5
-        
-        //brad soundbite [Tuan]
-        runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
-
-        self.addChild(grayScreen)
+        self.scene?.paused = true
     }
     
+    // [Sam]
     func restartGame() {
         self.roadSpeed = 5.0
         self.backgroundSpeed = 1.0
@@ -565,7 +615,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         skView.presentScene(scene)
     }
     
-    func playGame() {
+    // [Sam]
+    func startSpawn() {
+        
+        // hero physics starts
+        self.hero.physicsBody?.dynamic = true
+        
         // Obstacles Spawn, every 2 seconds [Brian/Kori]
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
@@ -580,6 +635,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.runAction(spawnThenDelayForever)
     }
     
+    // MARK: - APP TRANSITION OBSERVERS
+    
+    // [Sam]
     func registerAppTransitionObservers() {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
@@ -587,18 +645,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func applicationWillResignActive() {
-        backgroundMusicPlayer.stop()
+        self.soundOption!.audioPlayer.stop()
         self.scene?.paused = true
     }
     
     func applicationDidEnterBackground() {
-        backgroundMusicPlayer.stop()
+        self.soundOption!.audioPlayer.stop()
         self.scene?.paused = true
     }
     
     func applicationWillEnterForeground() {
         self.scene?.paused = false
-        backgroundMusicPlayer.play()
+        self.soundOption!.audioPlayer.play()
+    }
+    
+    func generateGameOverScreen() {
+        // screen dimmer node
+        self.screenDimmerNode = SKSpriteNode()
+        self.screenDimmerNode.size = CGSize(width: self.frame.width, height: self.frame.height)
+        self.screenDimmerNode.position = CGPointMake((CGRectGetMaxX(self.frame)/2), CGRectGetMaxY(self.frame)/2)
+        self.screenDimmerNode.color = SKColor.blackColor()
+        self.screenDimmerNode.alpha = 0.5
+        //self.zPosition = 100
+        self.addChild(self.screenDimmerNode)
+        
+        // game over label
+        self.gameOverLabel = SKLabelNode(text: "Game Over")
+        self.gameOverLabel.fontName = "Chalkduster"
+        self.gameOverLabel.fontSize = 40
+        self.gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 100 )
+        self.addChild(self.gameOverLabel)
+        
+        // reply button
+        self.replayButton = SKSpriteNode(imageNamed: "replay")
+        self.replayButton.name = "Replay"
+        self.replayButton.size = CGSize(width: 60.0, height: 60.0)
+        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + 30)
+        self.replayButton.zPosition = 200
+        self.addChild(self.replayButton)
     }
 
 }
