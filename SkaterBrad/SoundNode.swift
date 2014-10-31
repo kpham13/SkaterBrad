@@ -23,7 +23,7 @@ class SoundNode : SKNode {
         AVAudioSession.sharedInstance().setActive(true, error: nil)
         self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
         self.audioPlayer.numberOfLoops = 100 // Continuous play of background music [Kevin/Tuan]
-        self.audioPlayer.volume = 0.2 // Adjusts background music volume [Kevin]
+        self.audioPlayer.volume = 0.1 // Adjusts background music volume [Kevin]
         self.audioPlayer.prepareToPlay()
         self.audioPlayer.play()
     }

@@ -316,8 +316,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 //            }))
 //        }
     }
-    
-    
+
     // MARK: - DID BEGIN CONTACT
     
     func didBeginContact(contact: SKPhysicsContact) {
@@ -429,10 +428,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(benchScoreContact)
         
         let benchLoseContact = SKSpriteNode()
-        benchLoseContact.size = CGSize(width: 1, height: bench.size.height)
-        benchLoseContact.color = SKColor.blackColor() // Delete later
-        benchLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - bench.size.width / 2, self.roadSize!.height + bench.size.height / 2)
-        benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: bench.size.height))
+        benchLoseContact.size = CGSize(width: 2, height: bench.size.height * 0.6)
+        benchLoseContact.color = SKColor.redColor() // Delete later
+        benchLoseContact.anchorPoint = CGPointMake(0.5, 0)
+        benchLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - bench.size.width / 2, self.roadSize!.height)
+        benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: bench.size.height * 0.6))
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(benchLoseContact)
@@ -452,7 +452,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashCan.size = CGSize(width: 35, height: 40)
         trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), (self.roadSize!.height + (trashCan.size.height / 2)))
         trashCan.zPosition = 110
-        trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 35, height: 40))
+        trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 40))
         trashCan.physicsBody?.dynamic = false
         trashCan.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         trashCan.physicsBody?.node?.name = "trashCan"
@@ -470,13 +470,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(trashScoreContact)
         
         let trashLoseContact = SKSpriteNode()
-        trashLoseContact.size = CGSize(width: 1, height: trashCan.size.height)
-        trashLoseContact.color = SKColor.blackColor() // Delete Later
-        trashLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - trashCan.size.width / 2, self.roadSize!.height + trashCan.size.height / 2 - 0.5) //edited by brian 10/30/2014 10:40pm
-        trashLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: trashCan.size.height))
+        trashLoseContact.size = CGSize(width: 1, height: trashCan.size.height / 2)
+        trashLoseContact.color = SKColor.redColor() // Delete Later
+        trashLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - trashCan.size.width / 4, self.roadSize!.height + trashCan.size.height / 2 - 0.5) //edited by brian 10/30/2014 10:40pm
+        trashLoseContact.zPosition = 200
+        trashLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: trashCan.size.height / 2))
         trashLoseContact.physicsBody?.dynamic = false
         trashLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
-//        vertical.addChild(trashLoseContact)
+        vertical.addChild(trashLoseContact)
     }
     
     func spawnCrane(){
@@ -493,7 +494,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         chain.size = CGSize(width: 10, height: 350)
         chain.anchorPoint = CGPointMake(0.5, 1.0)
         chain.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMaxY(self.frame))
-        chain.zPosition = 110
+        chain.zPosition = -5
         vertical.addChild(chain)
         
         let craneHook = SKSpriteNode(imageNamed: "crane.gif")
@@ -511,9 +512,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         beem.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMaxY(self.frame) - chain.size.height - craneHook.size.height * 0.70)
         beem.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 250, height: 30))
         beem.physicsBody?.dynamic = false
+        beem.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        
+        let beemLoseContact = SKSpriteNode()
+        beemLoseContact.size = CGSize(width: 1, height: beem.size.height / 2)
+        beemLoseContact.color = SKColor.redColor()
+        beemLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - (beem.size.width / 2.1), CGRectGetMaxY(self.frame) - chain.size.height - craneHook.size.height * 0.70)
+        beemLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: beem.size.height / 2))
+        beemLoseContact.physicsBody?.dynamic = false
+        beemLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
+        
+        
+        /*
+        let trashLoseContact = SKSpriteNode()
+        trashLoseContact.size = CGSize(width: 1, height: trashCan.size.height / 2)
+        trashLoseContact.color = SKColor.redColor() // Delete Later
+        trashLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - trashCan.size.width / 4, self.roadSize!.height + trashCan.size.height / 2 - 0.5) //edited by brian 10/30/2014 10:40pm
+        trashLoseContact.zPosition = 200
+        trashLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: trashCan.size.height / 2))
+        trashLoseContact.physicsBody?.dynamic = false
+        trashLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
+        vertical.addChild(trashLoseContact)
+        */
         
         if randX < 300 {
             vertical.addChild(beem)
+            vertical.addChild(beemLoseContact)
         } else {
             
         }
@@ -541,12 +565,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let pylon = SKSpriteNode(imageNamed: "pylon.gif")
         pylon.size = CGSize(width: 25, height: 35)
-        pylon.position = CGPointMake(CGRectGetMidX(self.frame) + CGFloat(randX), (self.roadSize!.height) + pylon.size.height / 2)
+        pylon.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), (self.roadSize!.height) + pylon.size.height / 2)
         pylon.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 25, height: 35))
         pylon.physicsBody?.dynamic = false
         pylon.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-        pylon.physicsBody?.node?.name = "trashCan"
-        
+        //pylon.physicsBody?.node?.name = "trashCan"
         vertical.addChild(pylon)
         
         let pylonScoreContact = SKNode()
@@ -559,10 +582,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(pylonScoreContact)
         
         let pylonLoseContact = SKSpriteNode()
-        pylonLoseContact.size = CGSize(width: 1, height: pylon.size.height)
-        pylonLoseContact.color = SKColor.blackColor() // Delete Later
+        pylonLoseContact.size = CGSize(width: 1, height: pylon.size.height / 2)
+        pylonLoseContact.color = SKColor.redColor() // Delete Later
         pylonLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - pylon.size.width / 2, self.roadSize!.height + pylon.size.height / 2)
-        pylonLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: pylon.size.height))
+        pylonLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: pylon.size.height / 2))
         pylonLoseContact.physicsBody?.dynamic = false
         pylonLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(pylonLoseContact)
@@ -638,7 +661,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let craneHook = SKAction.runBlock({() in self.spawnCrane()})
         let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-        let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench,delay,spawnPylon,delay, spawnTrashcan,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
+        let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench, delay, spawnPylon, delay, spawnTrashcan, spawnTrashcan, delay, delay, craneHook, delay, spawnTrashcan])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         
         self.runAction(spawnThenDelayForever, withKey: "startSpawn")
