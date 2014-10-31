@@ -335,7 +335,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: bench.size.height))
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
-//        vertical.addChild(benchLoseContact)
+        vertical.addChild(benchLoseContact)
     }
     
     func spawnTrashcan() {
@@ -431,10 +431,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(craneScoreContact)
     }
     
-
-    
-    
-    
     func spawnPylon() {
         
         var randX = arc4random_uniform(300) + 2
@@ -455,14 +451,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(pylon)
         
         let pylonScoreContact = SKNode()
-        //trashScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
-        //trashScoreContact.color = SKColor.blueColor()
         pylonScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
         pylonScoreContact.zPosition = 105
         pylonScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
         pylonScoreContact.physicsBody?.dynamic = false
         pylonScoreContact.physicsBody?.categoryBitMask = UInt32(self.scoreCategory)
-        pylonScoreContact.physicsBody?.node?.name = "trashScoreContact"
+        pylonScoreContact.physicsBody?.node?.name = "pylonScoreContact"
         vertical.addChild(pylonScoreContact)
         
         let pylonLoseContact = SKSpriteNode()
@@ -473,16 +467,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pylonLoseContact.physicsBody?.dynamic = false
         pylonLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(pylonLoseContact)
-        
-        
-        
     }
-    
-    
-    
-    
-    
-    
     
     // Spawn coin [Tuan]
     func spawnCoin() {
@@ -614,5 +599,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.scene?.paused = false
         backgroundMusicPlayer.play()
     }
-    
+
 }
