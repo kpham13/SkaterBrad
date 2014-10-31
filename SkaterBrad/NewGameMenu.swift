@@ -44,7 +44,7 @@ class NewGameNode: SKNode {
         self.soundOnButton.yScale = 0.40
         self.soundOnButton.zPosition = 2.0
         self.addChild(self.soundOnButton)
-        
+        //
         // sound off button
         self.soundOffButton = SKSpriteNode(imageNamed: "SoundOff")
         self.soundOffButton.position = CGPoint(x: CGRectGetMaxX(scene.frame) - self.soundOffButton.frame.width, y: CGRectGetMaxY(scene.frame) - self.soundOffButton.frame.height / 2)
