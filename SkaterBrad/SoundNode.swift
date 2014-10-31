@@ -13,7 +13,7 @@ import AVFoundation
 class SoundNode : SKNode {
     
     var audioPlayer : AVAudioPlayer! = nil
-    let backgoundMusicFile = "bgMusic"
+    let backgoundMusicFile = "music"
     
     override init() {
         super.init()
@@ -24,6 +24,8 @@ class SoundNode : SKNode {
         self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
         self.audioPlayer.prepareToPlay()
         self.audioPlayer.play()
+        self.audioPlayer.numberOfLoops = 100
+        
     }
 
     required init?(coder aDecoder: NSCoder) {
