@@ -590,23 +590,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Obstacles Spawn [Brian/Kori]
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
-        var spawnThenDelay = SKAction()
+        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
         // Coin [Tuan]
         let spawnCoin = SKAction.runBlock({() in self.spawnCoin()})
-        
-        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
-        let delay = SKAction.waitForDuration(NSTimeInterval(rand))
       
-      switch rand {
-      case 1:
-        spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench, delay, spawnTrashcan,spawnTrashcan, delay, delay, craneHook])
-      case 2:
-        spawnThenDelay = SKAction.sequence([spawnTrashcan, delay, spawnTrashcan ,spawnBench, delay,spawnCoin, spawnTrashcan, delay, spawnCoin, craneHook])
-      case 3:
-        spawnThenDelay = SKAction.sequence([craneHook, delay, spawnTrashcan, delay, spawnTrashcan,spawnTrashcan,delay, delay, craneHook])
-      default:
-        spawnThenDelay = SKAction.sequence([spawnTrashcan, delay, spawnTrashcan, delay, spawnTrashcan,craneHook, delay, spawnBench, delay, craneHook])
-      }
+        let delay = SKAction.waitForDuration(NSTimeInterval(rand))
+        let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench, delay, spawnTrashcan, delay, spawnTrashcan, delay, delay, craneHook])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         
         self.runAction(spawnThenDelayForever, withKey: "startSpawn")
