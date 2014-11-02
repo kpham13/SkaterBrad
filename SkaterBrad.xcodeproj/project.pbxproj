@@ -15,6 +15,7 @@
 		0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C119FEE4F500D697D8 /* Images.xcassets */; };
 		0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */; };
 		0A5479D119FEE4F500D697D8 /* SkaterBradTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */; };
+		0AAE9D191A0609B4007BAC6B /* TrashCan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE9D181A0609B4007BAC6B /* TrashCan.swift */; };
 		45134F821A040E7D00EB0CA3 /* bench.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45134F811A040E7D00EB0CA3 /* bench.gif */; };
 		45134F841A040ED900EB0CA3 /* steelBeam.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45134F831A040ED900EB0CA3 /* steelBeam.gif */; };
 		45367B871A030F7C00A2CE4E /* crane.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45367B861A030F7C00A2CE4E /* crane.gif */; };
@@ -80,6 +81,7 @@
 		0A5479CA19FEE4F500D697D8 /* SkaterBradTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkaterBradTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkaterBradTests.swift; sourceTree = "<group>"; };
+		0AAE9D181A0609B4007BAC6B /* TrashCan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrashCan.swift; sourceTree = "<group>"; };
 		45134F811A040E7D00EB0CA3 /* bench.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = bench.gif; sourceTree = "<group>"; };
 		45134F831A040ED900EB0CA3 /* steelBeam.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = steelBeam.gif; sourceTree = "<group>"; };
 		45367B861A030F7C00A2CE4E /* crane.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = crane.gif; sourceTree = "<group>"; };
@@ -167,6 +169,7 @@
 				52AF41331A032AE7000F5687 /* GameOverMenu.swift */,
 				52AF41341A032AE7000F5687 /* SoundNode.swift */,
 				0A5479BA19FEE4F500D697D8 /* GameScene.swift */,
+				0AAE9D181A0609B4007BAC6B /* TrashCan.swift */,
 				0A5479B619FEE4F500D697D8 /* AppDelegate.swift */,
 				0A5479BC19FEE4F500D697D8 /* GameViewController.swift */,
 				0A5479BE19FEE4F500D697D8 /* Main.storyboard */,
@@ -393,6 +396,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A5479BB19FEE4F500D697D8 /* GameScene.swift in Sources */,
+				0AAE9D191A0609B4007BAC6B /* TrashCan.swift in Sources */,
 				52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */,
 				0A5479BD19FEE4F500D697D8 /* GameViewController.swift in Sources */,
 				52AF41351A032AE7000F5687 /* NewGameMenu.swift in Sources */,
