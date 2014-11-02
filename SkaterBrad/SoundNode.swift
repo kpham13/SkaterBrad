@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import AVFoundation
 
-class SoundNode : SKNode {
+class SoundNode: SKNode {
     
     var audioPlayer : AVAudioPlayer! = nil
     let backgoundMusicFile = "music"

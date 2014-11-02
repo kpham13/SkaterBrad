@@ -18,7 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
-    var roadSpeed : CGFloat = 6.0 // 6.0
+    var roadSpeed : CGFloat = 3.0 // 6.0
     var roadSize : CGSize?
     
     // Score [Kevin]
@@ -752,6 +752,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.gameOverLabel.fontName = "Chalkduster"
         self.gameOverLabel.fontSize = 40
         self.gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.7)
+        self.gameOverLabel.zPosition = 200
         self.addChild(self.gameOverLabel)
         
         // reply button
