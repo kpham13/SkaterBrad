@@ -10,7 +10,7 @@ import UIKit
 import SpriteKit
 import AVFoundation
 
-class SoundNode : SKNode {
+class SoundNode: SKNode {
     
     var audioPlayer : AVAudioPlayer! = nil
     let backgoundMusicFile = "music"
@@ -22,10 +22,10 @@ class SoundNode : SKNode {
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         AVAudioSession.sharedInstance().setActive(true, error: nil)
         self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
+        self.audioPlayer.numberOfLoops = 100 // Continuous play of background music [Kevin/Tuan]
+        self.audioPlayer.volume = 0.1 // Adjusts background music volume [Kevin]
         self.audioPlayer.prepareToPlay()
         self.audioPlayer.play()
-        self.audioPlayer.numberOfLoops = 100
-        
     }
 
     required init?(coder aDecoder: NSCoder) {
