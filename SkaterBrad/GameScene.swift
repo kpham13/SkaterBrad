@@ -634,7 +634,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         let craneHook = SKAction.runBlock({() in self.spawnCrane()})
         let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-        let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench,delay,spawnPylon,delay, spawnTrashcan,spawnTrashcan,delay, delay, craneHook, spawnTrashcan])
+        let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench,delay,spawnPylon,delay, spawnTrashcan,spawnTrashcan,delay, delay, craneHook, delay, spawnTrashcan])
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         
         self.runAction(spawnThenDelayForever, withKey: "startSpawn")
