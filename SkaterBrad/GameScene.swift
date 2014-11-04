@@ -18,7 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
-    var roadSpeed : CGFloat = 3.0 // 6.0
+    var roadSpeed : CGFloat = 9.0 // 6.0
     var roadSize : CGSize?
     
     // Score [Kevin]
@@ -34,7 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var jumpMode = false
     
     // Coin spritenode [Tuan]
-    let coin = SKSpriteNode(imageNamed: "taco.gif")
+   // let coin = SKSpriteNode(imageNamed: "taco.gif")
     
     // Duck Properties
     var duckMode = false
@@ -98,7 +98,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.addGestureRecognizer(swipeDownRecognizer)
         
         
-        // self.addChild(obst2)
+      // self.addChild(obst2)
         
         // Physics - Setting Gravity to Game World
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
@@ -366,8 +366,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
             self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.coinCategory):
+          // calls function that removes coin on contact
+            if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+              heroDidCollideWithCoin(contact.bodyB.node as SKSpriteNode, hero: contact.bodyA.node as SKSpriteNode)
+            }
+
             println("CHA CHING")
-            self.coin.removeFromParent()
+            //self.coin.removeFromParent()
             let ranNum = arc4random_uniform(UInt32(3))
             if ranNum == 0 {
                 runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
@@ -558,8 +563,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         craneHook.zPosition = -5
         craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 40, height: 60))
         craneHook.physicsBody?.dynamic = false
-//        craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-//        vertical.addChild(craneHook)
+        craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        // vertical.addChild(craneHook) - delete if using conditional addChild below
         
         let beem = SKSpriteNode(imageNamed: "steelBeam.gif")
         beem.zPosition = 112
@@ -636,7 +641,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
       //cxcxszZz'iuy tresvertical.addChild(pylonLoseContact)
     }
     
-    // Spawn coin [Tuan]
+    // Spawn coin [Tuan] - edited by [Kori-Brian]
     func spawnCoin() {
       //var randX = arc4random_uniform(100)
         
@@ -653,7 +658,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.name = "coin"
         addChild(coin)
     }
-    
+ 
+    //removing coin when hero collides - [Kori-Brian]
+    func heroDidCollideWithCoin(coin: SKSpriteNode, hero:SKSpriteNode) {
+        println("Hit-coin")
+        coin.removeFromParent()
+      }
+
     // MARK: - MENU SCREENS
     // [Sam]
     
@@ -695,14 +706,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // [Sam]
     func startSpawn() {
-        var rand = Float(arc4random_uniform(3) + 1)
+        var rand = Float(arc4random_uniform(2) + 1)
         // hero physics starts
         self.hero.physicsBody?.dynamic = true
         
         // Obstacles Spawn [Brian/Kori]
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
+        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
         let spawnPylon = SKAction.runBlock({() in self.spawnPylon()})
+        var obstacleArray = [SKAction]()
         // Coin [Tuan]
         let spawnCoin = SKAction.runBlock({() in self.spawnCoin()})
         
