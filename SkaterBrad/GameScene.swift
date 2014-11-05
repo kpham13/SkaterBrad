@@ -720,7 +720,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Coin [Tuan]
         let spawnCoin = SKAction.runBlock({() in self.spawnCoin()})
         var delay = SKAction.waitForDuration(NSTimeInterval(rand))
-        var craneDelay = SKAction.waitForDuration(NSTimeInterval(1))
+        var craneDelay = SKAction.waitForDuration(NSTimeInterval(2))
 
       
       
