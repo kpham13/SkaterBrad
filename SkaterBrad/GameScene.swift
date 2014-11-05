@@ -18,7 +18,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // Background Movement [Tina]
     var backgroundSpeed : CGFloat = 1.0
-    var roadSpeed : CGFloat = 9.0 // 6.0
+    var roadSpeed : CGFloat = 3.0 // 6.0
     var roadSize : CGSize?
     
     // Score [Kevin]
@@ -494,10 +494,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: bench.size.height * 0.6))
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
-      //vertical.addChild(benchLoseContact)
+        vertical.addChild(benchLoseContact)
     }
     func spawnTrashcan() {
-      //var randX: Float = 1.0
+      // var randX: Float = 1.0
       //Float(arc4random_uniform(500) + 100)
         //var anotherFloat: Float = Float(randX)
         
@@ -537,11 +537,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         trashLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: trashCan.size.height / 2))
         trashLoseContact.physicsBody?.dynamic = false
         trashLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
-      //vertical.addChild(trashLoseContact)
+        vertical.addChild(trashLoseContact)
     }
     
     func spawnCrane(){
-      var randX = Float(arc4random_uniform(300) + 1)
+      var randX = Float(arc4random_uniform(600) + 1)
         // Vertical Nodes for Game Score [Kevin]
         let vertical = SKNode()
         vertical.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 0)
@@ -582,11 +582,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         beemLoseContact.physicsBody?.dynamic = false
         beemLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
 
-        if randX < 150 {
+        if randX < 300 {
             craneHook.physicsBody?.categoryBitMask = UInt32(self.hookCategory)
             vertical.addChild(craneHook)
             vertical.addChild(beem)
-          //vertical.addChild(beemLoseContact)
+            vertical.addChild(beemLoseContact)
         } else {
             craneHook.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
             vertical.addChild(craneHook)
@@ -638,13 +638,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         pylonLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: pylon.size.height / 2))
         pylonLoseContact.physicsBody?.dynamic = false
         pylonLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
-      //cxcxszZz'iuy tresvertical.addChild(pylonLoseContact)
+        vertical.addChild(pylonLoseContact)
     }
     
     // Spawn coin [Tuan] - edited by [Kori-Brian]
     func spawnCoin() {
-      //var randX = arc4random_uniform(100)
-        
+        //var randX = arc4random_uniform(100)
+        let coin = SKSpriteNode(imageNamed: "taco.gif")
+
         coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
         coin.size = CGSize(width: 30, height: 30)
         
@@ -718,10 +719,46 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var obstacleArray = [SKAction]()
         // Coin [Tuan]
         let spawnCoin = SKAction.runBlock({() in self.spawnCoin()})
-        
-        let craneHook = SKAction.runBlock({() in self.spawnCrane()})
-        let delay = SKAction.waitForDuration(NSTimeInterval(0.75))
-        let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench, delay, spawnPylon, delay, spawnTrashcan, spawnTrashcan, delay, delay, craneHook, delay, spawnTrashcan])
+        var delay = SKAction.waitForDuration(NSTimeInterval(rand))
+        var craneDelay = SKAction.waitForDuration(NSTimeInterval(1))
+
+      
+      
+      
+      
+      
+        for var i = 0; i < 30; i++ {
+          var rand = Float(arc4random_uniform(5) + 1)
+          println(rand)
+          switch rand {
+          case 1:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnBench)
+          case 2:
+            obstacleArray.append(craneDelay)
+            obstacleArray.append(craneHook)
+            obstacleArray.append(craneDelay)
+          case 3:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnPylon)
+          case 4:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnTrashcan)
+          case 5:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnCoin)
+          default:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnCoin)
+          }
+        }
+      
+      
+      
+      
+      
+      
+        let spawnThenDelay = SKAction.sequence(obstacleArray)
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         
         self.runAction(spawnThenDelayForever, withKey: "startSpawn")
