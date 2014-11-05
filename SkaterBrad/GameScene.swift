@@ -563,7 +563,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         craneHook.zPosition = -5
         craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 40, height: 60))
         craneHook.physicsBody?.dynamic = false
-        craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        //craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         // vertical.addChild(craneHook) - delete if using conditional addChild below
         
         let beem = SKSpriteNode(imageNamed: "steelBeam.gif")
