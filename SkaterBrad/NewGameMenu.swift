@@ -20,13 +20,20 @@ class NewGameNode: SKNode {
     var soundOnButton: SKSpriteNode!
     var soundOffButton: SKSpriteNode!
     
-    init(scene: SKScene) {
+    init(scene: SKScene, playSound: Bool) {
         super.init()
-        
+
         self.titleLabel = SKLabelNode(text: "SkaterBrad")
         self.titleLabel.fontName = "Chalkduster"
         self.titleLabel.fontSize = 40
-        self.titleLabel.position = CGPointMake(CGRectGetMidX(scene.frame), scene.frame.size.height * 0.7)
+        self.titleLabel.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMaxY(scene.frame) - 90)
+        self.titleLabel.zPosition = 5
+        self.addChild(self.titleLabel)
+        
+        self.titleLabel = SKLabelNode(text: "Swipe to jump")
+        self.titleLabel.fontName = "Chalkduster"
+        self.titleLabel.fontSize = 28
+        self.titleLabel.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMaxY(scene.frame) - 250)
         self.titleLabel.zPosition = 5
         self.addChild(self.titleLabel)
         
@@ -44,7 +51,7 @@ class NewGameNode: SKNode {
         self.soundOnButton.xScale = 0.40
         self.soundOnButton.yScale = 0.40
         self.soundOnButton.zPosition = 2.0
-        self.addChild(self.soundOnButton)
+        
         //
         // sound off button
         self.soundOffButton = SKSpriteNode(imageNamed: "SoundOff")
@@ -53,7 +60,14 @@ class NewGameNode: SKNode {
         self.soundOffButton.xScale = 0.40
         self.soundOffButton.yScale = 0.40
         self.soundOffButton.zPosition = 2.0
-        //self.addChild(self.soundOffButton)
+        
+        if playSound == true  {
+            self.addChild(self.soundOnButton)
+        } else {
+            self.addChild(self.soundOffButton)
+        }
+
+        
         
     }
 
