@@ -83,11 +83,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
         self.registerAppTransitionObservers()
-//        self.playBackgroundMusic("music.mp3")
-        self.soundOption = SoundNode()
-        self.newGameMenu = NewGameNode(scene: self)
-        self.addChild(self.newGameMenu!)
         
+        self.soundOption = SoundNode(playSound: self.playSound)
+        self.newGameMenu = NewGameNode(scene: self, playSound: self.playSound)
+    
+        self.addChild(self.newGameMenu!)
+
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
@@ -296,11 +297,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if self.nodeAtPoint(location).name == "SoundOn" {
+            self.playSound = false
             self.soundOption!.audioPlayer.stop()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.Off)
         } else if self.nodeAtPoint(location).name == "SoundOff" {
-                self.soundOption!.audioPlayer.play()
-                self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
+            self.playSound = true
+            self.soundOption!.audioPlayer.play()
+            self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
         }
     }
     
@@ -373,29 +376,37 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
 
             println("CHA CHING")
             //self.coin.removeFromParent()
-            let ranNum = arc4random_uniform(UInt32(3))
-            if ranNum == 0 {
-                runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
+            
+            if self.playSound == true {
+                let ranNum = arc4random_uniform(UInt32(3))
+                if ranNum == 0 {
+                    runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
+                }
+                else if ranNum == 1 {
+                    runAction(SKAction.playSoundFileNamed("Goseahawks.wav", waitForCompletion: false))
+                }
+                else if ranNum == 2 {
+                    runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
+                }
             }
-            else if ranNum == 1 {
-                runAction(SKAction.playSoundFileNamed("Goseahawks.wav", waitForCompletion: false))
-            }
-            else if ranNum == 2 {
-                runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
-            }
+            
             self.score += 10
             self.scoreText.text = String(self.score)
             self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
             self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
-            let ranNum = arc4random_uniform(UInt32(2))
-            if ranNum == 0 {
-                runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
+            
+            if self.playSound == true {
+                let ranNum = arc4random_uniform(UInt32(2))
+                if ranNum == 0 {
+                    runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
+                }
+                else if ranNum == 1 {
+                    runAction(SKAction.playSoundFileNamed("5MinuteWaterBreak.mp3", waitForCompletion: false))
+                }
             }
-            else if ranNum == 1 {
-                runAction(SKAction.playSoundFileNamed("5MinuteWaterBreak.mp3", waitForCompletion: false))
-            }
+
             self.fallMode = true
             self.endGame()
         default:
@@ -698,11 +709,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundSpeed = 1.0
         
         var scene = GameScene(size: self.size)
+
         let skView = self.view! as SKView
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .ResizeFill
         scene.size = skView.bounds.size
+        scene.playSound = self.playSound
         skView.presentScene(scene)
+
     }
     
     // [Sam]
