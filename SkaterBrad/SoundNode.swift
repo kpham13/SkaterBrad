@@ -13,9 +13,10 @@ import AVFoundation
 class SoundNode: SKNode {
     
     var audioPlayer : AVAudioPlayer! = nil
+    var playSound = true
     let backgoundMusicFile = "music"
     
-    override init() {
+    init(playSound : Bool) {
         super.init()
         self.audioPlayer = AVAudioPlayer()
         var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(self.backgoundMusicFile, ofType: "mp3")!)
@@ -24,8 +25,13 @@ class SoundNode: SKNode {
         self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
         self.audioPlayer.numberOfLoops = 100 // Continuous play of background music [Kevin/Tuan]
         self.audioPlayer.volume = 0.1 // Adjusts background music volume [Kevin]
-        self.audioPlayer.prepareToPlay()
-        self.audioPlayer.play()
+        
+        self.playSound = playSound
+        
+        if self.playSound {
+            self.audioPlayer.prepareToPlay()
+            self.audioPlayer.play()
+        }
     }
 
     required init?(coder aDecoder: NSCoder) {

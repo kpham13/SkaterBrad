@@ -34,7 +34,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var jumpMode = false
     
     // Coin spritenode [Tuan]
-    let coin = SKSpriteNode(imageNamed: "taco.gif")
+   // let coin = SKSpriteNode(imageNamed: "taco.gif")
     
     // Duck Properties
     var duckMode = false
@@ -83,11 +83,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
         self.registerAppTransitionObservers()
-//        self.playBackgroundMusic("music.mp3")
-        self.soundOption = SoundNode()
-        self.newGameMenu = NewGameNode(scene: self)
-        self.addChild(self.newGameMenu!)
         
+        self.soundOption = SoundNode(playSound: self.playSound)
+        self.newGameMenu = NewGameNode(scene: self, playSound: self.playSound)
+    
+        self.addChild(self.newGameMenu!)
+
         // Swipe Recognizer Setup [Tuan/Vincent]
         var swipeUpRecognizer = UISwipeGestureRecognizer(target: self, action: "swipeUpAction:")
         swipeUpRecognizer.direction = UISwipeGestureRecognizerDirection.Up
@@ -98,7 +99,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.view?.addGestureRecognizer(swipeDownRecognizer)
         
         
-        // self.addChild(obst2)
+      // self.addChild(obst2)
         
         // Physics - Setting Gravity to Game World
         self.physicsWorld.gravity = CGVectorMake(0.0, -9.8)
@@ -296,11 +297,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if self.nodeAtPoint(location).name == "SoundOn" {
+            self.playSound = false
             self.soundOption!.audioPlayer.stop()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.Off)
         } else if self.nodeAtPoint(location).name == "SoundOff" {
-                self.soundOption!.audioPlayer.play()
-                self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
+            self.playSound = true
+            self.soundOption!.audioPlayer.play()
+            self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
         }
     }
     
@@ -366,31 +369,44 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
             self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.coinCategory):
+          // calls function that removes coin on contact
+            if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
+              heroDidCollideWithCoin(contact.bodyB.node as SKSpriteNode, hero: contact.bodyA.node as SKSpriteNode)
+            }
+
             println("CHA CHING")
-            self.coin.removeFromParent()
-            let ranNum = arc4random_uniform(UInt32(3))
-            if ranNum == 0 {
-                runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
+            //self.coin.removeFromParent()
+            
+            if self.playSound == true {
+                let ranNum = arc4random_uniform(UInt32(3))
+                if ranNum == 0 {
+                    runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
+                }
+                else if ranNum == 1 {
+                    runAction(SKAction.playSoundFileNamed("Goseahawks.wav", waitForCompletion: false))
+                }
+                else if ranNum == 2 {
+                    runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
+                }
             }
-            else if ranNum == 1 {
-                runAction(SKAction.playSoundFileNamed("Goseahawks.wav", waitForCompletion: false))
-            }
-            else if ranNum == 2 {
-                runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
-            }
+            
             self.score += 10
             self.scoreText.text = String(self.score)
             self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
             self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
-            let ranNum = arc4random_uniform(UInt32(2))
-            if ranNum == 0 {
-                runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
+            
+            if self.playSound == true {
+                let ranNum = arc4random_uniform(UInt32(2))
+                if ranNum == 0 {
+                    runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
+                }
+                else if ranNum == 1 {
+                    runAction(SKAction.playSoundFileNamed("5MinuteWaterBreak.mp3", waitForCompletion: false))
+                }
             }
-            else if ranNum == 1 {
-                runAction(SKAction.playSoundFileNamed("5MinuteWaterBreak.mp3", waitForCompletion: false))
-            }
+
             self.fallMode = true
             self.endGame()
         default:
@@ -447,19 +463,21 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // [Brian/Kori]
     
     func spawnBench(){
-        var randX: Float = Float(arc4random_uniform(300) + 1)
+      //var randX: Float = 1.0
+      //Float(arc4random_uniform(300) + 1)
+
         //var anotherFloat: Float = Float(randX)
         
         // Vertical Nodes for Game Score [Kevin]
         let vertical = SKNode()
-        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 0)
+        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 0)
         vertical.zPosition = 100
         vertical.name = "vertical"
         self.addChild(vertical)
         
         let bench = SKSpriteNode(imageNamed: "bench.gif")
         bench.size = CGSize(width: 105, height: 60)
-        bench.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), (self.roadSize!.height + (bench.size.height * 0.3)))
+        bench.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height + (bench.size.height * 0.3)))
         bench.zPosition = 110
         bench.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 105, height: 58))
         bench.physicsBody?.dynamic = false
@@ -470,7 +488,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let benchScoreContact = SKNode()
 //        benchScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
 //        benchScoreContact.color = SKColor.redColor()
-        benchScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
+        benchScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMidY(self.frame))
         benchScoreContact.zPosition = 105
         benchScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
         benchScoreContact.physicsBody?.dynamic = false
@@ -483,26 +501,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         benchLoseContact.size = CGSize(width: 2, height: bench.size.height * 0.6)
         //benchLoseContact.color = SKColor.redColor() // Delete later
         benchLoseContact.anchorPoint = CGPointMake(0.5, 0)
-        benchLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - bench.size.width / 2, self.roadSize!.height)
+        benchLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/ - bench.size.width / 2, self.roadSize!.height)
         benchLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: bench.size.height * 0.6))
         benchLoseContact.physicsBody?.dynamic = false
         benchLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(benchLoseContact)
     }
     func spawnTrashcan() {
-        var randX: Float = Float(arc4random_uniform(500) + 100)
+      // var randX: Float = 1.0
+      //Float(arc4random_uniform(500) + 100)
         //var anotherFloat: Float = Float(randX)
         
         // Vertical Nodes for Game Score [Kevin]
         let vertical = SKNode()
-        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 0)
+        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 0)
         vertical.zPosition = 100
         vertical.name = "vertical"
         self.addChild(vertical)
 
         let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
         trashCan.size = CGSize(width: 35, height: 40)
-        trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), (self.roadSize!.height + (trashCan.size.height / 2)))
+        trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height + (trashCan.size.height / 2)))
         trashCan.zPosition = 110
         trashCan.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 30, height: 40))
         trashCan.physicsBody?.dynamic = false
@@ -513,7 +532,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let trashScoreContact = SKNode()
         //trashScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
         //trashScoreContact.color = SKColor.blueColor()
-        trashScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
+        trashScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMidY(self.frame))
         trashScoreContact.zPosition = 105
         trashScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
         trashScoreContact.physicsBody?.dynamic = false
@@ -524,7 +543,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let trashLoseContact = SKSpriteNode()
         trashLoseContact.size = CGSize(width: 1, height: trashCan.size.height / 2)
         //trashLoseContact.color = SKColor.redColor() // Delete Later
-        trashLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - trashCan.size.width / 4, self.roadSize!.height + trashCan.size.height / 2 - 0.5) //edited by brian 10/30/2014 10:40pm
+        trashLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/ - trashCan.size.width / 4, self.roadSize!.height + trashCan.size.height / 2 - 0.5) //edited by brian 10/30/2014 10:40pm
         trashLoseContact.zPosition = 200
         trashLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: trashCan.size.height / 2))
         trashLoseContact.physicsBody?.dynamic = false
@@ -533,11 +552,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func spawnCrane(){
-        var randX = arc4random_uniform(300) + 100
-        
+      var randX = Float(arc4random_uniform(600) + 1)
         // Vertical Nodes for Game Score [Kevin]
         let vertical = SKNode()
-        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 0)
+        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 0)
         vertical.zPosition = 100
         vertical.name = "vertical"
         self.addChild(vertical)
@@ -545,24 +563,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let chain = SKSpriteNode(imageNamed: "chain.png")
         chain.size = CGSize(width: 3, height: 350)
         chain.anchorPoint = CGPointMake(0.5, 1.0)
-        chain.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMaxY(self.frame))
+        chain.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame))
         chain.zPosition = -5
         vertical.addChild(chain)
         
         let craneHook = SKSpriteNode(imageNamed: "crane.gif")
         craneHook.anchorPoint = CGPointMake(0.5, 1.0)
         craneHook.size = CGSize(width: 40.0, height: 60.0)
-        craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMaxY(self.frame) - chain.size.height * 0.95)
+        craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame) - chain.size.height * 0.95)
         craneHook.zPosition = -5
         craneHook.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 40, height: 60))
         craneHook.physicsBody?.dynamic = false
-//        craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
-//        vertical.addChild(craneHook)
+        //craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
+        // vertical.addChild(craneHook) - delete if using conditional addChild below
         
         let beem = SKSpriteNode(imageNamed: "steelBeam.gif")
         beem.zPosition = 112
         beem.size = CGSize(width: 250, height: 30)
-        beem.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMaxY(self.frame) - chain.size.height - craneHook.size.height * 0.70)
+        beem.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame) - chain.size.height - craneHook.size.height * 0.70)
         beem.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 250, height: 30))
         beem.physicsBody?.dynamic = false
         beem.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
@@ -570,7 +588,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let beemLoseContact = SKSpriteNode()
         beemLoseContact.size = CGSize(width: 1, height: beem.size.height / 2)
         //beemLoseContact.color = SKColor.redColor()
-        beemLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - (beem.size.width / 2.1), CGRectGetMaxY(self.frame) - chain.size.height - craneHook.size.height * 0.70)
+        beemLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/ - (beem.size.width / 2.1), CGRectGetMaxY(self.frame) - chain.size.height - craneHook.size.height * 0.70)
         beemLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: beem.size.height / 2))
         beemLoseContact.physicsBody?.dynamic = false
         beemLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
@@ -588,7 +606,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let craneScoreContact = SKNode()
         //craneScoreContact.size = CGSize(width: 5, height: self.frame.size.height)
         //craneScoreContact.color = SKColor.blueColor()
-        craneScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
+        craneScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMidY(self.frame))
         craneScoreContact.zPosition = 105
         craneScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
         craneScoreContact.physicsBody?.dynamic = false
@@ -599,16 +617,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     func spawnPylon() {
         
-        var randX = arc4random_uniform(300) + 2
+        //var randX = arc4random_uniform(300) + 2
         let vertical = SKNode()
-        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), 0)
+        vertical.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 0)
         vertical.zPosition = 100
         vertical.name = "vertical"
         self.addChild(vertical)
         
         let pylon = SKSpriteNode(imageNamed: "pylon.gif")
         pylon.size = CGSize(width: 25, height: 35)
-        pylon.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), (self.roadSize!.height) + pylon.size.height / 2)
+        pylon.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height) + pylon.size.height / 2)
         pylon.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 25, height: 35))
         pylon.physicsBody?.dynamic = false
         pylon.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
@@ -616,7 +634,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.addChild(pylon)
         
         let pylonScoreContact = SKNode()
-        pylonScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX), CGRectGetMidY(self.frame))
+        pylonScoreContact.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMidY(self.frame))
         pylonScoreContact.zPosition = 105
         pylonScoreContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 2, height: self.frame.size.height))
         pylonScoreContact.physicsBody?.dynamic = false
@@ -627,17 +645,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let pylonLoseContact = SKSpriteNode()
         pylonLoseContact.size = CGSize(width: 1, height: pylon.size.height / 2)
         //pylonLoseContact.color = SKColor.redColor() // Delete Later
-        pylonLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) + CGFloat(randX) - pylon.size.width / 2, self.roadSize!.height + pylon.size.height / 2)
+        pylonLoseContact.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/ - pylon.size.width / 2, self.roadSize!.height + pylon.size.height / 2)
         pylonLoseContact.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1, height: pylon.size.height / 2))
         pylonLoseContact.physicsBody?.dynamic = false
         pylonLoseContact.physicsBody?.categoryBitMask = UInt32(self.contactCategory)
         vertical.addChild(pylonLoseContact)
     }
     
-    // Spawn coin [Tuan]
+    // Spawn coin [Tuan] - edited by [Kori-Brian]
     func spawnCoin() {
-        var randX = arc4random_uniform(100)
-        
+        //var randX = arc4random_uniform(100)
+        let coin = SKSpriteNode(imageNamed: "taco.gif")
+
         coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
         coin.size = CGSize(width: 30, height: 30)
         
@@ -651,7 +670,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.name = "coin"
         addChild(coin)
     }
-    
+ 
+    //removing coin when hero collides - [Kori-Brian]
+    func heroDidCollideWithCoin(coin: SKSpriteNode, hero:SKSpriteNode) {
+        println("Hit-coin")
+        coin.removeFromParent()
+      }
+
     // MARK: - MENU SCREENS
     // [Sam]
     
@@ -684,30 +709,70 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundSpeed = 1.0
         
         var scene = GameScene(size: self.size)
+
         let skView = self.view! as SKView
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .ResizeFill
         scene.size = skView.bounds.size
+        scene.playSound = self.playSound
         skView.presentScene(scene)
+
     }
     
     // [Sam]
     func startSpawn() {
-        
+        var rand = Float(arc4random_uniform(2) + 1)
         // hero physics starts
         self.hero.physicsBody?.dynamic = true
         
-        // Obstacles Spawn, every 2 seconds [Brian/Kori]
+        // Obstacles Spawn [Brian/Kori]
         let spawnBench  = SKAction.runBlock({() in self.spawnBench()})
         let spawnTrashcan = SKAction.runBlock({() in self.spawnTrashcan()})
-        let spawnPylon = SKAction.runBlock({() in self.spawnPylon()})
-        // Coin [Tuan]
-        
-        let spawnCoin = SKAction.runBlock({() in self.spawnCoin()})
-        
         let craneHook = SKAction.runBlock({() in self.spawnCrane()})
-        let delay = SKAction.waitForDuration(NSTimeInterval(2.0))
-        let spawnThenDelay = SKAction.sequence([spawnCoin, delay, spawnBench, delay, spawnPylon, delay, spawnTrashcan, spawnTrashcan, delay, delay, craneHook, delay, spawnTrashcan])
+        let spawnPylon = SKAction.runBlock({() in self.spawnPylon()})
+        var obstacleArray = [SKAction]()
+        // Coin [Tuan]
+        let spawnCoin = SKAction.runBlock({() in self.spawnCoin()})
+        var delay = SKAction.waitForDuration(NSTimeInterval(rand))
+        var craneDelay = SKAction.waitForDuration(NSTimeInterval(2))
+
+      
+      
+      
+      
+      
+        for var i = 0; i < 30; i++ {
+          var rand = Float(arc4random_uniform(5) + 1)
+          println(rand)
+          switch rand {
+          case 1:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnBench)
+          case 2:
+            obstacleArray.append(craneDelay)
+            obstacleArray.append(craneHook)
+            obstacleArray.append(craneDelay)
+          case 3:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnPylon)
+          case 4:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnTrashcan)
+          case 5:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnCoin)
+          default:
+            obstacleArray.append(delay)
+            obstacleArray.append(spawnCoin)
+          }
+        }
+      
+      
+      
+      
+      
+      
+        let spawnThenDelay = SKAction.sequence(obstacleArray)
         let spawnThenDelayForever = SKAction.repeatActionForever(spawnThenDelay)
         
         self.runAction(spawnThenDelayForever, withKey: "startSpawn")
