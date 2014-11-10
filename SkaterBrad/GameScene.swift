@@ -25,6 +25,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let scoreText = SKLabelNode(fontNamed: "Chalkduster")
     var score = 0
     
+    // High Score [Kevin]
+    let highScoreText = SKLabelNode(fontNamed: "Chalkduster")
+    var highScore = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
+    
     // Jump Properties [Tuan/Vincent]
     var currentTime = 0.0
     var previousTime = 0.0
@@ -165,9 +169,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.scoreText.text = "0"
         self.scoreText.fontSize = 50
         self.scoreText.color = UIColor.blackColor()
-        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.07)
+        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.08)
         self.scoreText.zPosition = 100
         self.addChild(self.scoreText)
+        
+        //NSUserDefaults.standardUserDefaults().setInteger(0, forKey: "highscore")
+        // High Score [Kevin]
+        self.highScoreText.text = "High Score: \(self.highScore)"
+        self.highScoreText.fontSize = 15
+        self.highScoreText.color = UIColor.blackColor()
+        self.highScoreText.verticalAlignmentMode = SKLabelVerticalAlignmentMode(rawValue: 3)!
+        self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, CGRectGetMaxY(self.frame) * 0.01)
+        self.highScoreText.zPosition = 100
+        self.addChild(self.highScoreText)
     }
     
     // MARK: - UPDATE
@@ -737,10 +751,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var craneDelay = SKAction.waitForDuration(NSTimeInterval(2))
 
       
-      
-      
-      
-      
         for var i = 0; i < 30; i++ {
           var rand = Float(arc4random_uniform(5) + 1)
           println(rand)
@@ -766,10 +776,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             obstacleArray.append(spawnCoin)
           }
         }
-      
-      
-      
-      
       
       
         let spawnThenDelay = SKAction.sequence(obstacleArray)
@@ -827,6 +833,20 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.55)
         self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
+        
+        // High Score [Kevin]
+        if self.score > NSUserDefaults.standardUserDefaults().integerForKey("highscore") {
+            NSUserDefaults.standardUserDefaults().setInteger(score, forKey: "highscore")
+            NSUserDefaults.standardUserDefaults().synchronize()
+            
+            self.highScoreText.speed = 0.1
+            
+            for var newScore = self.highScore; newScore <= self.score; ++newScore {
+                self.highScoreText.text = "High Score: \(newScore)"
+            }
+            
+            self.highScoreText.speed = 1.0
+        }
     }
 
 }
