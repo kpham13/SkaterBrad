@@ -48,26 +48,26 @@
 		E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3051A02E895000EF20B /* Goseahawks.wav */; };
 		E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3061A02E895000EF20B /* Ohdamn.wav */; };
 		E1C2D30B1A02E895000EF20B /* Twitterrocks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3071A02E895000EF20B /* Twitterrocks.wav */; };
-		EB67596B1A13D23800274B53 /* SkaterBradObjects_BackGround.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759571A13D23800274B53 /* SkaterBradObjects_BackGround.png */; };
-		EB67596C1A13D23800274B53 /* SkaterBradObjects_Bench.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759581A13D23800274B53 /* SkaterBradObjects_Bench.png */; };
-		EB67596D1A13D23800274B53 /* SkaterBradObjects_BradDuck.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759591A13D23800274B53 /* SkaterBradObjects_BradDuck.png */; };
-		EB67596E1A13D23800274B53 /* SkaterBradObjects_BradFall1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595A1A13D23800274B53 /* SkaterBradObjects_BradFall1.png */; };
-		EB67596F1A13D23800274B53 /* SkaterBradObjects_BradFall2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595B1A13D23800274B53 /* SkaterBradObjects_BradFall2.png */; };
-		EB6759701A13D23800274B53 /* SkaterBradObjects_BradFall3.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595C1A13D23800274B53 /* SkaterBradObjects_BradFall3.png */; };
-		EB6759711A13D23800274B53 /* SkaterBradObjects_BradFall4.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595D1A13D23800274B53 /* SkaterBradObjects_BradFall4.png */; };
-		EB6759721A13D23800274B53 /* SkaterBradObjects_BradFall5.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595E1A13D23800274B53 /* SkaterBradObjects_BradFall5.png */; };
-		EB6759731A13D23800274B53 /* SkaterBradObjects_BradFall6.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595F1A13D23800274B53 /* SkaterBradObjects_BradFall6.png */; };
-		EB6759741A13D23800274B53 /* SkaterBradObjects_BradFall7.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759601A13D23800274B53 /* SkaterBradObjects_BradFall7.png */; };
-		EB6759751A13D23800274B53 /* SkaterBradObjects_BradFall8.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759611A13D23800274B53 /* SkaterBradObjects_BradFall8.png */; };
-		EB6759761A13D23800274B53 /* SkaterBradObjects_BradJump.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759621A13D23800274B53 /* SkaterBradObjects_BradJump.png */; };
-		EB6759771A13D23800274B53 /* SkaterBradObjects_BradJump2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759631A13D23800274B53 /* SkaterBradObjects_BradJump2.png */; };
-		EB6759781A13D23800274B53 /* SkaterBradObjects_BradNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759641A13D23800274B53 /* SkaterBradObjects_BradNormal.png */; };
-		EB6759791A13D23800274B53 /* SkaterBradObjects_Chain.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759651A13D23800274B53 /* SkaterBradObjects_Chain.png */; };
-		EB67597A1A13D23800274B53 /* SkaterBradObjects_Cone.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759661A13D23800274B53 /* SkaterBradObjects_Cone.png */; };
-		EB67597B1A13D23800274B53 /* SkaterBradObjects_CraneHook.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759671A13D23800274B53 /* SkaterBradObjects_CraneHook.png */; };
-		EB67597C1A13D23800274B53 /* SkaterBradObjects_SteelBeam.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759681A13D23800274B53 /* SkaterBradObjects_SteelBeam.png */; };
-		EB67597D1A13D23800274B53 /* SkaterBradObjects_Taco.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759691A13D23800274B53 /* SkaterBradObjects_Taco.png */; };
-		EB67597E1A13D23800274B53 /* SkaterBradObjects_TrashCan.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67596A1A13D23800274B53 /* SkaterBradObjects_TrashCan.png */; };
+		EB67596B1A13D23800274B53 /* Background.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759571A13D23800274B53 /* Background.png */; };
+		EB67596C1A13D23800274B53 /* Bench.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759581A13D23800274B53 /* Bench.png */; };
+		EB67596D1A13D23800274B53 /* BradDuck.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759591A13D23800274B53 /* BradDuck.png */; };
+		EB67596E1A13D23800274B53 /* BradFall0.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595A1A13D23800274B53 /* BradFall0.png */; };
+		EB67596F1A13D23800274B53 /* BradFall1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595B1A13D23800274B53 /* BradFall1.png */; };
+		EB6759701A13D23800274B53 /* BradFall2.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595C1A13D23800274B53 /* BradFall2.png */; };
+		EB6759711A13D23800274B53 /* BradFall3.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595D1A13D23800274B53 /* BradFall3.png */; };
+		EB6759721A13D23800274B53 /* BradFall4.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595E1A13D23800274B53 /* BradFall4.png */; };
+		EB6759731A13D23800274B53 /* BradFall5.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67595F1A13D23800274B53 /* BradFall5.png */; };
+		EB6759741A13D23800274B53 /* BradFall6.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759601A13D23800274B53 /* BradFall6.png */; };
+		EB6759751A13D23800274B53 /* BradFall7.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759611A13D23800274B53 /* BradFall7.png */; };
+		EB6759761A13D23800274B53 /* BradJump0.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759621A13D23800274B53 /* BradJump0.png */; };
+		EB6759771A13D23800274B53 /* BradJump1.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759631A13D23800274B53 /* BradJump1.png */; };
+		EB6759781A13D23800274B53 /* BradNormal.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759641A13D23800274B53 /* BradNormal.png */; };
+		EB6759791A13D23800274B53 /* Chain.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759651A13D23800274B53 /* Chain.png */; };
+		EB67597A1A13D23800274B53 /* Pylon.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759661A13D23800274B53 /* Pylon.png */; };
+		EB67597B1A13D23800274B53 /* CraneHook.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759671A13D23800274B53 /* CraneHook.png */; };
+		EB67597C1A13D23800274B53 /* SteelBeam.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759681A13D23800274B53 /* SteelBeam.png */; };
+		EB67597D1A13D23800274B53 /* Taco.png in Resources */ = {isa = PBXBuildFile; fileRef = EB6759691A13D23800274B53 /* Taco.png */; };
+		EB67597E1A13D23800274B53 /* TrashCan.png in Resources */ = {isa = PBXBuildFile; fileRef = EB67596A1A13D23800274B53 /* TrashCan.png */; };
 		EBD199DA1A03FFE700FBD60F /* Falling0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D21A03FFE700FBD60F /* Falling0.jpg */; };
 		EBD199DB1A03FFE700FBD60F /* Falling1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D31A03FFE700FBD60F /* Falling1.jpg */; };
 		EBD199DC1A03FFE700FBD60F /* Falling2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EBD199D41A03FFE700FBD60F /* Falling2.jpg */; };
@@ -134,26 +134,26 @@
 		E1C2D3051A02E895000EF20B /* Goseahawks.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Goseahawks.wav; sourceTree = "<group>"; };
 		E1C2D3061A02E895000EF20B /* Ohdamn.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Ohdamn.wav; sourceTree = "<group>"; };
 		E1C2D3071A02E895000EF20B /* Twitterrocks.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Twitterrocks.wav; sourceTree = "<group>"; };
-		EB6759571A13D23800274B53 /* SkaterBradObjects_BackGround.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BackGround.png; sourceTree = "<group>"; };
-		EB6759581A13D23800274B53 /* SkaterBradObjects_Bench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_Bench.png; sourceTree = "<group>"; };
-		EB6759591A13D23800274B53 /* SkaterBradObjects_BradDuck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradDuck.png; sourceTree = "<group>"; };
-		EB67595A1A13D23800274B53 /* SkaterBradObjects_BradFall1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradFall1.png; sourceTree = "<group>"; };
-		EB67595B1A13D23800274B53 /* SkaterBradObjects_BradFall2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradFall2.png; sourceTree = "<group>"; };
-		EB67595C1A13D23800274B53 /* SkaterBradObjects_BradFall3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradFall3.png; sourceTree = "<group>"; };
-		EB67595D1A13D23800274B53 /* SkaterBradObjects_BradFall4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradFall4.png; sourceTree = "<group>"; };
-		EB67595E1A13D23800274B53 /* SkaterBradObjects_BradFall5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradFall5.png; sourceTree = "<group>"; };
-		EB67595F1A13D23800274B53 /* SkaterBradObjects_BradFall6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradFall6.png; sourceTree = "<group>"; };
-		EB6759601A13D23800274B53 /* SkaterBradObjects_BradFall7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradFall7.png; sourceTree = "<group>"; };
-		EB6759611A13D23800274B53 /* SkaterBradObjects_BradFall8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradFall8.png; sourceTree = "<group>"; };
-		EB6759621A13D23800274B53 /* SkaterBradObjects_BradJump.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradJump.png; sourceTree = "<group>"; };
-		EB6759631A13D23800274B53 /* SkaterBradObjects_BradJump2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradJump2.png; sourceTree = "<group>"; };
-		EB6759641A13D23800274B53 /* SkaterBradObjects_BradNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_BradNormal.png; sourceTree = "<group>"; };
-		EB6759651A13D23800274B53 /* SkaterBradObjects_Chain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_Chain.png; sourceTree = "<group>"; };
-		EB6759661A13D23800274B53 /* SkaterBradObjects_Cone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_Cone.png; sourceTree = "<group>"; };
-		EB6759671A13D23800274B53 /* SkaterBradObjects_CraneHook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_CraneHook.png; sourceTree = "<group>"; };
-		EB6759681A13D23800274B53 /* SkaterBradObjects_SteelBeam.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_SteelBeam.png; sourceTree = "<group>"; };
-		EB6759691A13D23800274B53 /* SkaterBradObjects_Taco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_Taco.png; sourceTree = "<group>"; };
-		EB67596A1A13D23800274B53 /* SkaterBradObjects_TrashCan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SkaterBradObjects_TrashCan.png; sourceTree = "<group>"; };
+		EB6759571A13D23800274B53 /* Background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Background.png; sourceTree = "<group>"; };
+		EB6759581A13D23800274B53 /* Bench.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Bench.png; sourceTree = "<group>"; };
+		EB6759591A13D23800274B53 /* BradDuck.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradDuck.png; sourceTree = "<group>"; };
+		EB67595A1A13D23800274B53 /* BradFall0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradFall0.png; sourceTree = "<group>"; };
+		EB67595B1A13D23800274B53 /* BradFall1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradFall1.png; sourceTree = "<group>"; };
+		EB67595C1A13D23800274B53 /* BradFall2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradFall2.png; sourceTree = "<group>"; };
+		EB67595D1A13D23800274B53 /* BradFall3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradFall3.png; sourceTree = "<group>"; };
+		EB67595E1A13D23800274B53 /* BradFall4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradFall4.png; sourceTree = "<group>"; };
+		EB67595F1A13D23800274B53 /* BradFall5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradFall5.png; sourceTree = "<group>"; };
+		EB6759601A13D23800274B53 /* BradFall6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradFall6.png; sourceTree = "<group>"; };
+		EB6759611A13D23800274B53 /* BradFall7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradFall7.png; sourceTree = "<group>"; };
+		EB6759621A13D23800274B53 /* BradJump0.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradJump0.png; sourceTree = "<group>"; };
+		EB6759631A13D23800274B53 /* BradJump1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradJump1.png; sourceTree = "<group>"; };
+		EB6759641A13D23800274B53 /* BradNormal.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BradNormal.png; sourceTree = "<group>"; };
+		EB6759651A13D23800274B53 /* Chain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Chain.png; sourceTree = "<group>"; };
+		EB6759661A13D23800274B53 /* Pylon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Pylon.png; sourceTree = "<group>"; };
+		EB6759671A13D23800274B53 /* CraneHook.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = CraneHook.png; sourceTree = "<group>"; };
+		EB6759681A13D23800274B53 /* SteelBeam.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SteelBeam.png; sourceTree = "<group>"; };
+		EB6759691A13D23800274B53 /* Taco.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Taco.png; sourceTree = "<group>"; };
+		EB67596A1A13D23800274B53 /* TrashCan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TrashCan.png; sourceTree = "<group>"; };
 		EBD199D21A03FFE700FBD60F /* Falling0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling0.jpg; sourceTree = "<group>"; };
 		EBD199D31A03FFE700FBD60F /* Falling1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling1.jpg; sourceTree = "<group>"; };
 		EBD199D41A03FFE700FBD60F /* Falling2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = Falling2.jpg; sourceTree = "<group>"; };
@@ -309,26 +309,26 @@
 		EB6759561A13D23800274B53 /* NewImages */ = {
 			isa = PBXGroup;
 			children = (
-				EB6759571A13D23800274B53 /* SkaterBradObjects_BackGround.png */,
-				EB6759581A13D23800274B53 /* SkaterBradObjects_Bench.png */,
-				EB6759591A13D23800274B53 /* SkaterBradObjects_BradDuck.png */,
-				EB67595A1A13D23800274B53 /* SkaterBradObjects_BradFall1.png */,
-				EB67595B1A13D23800274B53 /* SkaterBradObjects_BradFall2.png */,
-				EB67595C1A13D23800274B53 /* SkaterBradObjects_BradFall3.png */,
-				EB67595D1A13D23800274B53 /* SkaterBradObjects_BradFall4.png */,
-				EB67595E1A13D23800274B53 /* SkaterBradObjects_BradFall5.png */,
-				EB67595F1A13D23800274B53 /* SkaterBradObjects_BradFall6.png */,
-				EB6759601A13D23800274B53 /* SkaterBradObjects_BradFall7.png */,
-				EB6759611A13D23800274B53 /* SkaterBradObjects_BradFall8.png */,
-				EB6759621A13D23800274B53 /* SkaterBradObjects_BradJump.png */,
-				EB6759631A13D23800274B53 /* SkaterBradObjects_BradJump2.png */,
-				EB6759641A13D23800274B53 /* SkaterBradObjects_BradNormal.png */,
-				EB6759651A13D23800274B53 /* SkaterBradObjects_Chain.png */,
-				EB6759661A13D23800274B53 /* SkaterBradObjects_Cone.png */,
-				EB6759671A13D23800274B53 /* SkaterBradObjects_CraneHook.png */,
-				EB6759681A13D23800274B53 /* SkaterBradObjects_SteelBeam.png */,
-				EB6759691A13D23800274B53 /* SkaterBradObjects_Taco.png */,
-				EB67596A1A13D23800274B53 /* SkaterBradObjects_TrashCan.png */,
+				EB6759571A13D23800274B53 /* Background.png */,
+				EB6759581A13D23800274B53 /* Bench.png */,
+				EB6759591A13D23800274B53 /* BradDuck.png */,
+				EB67595A1A13D23800274B53 /* BradFall0.png */,
+				EB67595B1A13D23800274B53 /* BradFall1.png */,
+				EB67595C1A13D23800274B53 /* BradFall2.png */,
+				EB67595D1A13D23800274B53 /* BradFall3.png */,
+				EB67595E1A13D23800274B53 /* BradFall4.png */,
+				EB67595F1A13D23800274B53 /* BradFall5.png */,
+				EB6759601A13D23800274B53 /* BradFall6.png */,
+				EB6759611A13D23800274B53 /* BradFall7.png */,
+				EB6759621A13D23800274B53 /* BradJump0.png */,
+				EB6759631A13D23800274B53 /* BradJump1.png */,
+				EB6759641A13D23800274B53 /* BradNormal.png */,
+				EB6759651A13D23800274B53 /* Chain.png */,
+				EB6759661A13D23800274B53 /* Pylon.png */,
+				EB6759671A13D23800274B53 /* CraneHook.png */,
+				EB6759681A13D23800274B53 /* SteelBeam.png */,
+				EB6759691A13D23800274B53 /* Taco.png */,
+				EB67596A1A13D23800274B53 /* TrashCan.png */,
 			);
 			name = NewImages;
 			path = SkaterBradImages;
@@ -423,63 +423,63 @@
 				E1C2D30B1A02E895000EF20B /* Twitterrocks.wav in Resources */,
 				45367B871A030F7C00A2CE4E /* crane.gif in Resources */,
 				45367B8E1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 in Resources */,
-				EB6759771A13D23800274B53 /* SkaterBradObjects_BradJump2.png in Resources */,
+				EB6759771A13D23800274B53 /* BradJump1.png in Resources */,
 				92CBF7B01A00D15D0071E392 /* test.jpg in Resources */,
 				926821251A015C40009C3022 /* test2.jpg in Resources */,
 				EBD199DD1A03FFE700FBD60F /* Falling3.jpg in Resources */,
 				45DAB90B1A015C4300A3920D /* duck1.gif in Resources */,
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
-				EB6759761A13D23800274B53 /* SkaterBradObjects_BradJump.png in Resources */,
+				EB6759761A13D23800274B53 /* BradJump0.png in Resources */,
 				92CE648F1A02A29C0091704C /* normal.jpg in Resources */,
-				EB67596D1A13D23800274B53 /* SkaterBradObjects_BradDuck.png in Resources */,
+				EB67596D1A13D23800274B53 /* BradDuck.png in Resources */,
 				E1C2D3031A02E886000EF20B /* taco.gif in Resources */,
-				EB67596C1A13D23800274B53 /* SkaterBradObjects_Bench.png in Resources */,
+				EB67596C1A13D23800274B53 /* Bench.png in Resources */,
 				92CE648D1A02A2940091704C /* jump2.jpg in Resources */,
 				EBD199DB1A03FFE700FBD60F /* Falling1.jpg in Resources */,
 				926821231A015AB2009C3022 /* test1.jpg in Resources */,
-				EB6759721A13D23800274B53 /* SkaterBradObjects_BradFall5.png in Resources */,
-				EB6759731A13D23800274B53 /* SkaterBradObjects_BradFall6.png in Resources */,
+				EB6759721A13D23800274B53 /* BradFall4.png in Resources */,
+				EB6759731A13D23800274B53 /* BradFall5.png in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
-				EB67596F1A13D23800274B53 /* SkaterBradObjects_BradFall2.png in Resources */,
+				EB67596F1A13D23800274B53 /* BradFall1.png in Resources */,
 				92CE64891A02A2690091704C /* duck.jpg in Resources */,
-				EB6759741A13D23800274B53 /* SkaterBradObjects_BradFall7.png in Resources */,
+				EB6759741A13D23800274B53 /* BradFall6.png in Resources */,
 				45134F821A040E7D00EB0CA3 /* bench.gif in Resources */,
-				EB67597B1A13D23800274B53 /* SkaterBradObjects_CraneHook.png in Resources */,
+				EB67597B1A13D23800274B53 /* CraneHook.png in Resources */,
 				8B2C04A61A018E4200464B06 /* chain.png in Resources */,
 				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
 				0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */,
-				EB6759781A13D23800274B53 /* SkaterBradObjects_BradNormal.png in Resources */,
+				EB6759781A13D23800274B53 /* BradNormal.png in Resources */,
 				8B8CF4851A003D2200DA7F28 /* trashCan.gif in Resources */,
 				45DAB90A1A015C4300A3920D /* duck2.gif in Resources */,
 				EBD199DC1A03FFE700FBD60F /* Falling2.jpg in Resources */,
 				52AF413D1A032F96000F5687 /* replay.png in Resources */,
 				45DAB90C1A015C4300A3920D /* coast.gif in Resources */,
-				EB67596B1A13D23800274B53 /* SkaterBradObjects_BackGround.png in Resources */,
+				EB67596B1A13D23800274B53 /* Background.png in Resources */,
 				92CE648B1A02A28C0091704C /* jump.jpg in Resources */,
 				EBD199E11A03FFE700FBD60F /* Falling7.jpg in Resources */,
-				EB67596E1A13D23800274B53 /* SkaterBradObjects_BradFall1.png in Resources */,
-				EB67597A1A13D23800274B53 /* SkaterBradObjects_Cone.png in Resources */,
-				EB6759751A13D23800274B53 /* SkaterBradObjects_BradFall8.png in Resources */,
-				EB67597D1A13D23800274B53 /* SkaterBradObjects_Taco.png in Resources */,
+				EB67596E1A13D23800274B53 /* BradFall0.png in Resources */,
+				EB67597A1A13D23800274B53 /* Pylon.png in Resources */,
+				EB6759751A13D23800274B53 /* BradFall7.png in Resources */,
+				EB67597D1A13D23800274B53 /* Taco.png in Resources */,
 				45134F841A040ED900EB0CA3 /* steelBeam.gif in Resources */,
 				92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */,
 				EBD199DF1A03FFE700FBD60F /* Falling5.jpg in Resources */,
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
-				EB6759701A13D23800274B53 /* SkaterBradObjects_BradFall3.png in Resources */,
+				EB6759701A13D23800274B53 /* BradFall2.png in Resources */,
 				E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */,
 				52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */,
 				EBD199E01A03FFE700FBD60F /* Falling6.jpg in Resources */,
 				EBD199DA1A03FFE700FBD60F /* Falling0.jpg in Resources */,
 				52348A9D1A00584A0054E55A /* win.wav in Resources */,
-				EB6759711A13D23800274B53 /* SkaterBradObjects_BradFall4.png in Resources */,
+				EB6759711A13D23800274B53 /* BradFall3.png in Resources */,
 				EBD199DE1A03FFE700FBD60F /* Falling4.jpg in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
-				EB67597E1A13D23800274B53 /* SkaterBradObjects_TrashCan.png in Resources */,
+				EB67597E1A13D23800274B53 /* TrashCan.png in Resources */,
 				0A5479C019FEE4F500D697D8 /* Main.storyboard in Resources */,
-				EB6759791A13D23800274B53 /* SkaterBradObjects_Chain.png in Resources */,
+				EB6759791A13D23800274B53 /* Chain.png in Resources */,
 				45367B8B1A0330DB00A2CE4E /* pylon.gif in Resources */,
-				EB67597C1A13D23800274B53 /* SkaterBradObjects_SteelBeam.png in Resources */,
+				EB67597C1A13D23800274B53 /* SteelBeam.png in Resources */,
 				45FD56BC1A03F7C200E24B28 /* music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
