@@ -2,7 +2,6 @@
 //  NewGrameNode.swift
 //  SkaterBrad
 //
-//  Created by Sam Wong on 30/10/2014.
 //  Copyright (c) 2014 Mother Functions. All rights reserved.
 //
 
@@ -19,6 +18,7 @@ class NewGameNode: SKNode {
     var playButton: SKSpriteNode!
     var soundOnButton: SKSpriteNode!
     var soundOffButton: SKSpriteNode!
+    var gameCenterButton: SKSpriteNode! //xx
     
     init(scene: SKScene, playSound: Bool) {
         super.init()
@@ -66,8 +66,16 @@ class NewGameNode: SKNode {
         } else {
             self.addChild(self.soundOffButton)
         }
-
         
+        // Game Center Button [KP] //15
+        self.gameCenterButton = SKSpriteNode(imageNamed: "GameCenter")
+        self.gameCenterButton?.name = "GameCenterButton"
+        self.gameCenterButton?.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMinY(scene.frame))
+        self.gameCenterButton?.zPosition = 100
+        self.gameCenterButton.xScale = 0.8
+        self.gameCenterButton.yScale = 0.8
+        self.gameCenterButton?.anchorPoint = CGPointMake(0.5, 0)
+        self.addChild(self.gameCenterButton)
         
     }
 

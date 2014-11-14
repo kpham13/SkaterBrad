@@ -2,7 +2,6 @@
 //  MusicNode.swift
 //  SkaterBrad
 //
-//  Created by Sam Wong on 30/10/2014.
 //  Copyright (c) 2014 Mother Functions. All rights reserved.
 //
 

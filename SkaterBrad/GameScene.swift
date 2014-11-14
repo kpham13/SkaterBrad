@@ -2,14 +2,19 @@
 //  GameScene.swift
 //  SkaterBrad
 //
-//  Created by Kevin Pham on 10/27/14.
 //  Copyright (c) 2014 Mother Functions. All rights reserved.
 //
 
 import SpriteKit
 import AVFoundation
+import GameKit //3
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    var gameViewController : GameViewController? //4
+    
+    // User Defaults
+    var userDefaultsController : UserDefaultsController?
     
     var hero = SKSpriteNode()
     var road = SKSpriteNode()
@@ -21,11 +26,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var roadSpeed : CGFloat = 3.0 // 6.0
     var roadSize : CGSize?
     
-    // Score [Kevin]
-    let scoreText = SKLabelNode(fontNamed: "Chalkduster")
+    // Score [KP]
+    var scoreTextLabel: SKLabelNode!
     var score = 0
     
-    // High Score [Kevin]
+    // High Score [KP]
     let highScoreText = SKLabelNode(fontNamed: "Chalkduster")
     var highScore = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
     
@@ -75,6 +80,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var soundOption: SoundNode?
     var newGameMenu: NewGameNode?
     var gameOverMenu: GameOverNode?
+    var gameCenterButton: SKSpriteNode? //14
     var showNewGameMenu = true
     var showGameOverMenu = false
     var playSound = true
@@ -87,10 +93,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
         self.registerAppTransitionObservers()
+        self.userDefaultsController = UserDefaultsController()
         
         self.soundOption = SoundNode(playSound: self.playSound)
         self.newGameMenu = NewGameNode(scene: self, playSound: self.playSound)
-    
         self.addChild(self.newGameMenu!)
 
         // Swipe Recognizer Setup [Tuan/Vincent]
@@ -165,16 +171,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
         
-        // Game Score [Kevin]
-        self.scoreText.text = "0"
-        self.scoreText.fontSize = 50
-        self.scoreText.color = UIColor.blackColor()
-        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.08)
-        self.scoreText.zPosition = 100
-        self.addChild(self.scoreText)
+        // Game Score [KP]
+        self.scoreTextLabel = SKLabelNode(fontNamed: "Chalkduster")
+        self.scoreTextLabel.text = "0"
+        self.scoreTextLabel.fontSize = 50
+        self.scoreTextLabel.color = UIColor.blackColor()
+        self.scoreTextLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.08)
+        self.scoreTextLabel.zPosition = 100
+        self.scoreTextLabel.hidden = true
+        self.addChild(self.scoreTextLabel)
         
         //NSUserDefaults.standardUserDefaults().setInteger(0, forKey: "highscore")
-        // High Score [Kevin]
+        // High Score [KP]
         self.highScoreText.text = "High Score: \(self.highScore)"
         self.highScoreText.fontSize = 15
         self.highScoreText.color = UIColor.blackColor()
@@ -306,6 +314,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.showNewGameMenu = false
                 self.showGameOverMenu = false
                 self.newGameMenu?.removeFromParent()
+                self.scoreTextLabel.hidden = false
                 self.startSpawn()
             }))
         }
@@ -319,6 +328,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.soundOption!.audioPlayer.play()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
         }
+        
+        //16
+        if self.nodeAtPoint(location).name == "GameCenterButton" {
+            self.gameViewController?.showLeaderboardAndAchievements(true)
+        }
+        
     }
     
     // [Sam]
@@ -379,9 +394,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.scoreCategory):
             println("Score!")
             self.score += 1
-            self.scoreText.text = String(self.score)
-            self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
-            self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
+            self.scoreTextLabel.text = String(self.score)
+            self.scoreTextLabel.runAction(SKAction.scaleTo(2.0, duration: 0.1))
+            self.scoreTextLabel.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.coinCategory):
           // calls function that removes coin on contact
             if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -405,9 +420,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             self.score += 10
-            self.scoreText.text = String(self.score)
-            self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
-            self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
+            self.scoreTextLabel.text = String(self.score)
+            self.scoreTextLabel.runAction(SKAction.scaleTo(2.0, duration: 0.1))
+            self.scoreTextLabel.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
             
@@ -725,7 +740,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         var scene = GameScene(size: self.size)
 
         let skView = self.view! as SKView
-        skView.ignoresSiblingOrder = true
+        //skView.ignoresSiblingOrder = true
         scene.scaleMode = .ResizeFill
         scene.size = skView.bounds.size
         scene.playSound = self.playSound
@@ -826,7 +841,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.gameOverLabel.zPosition = 200
         self.addChild(self.gameOverLabel)
         
-        // reply button
+        // replay button
         self.replayButton = SKSpriteNode(imageNamed: "replay")
         self.replayButton.name = "Replay"
         self.replayButton.size = CGSize(width: 60.0, height: 60.0)
@@ -834,18 +849,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
         
-        // High Score [Kevin]
-        if self.score > NSUserDefaults.standardUserDefaults().integerForKey("highscore") {
-            NSUserDefaults.standardUserDefaults().setInteger(score, forKey: "highscore")
-            NSUserDefaults.standardUserDefaults().synchronize()
-            
-            self.highScoreText.speed = 0.1
-            
-            for var newScore = self.highScore; newScore <= self.score; ++newScore {
-                self.highScoreText.text = "High Score: \(newScore)"
-            }
-            
-            self.highScoreText.speed = 1.0
+        // High Score [KP]
+        self.userDefaultsController?.highScoreCheck(self)
+
+        // Game Center [KP] //12
+        if self.gameViewController?.gameCenterEnabled == true {
+            println(self.gameViewController?.gameCenterEnabled)
+            let gameCenterScore = Int64(self.score)
+            self.gameViewController!.reportScoreToGameCenter(gameCenterScore, forLeaderboard: "SkaterBradLeaderboard")
         }
     }
 
