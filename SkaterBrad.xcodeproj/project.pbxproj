@@ -12,10 +12,14 @@
 		0A5479BB19FEE4F500D697D8 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479BA19FEE4F500D697D8 /* GameScene.swift */; };
 		0A5479BD19FEE4F500D697D8 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479BC19FEE4F500D697D8 /* GameViewController.swift */; };
 		0A5479C019FEE4F500D697D8 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479BE19FEE4F500D697D8 /* Main.storyboard */; };
-		0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C119FEE4F500D697D8 /* Images.xcassets */; };
+		0A5479C219FEE4F500D697D8 /* bg0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C119FEE4F500D697D8 /* bg0.jpg */; };
 		0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */; };
 		0A5479D119FEE4F500D697D8 /* SkaterBradTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */; };
-		0AAE9D191A0609B4007BAC6B /* TrashCan.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AAE9D181A0609B4007BAC6B /* TrashCan.swift */; };
+		0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A62FC051A16B35F00A844D2 /* Images.xcassets */; };
+		0A7D05E51A15BB3100301D06 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D05E41A15BB3100301D06 /* UserDefaultsController.swift */; };
+		0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A7D05E71A15D39000301D06 /* GameCenter.png */; };
+		0A7D05EA1A15DA5300301D06 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D05E91A15DA5300301D06 /* GameKit.framework */; };
+		0A7D05EE1A167C8A00301D06 /* GKLocalPlayerCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */; };
 		45134F821A040E7D00EB0CA3 /* bench.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45134F811A040E7D00EB0CA3 /* bench.gif */; };
 		45134F841A040ED900EB0CA3 /* steelBeam.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45134F831A040ED900EB0CA3 /* steelBeam.gif */; };
 		45367B871A030F7C00A2CE4E /* crane.gif in Resources */ = {isa = PBXBuildFile; fileRef = 45367B861A030F7C00A2CE4E /* crane.gif */; };
@@ -96,12 +100,18 @@
 		0A5479BA19FEE4F500D697D8 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0A5479BC19FEE4F500D697D8 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0A5479BF19FEE4F500D697D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0A5479C119FEE4F500D697D8 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		0A5479C119FEE4F500D697D8 /* bg0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bg0.jpg; path = SkaterBrad/Images.xcassets/bg0.imageset/bg0.jpg; sourceTree = "<group>"; };
 		0A5479C419FEE4F500D697D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		0A5479CA19FEE4F500D697D8 /* SkaterBradTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkaterBradTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkaterBradTests.swift; sourceTree = "<group>"; };
-		0AAE9D181A0609B4007BAC6B /* TrashCan.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TrashCan.swift; sourceTree = "<group>"; };
+		0A62FC051A16B35F00A844D2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SkaterBrad/Images.xcassets; sourceTree = "<group>"; };
+		0A7D05E41A15BB3100301D06 /* UserDefaultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
+		0A7D05E71A15D39000301D06 /* GameCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GameCenter.png; sourceTree = "<group>"; };
+		0A7D05E91A15DA5300301D06 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
+		0A7D05EB1A167C8A00301D06 /* SkaterBrad-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SkaterBrad-Bridging-Header.h"; sourceTree = "<group>"; };
+		0A7D05EC1A167C8A00301D06 /* GKLocalPlayerCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLocalPlayerCustom.h; sourceTree = "<group>"; };
+		0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLocalPlayerCustom.m; sourceTree = "<group>"; };
 		45134F811A040E7D00EB0CA3 /* bench.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = bench.gif; path = SkaterBrad/bench.gif; sourceTree = "<group>"; };
 		45134F831A040ED900EB0CA3 /* steelBeam.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = steelBeam.gif; path = SkaterBrad/steelBeam.gif; sourceTree = "<group>"; };
 		45367B861A030F7C00A2CE4E /* crane.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = crane.gif; path = SkaterBrad/crane.gif; sourceTree = "<group>"; };
@@ -116,7 +126,7 @@
 		52348A981A00584A0054E55A /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = win.wav; path = SkaterBrad/win.wav; sourceTree = "<group>"; };
 		52AF41321A032AE7000F5687 /* NewGameMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewGameMenu.swift; sourceTree = "<group>"; };
 		52AF41331A032AE7000F5687 /* GameOverMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverMenu.swift; sourceTree = "<group>"; };
-		52AF41341A032AE7000F5687 /* SoundNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundNode.swift; sourceTree = "<group>"; };
+		52AF41341A032AE7000F5687 /* SoundNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoundNode.swift; path = SkaterBrad/SoundNode.swift; sourceTree = "<group>"; };
 		52AF413C1A032F96000F5687 /* replay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay.png; sourceTree = "<group>"; };
 		8B2C04A51A018E4200464B06 /* chain.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = chain.png; path = SkaterBrad/chain.png; sourceTree = "<group>"; };
 		8B8CF4841A003D2200DA7F28 /* trashCan.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; name = trashCan.gif; path = SkaterBrad/trashCan.gif; sourceTree = "<group>"; };
@@ -169,6 +179,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A7D05EA1A15DA5300301D06 /* GameKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -185,8 +196,7 @@
 		0A5479A819FEE4F500D697D8 = {
 			isa = PBXGroup;
 			children = (
-				52AF41311A0327FC000F5687 /* Images */,
-				52348A9E1A00588D0054E55A /* Sounds */,
+				0A7D05E91A15DA5300301D06 /* GameKit.framework */,
 				0A5479B319FEE4F500D697D8 /* SkaterBrad */,
 				0A5479CD19FEE4F500D697D8 /* SkaterBradTests */,
 				0A5479B219FEE4F500D697D8 /* Products */,
@@ -205,18 +215,20 @@
 		0A5479B319FEE4F500D697D8 /* SkaterBrad */ = {
 			isa = PBXGroup;
 			children = (
-				52AF41321A032AE7000F5687 /* NewGameMenu.swift */,
-				52AF41331A032AE7000F5687 /* GameOverMenu.swift */,
-				52AF41341A032AE7000F5687 /* SoundNode.swift */,
-				0A5479BA19FEE4F500D697D8 /* GameScene.swift */,
-				0AAE9D181A0609B4007BAC6B /* TrashCan.swift */,
 				0A5479B619FEE4F500D697D8 /* AppDelegate.swift */,
+				0A5479BA19FEE4F500D697D8 /* GameScene.swift */,
 				0A5479BC19FEE4F500D697D8 /* GameViewController.swift */,
+				0A7D05EC1A167C8A00301D06 /* GKLocalPlayerCustom.h */,
+				0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */,
+				0A7D05E41A15BB3100301D06 /* UserDefaultsController.swift */,
 				0A5479BE19FEE4F500D697D8 /* Main.storyboard */,
-				0A5479C119FEE4F500D697D8 /* Images.xcassets */,
 				0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */,
 				0A5479B819FEE4F500D697D8 /* GameScene.sks */,
+				0A7D05E61A15BB9200301D06 /* Menus */,
+				52AF41311A0327FC000F5687 /* Images */,
+				52348A9E1A00588D0054E55A /* Sounds */,
 				0A5479B419FEE4F500D697D8 /* Supporting Files */,
+				0A7D05EB1A167C8A00301D06 /* SkaterBrad-Bridging-Header.h */,
 			);
 			path = SkaterBrad;
 			sourceTree = "<group>";
@@ -246,9 +258,19 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		0A7D05E61A15BB9200301D06 /* Menus */ = {
+			isa = PBXGroup;
+			children = (
+				52AF41321A032AE7000F5687 /* NewGameMenu.swift */,
+				52AF41331A032AE7000F5687 /* GameOverMenu.swift */,
+			);
+			name = Menus;
+			sourceTree = "<group>";
+		};
 		52348A9E1A00588D0054E55A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				52AF41341A032AE7000F5687 /* SoundNode.swift */,
 				E1C2D3041A02E895000EF20B /* Getitnexttime.wav */,
 				45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */,
 				E1C2D3051A02E895000EF20B /* Goseahawks.wav */,
@@ -260,18 +282,23 @@
 				52348A981A00584A0054E55A /* win.wav */,
 			);
 			name = Sounds;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		52AF41311A0327FC000F5687 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0A62FC051A16B35F00A844D2 /* Images.xcassets */,
+				0A5479C119FEE4F500D697D8 /* bg0.jpg */,
 				EB6759561A13D23800274B53 /* NewImages */,
 				EB6759551A13D1F100274B53 /* OldImages */,
 				52AF413C1A032F96000F5687 /* replay.png */,
 				92A49AE51A00225B00EEDF39 /* road@3x.png */,
 				92A49ADB1A00127C00EEDF39 /* background.jpg */,
+				0A7D05E71A15D39000301D06 /* GameCenter.png */,
 			);
 			name = Images;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		EB6759551A13D1F100274B53 /* OldImages */ = {
@@ -386,7 +413,7 @@
 						DevelopmentTeam = 6ALA275LQK;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
-								enabled = 0;
+								enabled = 1;
 							};
 						};
 					};
@@ -426,8 +453,10 @@
 				EB6759771A13D23800274B53 /* BradJump1.png in Resources */,
 				92CBF7B01A00D15D0071E392 /* test.jpg in Resources */,
 				926821251A015C40009C3022 /* test2.jpg in Resources */,
+				0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */,
 				EBD199DD1A03FFE700FBD60F /* Falling3.jpg in Resources */,
 				45DAB90B1A015C4300A3920D /* duck1.gif in Resources */,
+				0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */,
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
 				EB6759761A13D23800274B53 /* BradJump0.png in Resources */,
 				92CE648F1A02A29C0091704C /* normal.jpg in Resources */,
@@ -447,7 +476,7 @@
 				EB67597B1A13D23800274B53 /* CraneHook.png in Resources */,
 				8B2C04A61A018E4200464B06 /* chain.png in Resources */,
 				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
-				0A5479C219FEE4F500D697D8 /* Images.xcassets in Resources */,
+				0A5479C219FEE4F500D697D8 /* bg0.jpg in Resources */,
 				EB6759781A13D23800274B53 /* BradNormal.png in Resources */,
 				8B8CF4851A003D2200DA7F28 /* trashCan.gif in Resources */,
 				45DAB90A1A015C4300A3920D /* duck2.gif in Resources */,
@@ -499,10 +528,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A5479BB19FEE4F500D697D8 /* GameScene.swift in Sources */,
-				0AAE9D191A0609B4007BAC6B /* TrashCan.swift in Sources */,
+				0A7D05E51A15BB3100301D06 /* UserDefaultsController.swift in Sources */,
 				52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */,
 				0A5479BD19FEE4F500D697D8 /* GameViewController.swift in Sources */,
 				52AF41351A032AE7000F5687 /* NewGameMenu.swift in Sources */,
+				0A7D05EE1A167C8A00301D06 /* GKLocalPlayerCustom.m in Sources */,
 				0A5479B719FEE4F500D697D8 /* AppDelegate.swift in Sources */,
 				52AF41361A032AE7000F5687 /* GameOverMenu.swift in Sources */,
 			);
@@ -627,6 +657,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SkaterBrad/Info.plist;
@@ -634,6 +665,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SkaterBrad/SkaterBrad-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -641,6 +674,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SkaterBrad/Info.plist;
@@ -648,6 +682,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SkaterBrad/SkaterBrad-Bridging-Header.h";
 			};
 			name = Release;
 		};
