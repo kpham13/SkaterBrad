@@ -17,10 +17,14 @@ class SoundNode: SKNode {
     
     init(playSound : Bool) {
         super.init()
-        self.audioPlayer = AVAudioPlayer()
-        var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(self.backgoundMusicFile, ofType: "mp3")!)
+        
         AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
         AVAudioSession.sharedInstance().setActive(true, error: nil)
+        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient, error: nil)
+        
+        self.audioPlayer = AVAudioPlayer()
+        var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(self.backgoundMusicFile, ofType: "mp3")!)
+        
         self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
         self.audioPlayer.numberOfLoops = 100 // Continuous play of background music [Kevin/Tuan]
         self.audioPlayer.volume = 0.1 // Adjusts background music volume [Kevin]

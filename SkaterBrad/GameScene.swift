@@ -738,9 +738,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundSpeed = 1.0
         
         var scene = GameScene(size: self.size)
-
+        scene.gameViewController = self.gameViewController
+        
         let skView = self.view! as SKView
-        //skView.ignoresSiblingOrder = true
+        skView.ignoresSiblingOrder = true
         scene.scaleMode = .ResizeFill
         scene.size = skView.bounds.size
         scene.playSound = self.playSound
@@ -809,18 +810,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func applicationWillResignActive() {
-        self.soundOption!.audioPlayer.stop()
+        //self.soundOption!.audioPlayer.stop()
         self.scene?.paused = true
     }
     
     func applicationDidEnterBackground() {
-        self.soundOption!.audioPlayer.stop()
+        //self.soundOption!.audioPlayer.stop()
         self.scene?.paused = true
     }
     
     func applicationWillEnterForeground() {
         self.scene?.paused = false
-        self.soundOption!.audioPlayer.play()
+        //self.soundOption!.audioPlayer.play()
     }
     
     func generateGameOverScreen() {

@@ -98,7 +98,6 @@ class GameViewController: UIViewController, GKGameCenterControllerDelegate {
             } else {
                 println("Is player authenticated: \(localPlayer.authenticated)")
                 if localPlayer.authenticated {
-                    println(localPlayer.authenticated)
                     self.gameCenterEnabled = true
                     
                     localPlayer.loadDefaultLeaderboardIdentifierWithCompletionHandler({ (leaderboardIdentifier, error) -> Void in

@@ -15,6 +15,7 @@
 		0A5479C219FEE4F500D697D8 /* bg0.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C119FEE4F500D697D8 /* bg0.jpg */; };
 		0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */; };
 		0A5479D119FEE4F500D697D8 /* SkaterBradTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */; };
+		0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A62FC051A16B35F00A844D2 /* Images.xcassets */; };
 		0A7D05E51A15BB3100301D06 /* UserDefaultsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D05E41A15BB3100301D06 /* UserDefaultsController.swift */; };
 		0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A7D05E71A15D39000301D06 /* GameCenter.png */; };
 		0A7D05EA1A15DA5300301D06 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D05E91A15DA5300301D06 /* GameKit.framework */; };
@@ -104,6 +105,7 @@
 		0A5479CA19FEE4F500D697D8 /* SkaterBradTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkaterBradTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkaterBradTests.swift; sourceTree = "<group>"; };
+		0A62FC051A16B35F00A844D2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SkaterBrad/Images.xcassets; sourceTree = "<group>"; };
 		0A7D05E41A15BB3100301D06 /* UserDefaultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		0A7D05E71A15D39000301D06 /* GameCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GameCenter.png; sourceTree = "<group>"; };
 		0A7D05E91A15DA5300301D06 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
@@ -198,7 +200,6 @@
 				0A5479B319FEE4F500D697D8 /* SkaterBrad */,
 				0A5479CD19FEE4F500D697D8 /* SkaterBradTests */,
 				0A5479B219FEE4F500D697D8 /* Products */,
-				0A7D05E71A15D39000301D06 /* GameCenter.png */,
 			);
 			sourceTree = "<group>";
 		};
@@ -287,12 +288,14 @@
 		52AF41311A0327FC000F5687 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				0A62FC051A16B35F00A844D2 /* Images.xcassets */,
 				0A5479C119FEE4F500D697D8 /* bg0.jpg */,
 				EB6759561A13D23800274B53 /* NewImages */,
 				EB6759551A13D1F100274B53 /* OldImages */,
 				52AF413C1A032F96000F5687 /* replay.png */,
 				92A49AE51A00225B00EEDF39 /* road@3x.png */,
 				92A49ADB1A00127C00EEDF39 /* background.jpg */,
+				0A7D05E71A15D39000301D06 /* GameCenter.png */,
 			);
 			name = Images;
 			path = ..;
@@ -453,6 +456,7 @@
 				0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */,
 				EBD199DD1A03FFE700FBD60F /* Falling3.jpg in Resources */,
 				45DAB90B1A015C4300A3920D /* duck1.gif in Resources */,
+				0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */,
 				0A5479C519FEE4F500D697D8 /* LaunchScreen.xib in Resources */,
 				EB6759761A13D23800274B53 /* BradJump0.png in Resources */,
 				92CE648F1A02A29C0091704C /* normal.jpg in Resources */,
