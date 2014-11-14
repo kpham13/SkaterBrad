@@ -856,7 +856,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if self.gameViewController?.gameCenterEnabled == true {
             println(self.gameViewController?.gameCenterEnabled)
             let gameCenterScore = Int64(self.score)
-            self.gameViewController!.reportScoreToGameCenter(gameCenterScore, forLeaderboard: "SkaterBradLeaderboard")
+            self.gameViewController!.reportScoreToGameCenter(gameCenterScore, forLeaderboard: "MF.SkaterBrad")
         }
     }
 

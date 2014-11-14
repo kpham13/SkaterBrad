@@ -71,7 +71,7 @@ class NewGameNode: SKNode {
         self.gameCenterButton = SKSpriteNode(imageNamed: "GameCenter")
         self.gameCenterButton?.name = "GameCenterButton"
         self.gameCenterButton?.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMinY(scene.frame))
-        self.gameCenterButton?.zPosition = 100
+        self.gameCenterButton?.zPosition = 400
         self.gameCenterButton.xScale = 0.8
         self.gameCenterButton.yScale = 0.8
         self.gameCenterButton?.anchorPoint = CGPointMake(0.5, 0)
