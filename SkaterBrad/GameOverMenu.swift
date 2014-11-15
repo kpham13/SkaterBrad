@@ -2,7 +2,6 @@
 //  GameOverNode.swift
 //  SkaterBrad
 //
-//  Created by Sam Wong on 30/10/2014.
 //  Copyright (c) 2014 Mother Functions. All rights reserved.
 //
 
@@ -36,7 +35,7 @@ class GameOverNode: SKNode {
         self.titleLabel.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMidY(scene.frame) + 100 )
         scene.addChild(self.titleLabel)
         
-        // reply button
+        // replay button
         self.replayButton = SKSpriteNode(imageNamed: "replay")
         self.replayButton.name = "Replay"
         self.replayButton.size = CGSize(width: 60.0, height: 60.0)
