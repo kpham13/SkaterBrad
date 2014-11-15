@@ -25,7 +25,6 @@
 		52AF41361A032AE7000F5687 /* GameOverMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41331A032AE7000F5687 /* GameOverMenu.swift */; };
 		52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41341A032AE7000F5687 /* SoundNode.swift */; };
 		52AF413D1A032F96000F5687 /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF413C1A032F96000F5687 /* replay.png */; };
-		92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 92A49ADB1A00127C00EEDF39 /* background.jpg */; };
 		92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A49AE51A00225B00EEDF39 /* road@3x.png */; };
 		E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3041A02E895000EF20B /* Getitnexttime.wav */; };
 		E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3051A02E895000EF20B /* Goseahawks.wav */; };
@@ -130,7 +129,6 @@
 		52AF41331A032AE7000F5687 /* GameOverMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverMenu.swift; sourceTree = "<group>"; };
 		52AF41341A032AE7000F5687 /* SoundNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SoundNode.swift; sourceTree = "<group>"; };
 		52AF413C1A032F96000F5687 /* replay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay.png; sourceTree = "<group>"; };
-		92A49ADB1A00127C00EEDF39 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = background.jpg; path = SkaterBrad/background.jpg; sourceTree = "<group>"; };
 		92A49AE51A00225B00EEDF39 /* road@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "road@3x.png"; path = "SkaterBrad/road@3x.png"; sourceTree = "<group>"; };
 		E1C2D3041A02E895000EF20B /* Getitnexttime.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Getitnexttime.wav; sourceTree = "<group>"; };
 		E1C2D3051A02E895000EF20B /* Goseahawks.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = Goseahawks.wav; sourceTree = "<group>"; };
@@ -306,7 +304,6 @@
 				EB77679F1A16DAAA0092AE7D /* NewImages */,
 				52AF413C1A032F96000F5687 /* replay.png */,
 				92A49AE51A00225B00EEDF39 /* road@3x.png */,
-				92A49ADB1A00127C00EEDF39 /* background.jpg */,
 			);
 			name = Images;
 			sourceTree = "<group>";
@@ -510,7 +507,6 @@
 				EB7767F81A16DAAA0092AE7D /* BradFall3@3x.png in Resources */,
 				EB7768031A16DAAA0092AE7D /* BradFall7@2x.png in Resources */,
 				EB7768091A16DAAA0092AE7D /* BradJump1@2x.png in Resources */,
-				92A49ADC1A00127C00EEDF39 /* background.jpg in Resources */,
 				EB7767F41A16DAAA0092AE7D /* BradFall2@2x.png in Resources */,
 				EB7768191A16DAAA0092AE7D /* SteelBeam@3x.png in Resources */,
 				EB7767F21A16DAAA0092AE7D /* BradFall1@3x.png in Resources */,
