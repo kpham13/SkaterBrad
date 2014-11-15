@@ -51,7 +51,6 @@
 		0A5479BA19FEE4F500D697D8 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0A5479BC19FEE4F500D697D8 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0A5479BF19FEE4F500D697D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0A5479C119FEE4F500D697D8 /* bg0.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = bg0.jpg; path = SkaterBrad/Images.xcassets/bg0.imageset/bg0.jpg; sourceTree = "<group>"; };
 		0A5479C419FEE4F500D697D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		0A5479CA19FEE4F500D697D8 /* SkaterBradTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkaterBradTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -194,7 +193,6 @@
 			isa = PBXGroup;
 			children = (
 				0A62FC051A16B35F00A844D2 /* Images.xcassets */,
-				0A5479C119FEE4F500D697D8 /* bg0.jpg */,
 				52AF413C1A032F96000F5687 /* replay.png */,
 				92A49AE51A00225B00EEDF39 /* road@3x.png */,
 				0A7D05E71A15D39000301D06 /* GameCenter.png */,
