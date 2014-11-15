@@ -121,7 +121,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Roads [Tina]
         for var index = 0; index < 2; ++index {
-            self.road = SKSpriteNode(imageNamed: "road.jpg")
+            self.road = SKSpriteNode(imageNamed: "road")
             self.road.anchorPoint = CGPointZero
             self.road.position = CGPoint(x: index * Int(self.road.size.width), y: 0)
             self.road.name = "road"
@@ -141,7 +141,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.hero.name = "Brad"
         self.hero = SKSpriteNode(texture: bradTexture)
-        self.hero.setScale(2.0)
+        self.hero.setScale(1.0)
         self.hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
         self.hero.anchorPoint = CGPointZero
         self.hero.zPosition = 100
@@ -445,7 +445,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.jumpNumber += 1
             }
         } else if self.duckMode == true && self.fallMode == false {
-            self.hero.yScale = 2.0
+            self.hero.yScale = 1.0
             self.hero.texture = bradTexture
             self.duckMode = false
         }
@@ -454,7 +454,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
         if self.duckMode == false && self.jumpMode == false && self.fallMode == false {
             println("Swipe down")
-            self.hero.yScale = 1.33
+            self.hero.yScale = 0.66
             self.hero.texture = bradDuckTexture
             self.duckMode = true
         }
@@ -467,6 +467,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveDown = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.8, y: self.roadSize!.height * 0.9), duration: 0.3)
         let upDown = SKAction.sequence([moveUp, moveDown])
         
+        self.jumpNumber = 2
         self.hero.runAction(fallAnimation)
         self.hero.runAction(upDown, completion: { () -> Void in
             completionHandler()
