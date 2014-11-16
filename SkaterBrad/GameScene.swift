@@ -61,19 +61,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let hookCategory = 0x1 << 7
     
     // Texture Variables [Tina]
-    var bradJumpTexture = SKTexture(imageNamed: "jump.jpg")
-    var bradTexture = SKTexture(imageNamed: "normal.jpg")
-    var bradDuckTexture = SKTexture(imageNamed: "duck.jpg")
-    var bradJumpDownTexture = SKTexture(imageNamed: "jump2.jpg")
+    var bradJumpTexture = SKTexture(imageNamed: "BradJump0")
+    var bradTexture = SKTexture(imageNamed: "BradNormal")
+    var bradDuckTexture = SKTexture(imageNamed: "BradDuck")
+    var bradJumpDownTexture = SKTexture(imageNamed: "BradJump1")
     var bradFallTextures: Array<SKTexture> = [
-        SKTexture(imageNamed: "Falling0.jpg"),
-        SKTexture(imageNamed: "Falling1.jpg"),
-        SKTexture(imageNamed: "Falling2.jpg"),
-        SKTexture(imageNamed: "Falling3.jpg"),
-        SKTexture(imageNamed: "Falling4.jpg"),
-        SKTexture(imageNamed: "Falling5.jpg"),
-        SKTexture(imageNamed: "Falling6.jpg"),
-        SKTexture(imageNamed: "Falling7.jpg"),
+        SKTexture(imageNamed: "BradFall0"),
+        SKTexture(imageNamed: "BradFall1"),
+        SKTexture(imageNamed: "BradFall2"),
+        SKTexture(imageNamed: "BradFall3"),
+        SKTexture(imageNamed: "BradFall4"),
+        SKTexture(imageNamed: "BradFall5"),
+        SKTexture(imageNamed: "BradFall6"),
+        SKTexture(imageNamed: "BradFall7"),
     ]
     
     // Menu & Buttons
@@ -117,7 +117,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // City Background [Tina]
         for var index = 0; index < 2; ++index {
-            let bg = SKSpriteNode(imageNamed: "bg\(index).jpg")
+            let bg = SKSpriteNode(imageNamed: "Background\(index)")
             bg.anchorPoint = CGPointZero
             bg.position = CGPoint(x: index * Int(bg.size.width), y: 110)
             bg.name = "background"
@@ -127,7 +127,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Roads [Tina]
         for var index = 0; index < 2; ++index {
-            self.road = SKSpriteNode(imageNamed: "road.jpg")
+            self.road = SKSpriteNode(imageNamed: "road")
             self.road.anchorPoint = CGPointZero
             self.road.position = CGPoint(x: index * Int(self.road.size.width), y: 0)
             self.road.name = "road"
@@ -147,7 +147,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.hero.name = "Brad"
         self.hero = SKSpriteNode(texture: bradTexture)
-        self.hero.setScale(2.0)
+        self.hero.setScale(1.0)
         self.hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
         self.hero.anchorPoint = CGPointZero
         self.hero.zPosition = 100
@@ -455,12 +455,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //         Jump Limit Logic ------ Uncomment to use.
             if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
                 self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 70))
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 150))
                 self.hero.texture = self.bradJumpTexture
                 self.jumpNumber += 1
             }
         } else if self.duckMode == true && self.fallMode == false {
-            self.hero.yScale = 2.0
+            self.hero.yScale = 1.0
             self.hero.texture = bradTexture
             self.duckMode = false
         }
@@ -469,7 +469,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
         if self.duckMode == false && self.jumpMode == false && self.fallMode == false {
             println("Swipe down")
-            self.hero.yScale = 1.33
+            self.hero.yScale = 0.66
             self.hero.texture = bradDuckTexture
             self.duckMode = true
         }
@@ -482,6 +482,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveDown = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.8, y: self.roadSize!.height * 0.9), duration: 0.3)
         let upDown = SKAction.sequence([moveUp, moveDown])
         
+        self.jumpNumber = 2
         self.hero.runAction(fallAnimation)
         self.hero.runAction(upDown, completion: { () -> Void in
             completionHandler()
@@ -504,7 +505,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.name = "vertical"
         self.addChild(vertical)
         
-        let bench = SKSpriteNode(imageNamed: "bench.gif")
+        let bench = SKSpriteNode(imageNamed: "Bench")
         bench.size = CGSize(width: 105, height: 60)
         bench.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height + (bench.size.height * 0.3)))
         bench.zPosition = 110
@@ -548,7 +549,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.name = "vertical"
         self.addChild(vertical)
 
-        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        let trashCan = SKSpriteNode(imageNamed: "TrashCan")
         trashCan.size = CGSize(width: 35, height: 40)
         trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height + (trashCan.size.height / 2)))
         trashCan.zPosition = 110
@@ -589,14 +590,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.name = "vertical"
         self.addChild(vertical)
         
-        let chain = SKSpriteNode(imageNamed: "chain.png")
+        let chain = SKSpriteNode(imageNamed: "Chain")
         chain.size = CGSize(width: 3, height: 350)
         chain.anchorPoint = CGPointMake(0.5, 1.0)
         chain.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame))
         chain.zPosition = -5
         vertical.addChild(chain)
         
-        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        let craneHook = SKSpriteNode(imageNamed: "CraneHook")
         craneHook.anchorPoint = CGPointMake(0.5, 1.0)
         craneHook.size = CGSize(width: 40.0, height: 60.0)
         craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame) - chain.size.height * 0.95)
@@ -606,7 +607,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         // vertical.addChild(craneHook) - delete if using conditional addChild below
         
-        let beem = SKSpriteNode(imageNamed: "steelBeam.gif")
+        let beem = SKSpriteNode(imageNamed: "SteelBeam")
         beem.zPosition = 112
         beem.size = CGSize(width: 250, height: 30)
         beem.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame) - chain.size.height - craneHook.size.height * 0.70)
@@ -653,7 +654,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.name = "vertical"
         self.addChild(vertical)
         
-        let pylon = SKSpriteNode(imageNamed: "pylon.gif")
+        let pylon = SKSpriteNode(imageNamed: "Pylon")
         pylon.size = CGSize(width: 25, height: 35)
         pylon.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height) + pylon.size.height / 2)
         pylon.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 25, height: 35))
@@ -684,7 +685,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Spawn coin [Tuan] - edited by [Kori-Brian]
     func spawnCoin() {
         //var randX = arc4random_uniform(100)
-        let coin = SKSpriteNode(imageNamed: "taco.gif")
+        let coin = SKSpriteNode(imageNamed: "Taco")
 
         coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
         coin.size = CGSize(width: 30, height: 30)
