@@ -119,7 +119,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for var index = 0; index < 2; ++index {
             let bg = SKSpriteNode(imageNamed: "Background\(index)")
             bg.anchorPoint = CGPointZero
-            bg.position = CGPoint(x: index * Int(bg.size.width), y: 110)
+            bg.position = CGPoint(x: index * Int(bg.size.width), y: 55)
             bg.name = "background"
             //bg.zPosition = 100
             self.addChild(bg)
@@ -482,7 +482,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveDown = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.8, y: self.roadSize!.height * 0.9), duration: 0.3)
         let upDown = SKAction.sequence([moveUp, moveDown])
         
-        self.jumpNumber = 2
+        self.jumpMode = false
+        self.duckMode = false
         self.hero.runAction(fallAnimation)
         self.hero.runAction(upDown, completion: { () -> Void in
             completionHandler()
