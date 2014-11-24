@@ -93,7 +93,6 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
-        
         self.registerAppTransitionObservers()
         self.userDefaultsController = UserDefaultsController()
         
