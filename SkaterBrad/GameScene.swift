@@ -687,7 +687,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //var randX = arc4random_uniform(100)
         let coin = SKSpriteNode(imageNamed: "Taco")
 
-        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
+        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, self.frame.size.height * (2 / 3))
         coin.size = CGSize(width: 30, height: 30)
         
         coin.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1 , height: 1))
