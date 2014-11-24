@@ -31,7 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var score = 0
     
     // High Score [KP]
-    let highScoreText = SKLabelNode(fontNamed: "Chalkduster")
+    let highScoreText = SKLabelNode(fontNamed: "SkaterDudes")
     var highScore = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
     
     // Jump Properties [Tuan/Vincent]
@@ -92,6 +92,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
    
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
+        
         self.registerAppTransitionObservers()
         self.userDefaultsController = UserDefaultsController()
         
@@ -172,7 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(ground)
         
         // Game Score [KP]
-        self.scoreTextLabel = SKLabelNode(fontNamed: "Chalkduster")
+        self.scoreTextLabel = SKLabelNode(fontNamed: "SkaterDudes")
         self.scoreTextLabel.text = "0"
         self.scoreTextLabel.fontSize = 50
         self.scoreTextLabel.color = UIColor.blackColor()
@@ -187,7 +188,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.highScoreText.fontSize = 15
         self.highScoreText.color = UIColor.blackColor()
         self.highScoreText.verticalAlignmentMode = SKLabelVerticalAlignmentMode(rawValue: 3)!
-        self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, CGRectGetMaxY(self.frame) * 0.01)
+        //self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, CGRectGetMaxY(self.frame) * 0.01)
+        self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, 7)
         self.highScoreText.zPosition = 100
         self.addChild(self.highScoreText)
     }
@@ -837,7 +839,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // game over label
         self.gameOverLabel = SKLabelNode(text: "Game Over")
-        self.gameOverLabel.fontName = "Chalkduster"
+        self.gameOverLabel.fontName = "SkaterDudes"
         self.gameOverLabel.fontSize = 40
         self.gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.7)
         self.gameOverLabel.zPosition = 200
@@ -847,7 +849,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.replayButton = SKSpriteNode(imageNamed: "replay")
         self.replayButton.name = "Replay"
         self.replayButton.size = CGSize(width: 60.0, height: 60.0)
-        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.55)
+        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
         
