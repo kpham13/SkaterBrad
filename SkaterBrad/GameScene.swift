@@ -12,7 +12,7 @@ import GameKit //3
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameViewController : GameViewController? //4
-    
+
     // User Defaults
     var userDefaultsController : UserDefaultsController?
     
@@ -83,7 +83,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameCenterButton: SKSpriteNode? //14
     var showNewGameMenu = true
     var showGameOverMenu = false
-    var playSound = true
+    var isSoundOn = true
+    //var isGamePaused = false
     
     // Game Over Screen
     var gameOverLabel: SKLabelNode!
@@ -95,8 +96,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.registerAppTransitionObservers()
         self.userDefaultsController = UserDefaultsController()
         
-        self.soundOption = SoundNode(playSound: self.playSound)
-        self.newGameMenu = NewGameNode(scene: self, playSound: self.playSound)
+        self.soundOption = SoundNode(isSoundOn: self.isSoundOn)
+        self.newGameMenu = NewGameNode(scene: self, playSound: self.isSoundOn)
         self.addChild(self.newGameMenu!)
 
         // Swipe Recognizer Setup [Tuan/Vincent]
@@ -320,12 +321,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if self.nodeAtPoint(location).name == "SoundOn" {
-            self.playSound = false
-            self.soundOption!.audioPlayer.stop()
+            self.isSoundOn = false
+            //self.soundOption!.audioPlayer.stop()
+            self.stopMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.Off)
         } else if self.nodeAtPoint(location).name == "SoundOff" {
-            self.playSound = true
-            self.soundOption!.audioPlayer.play()
+            self.isSoundOn = true
+            //self.soundOption!.audioPlayer.play()
+            self.playMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
         }
         
@@ -406,7 +409,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("CHA CHING")
             //self.coin.removeFromParent()
             
-            if self.playSound == true {
+            if self.isSoundOn == true {
                 let ranNum = arc4random_uniform(UInt32(3))
                 if ranNum == 0 {
                     runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
@@ -426,7 +429,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
             
-            if self.playSound == true {
+            if self.isSoundOn == true {
                 let ranNum = arc4random_uniform(UInt32(2))
                 if ranNum == 0 {
                     runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
@@ -707,6 +710,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.removeFromParent()
       }
 
+    func pauseGame() {
+        //self.isGamePaused = true
+        self.paused = true
+        if (self.isSoundOn) {
+            self.soundOption?.audioPlayer.pause()
+        }
+    }
+    
+    func unpauseGame() {
+        //self.isGamePaused = false
+        self.paused = false
+        if (self.isSoundOn) {
+            self.soundOption?.audioPlayer.play()
+        }
+    }
+    
+    func playMusic() {
+        self.soundOption?.playMusic(self.isSoundOn)
+    }
+    
+    func stopMusic() {
+        if self.soundOption?.audioPlayer?.playing == true || self.paused == true {
+            self.soundOption?.audioPlayer?.stop()
+        }
+    }
+    
     // MARK: - MENU SCREENS
     // [Sam]
     
@@ -745,7 +774,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .ResizeFill
         scene.size = skView.bounds.size
-        scene.playSound = self.playSound
+        scene.isSoundOn = self.isSoundOn
         skView.presentScene(scene)
 
     }
@@ -805,25 +834,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // [Sam]
     func registerAppTransitionObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive:", name:   UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
-    func applicationWillResignActive() {
-        //self.soundOption!.audioPlayer.stop()
-        self.scene?.paused = true
+    func applicationWillResignActive(application: UIApplication) {
+        self.pauseGame()
+    }
+  
+    func applicationDidEnterBackground(application: UIApplication) {
+        self.soundOption?.audioPlayer.stop()
+        self.soundOption?.avAudioSession.setActive(false, error: nil)
+        self.view?.paused = true
     }
     
-    func applicationDidEnterBackground() {
-        //self.soundOption!.audioPlayer.stop()
-        self.scene?.paused = true
+    func applicationWillEnterForeground(application: UIApplication) {
+        self.scene?.view?.paused = false
+        self.unpauseGame()
+        self.soundOption?.avAudioSession.setActive(true, error: nil)
     }
     
-    func applicationWillEnterForeground() {
-        self.scene?.paused = false
-        //self.soundOption!.audioPlayer.play()
-    }
     
     func generateGameOverScreen() {
         // screen dimmer node

@@ -12,28 +12,49 @@ import AVFoundation
 class SoundNode: SKNode {
     
     var audioPlayer : AVAudioPlayer! = nil
-    var playSound = true
+    var isSoundOn = true
     let backgoundMusicFile = "music"
+    var avAudioSession : AVAudioSession!
+    var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music", ofType: "mp3")!)
     
-    init(playSound : Bool) {
+    init(isSoundOn : Bool) {
         super.init()
         
-        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
-        AVAudioSession.sharedInstance().setActive(true, error: nil)
-        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient, error: nil)
+        self.avAudioSession = AVAudioSession.sharedInstance()
+        self.avAudioSession.setCategory(AVAudioSessionCategoryPlayback, error: nil)
+        self.avAudioSession.setActive(true, error: nil)
+        self.avAudioSession.setCategory(AVAudioSessionCategoryAmbient, error: nil)
         
         self.audioPlayer = AVAudioPlayer()
-        var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(self.backgoundMusicFile, ofType: "mp3")!)
+        //var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(self.backgoundMusicFile, ofType: "mp3")!)
         
         self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
         self.audioPlayer.numberOfLoops = 100 // Continuous play of background music [Kevin/Tuan]
         self.audioPlayer.volume = 0.1 // Adjusts background music volume [Kevin]
         
-        self.playSound = playSound
+        self.isSoundOn = isSoundOn
         
-        if self.playSound {
-            self.audioPlayer.prepareToPlay()
-            self.audioPlayer.play()
+        self.playMusic(isSoundOn)
+        
+//        if self.isSoundOn {
+//            self.audioPlayer.prepareToPlay()
+//            self.audioPlayer.play()
+//        }
+    }
+    
+    func playMusic(isSoundOn : Bool) {
+        var error : NSError?
+        self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
+        
+        if error != nil {
+            println(error)
+        } else {
+            if isSoundOn {
+                self.audioPlayer.prepareToPlay()
+                self.audioPlayer.numberOfLoops = -1
+                self.audioPlayer.volume = 0.25
+                self.audioPlayer?.play()
+            }
         }
     }
 

@@ -26,6 +26,7 @@
 		52AF41361A032AE7000F5687 /* GameOverMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41331A032AE7000F5687 /* GameOverMenu.swift */; };
 		52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41341A032AE7000F5687 /* SoundNode.swift */; };
 		52AF413D1A032F96000F5687 /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF413C1A032F96000F5687 /* replay.png */; };
+		52ED71DB1A23CCB9008BE4E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479BE19FEE4F500D697D8 /* Main.storyboard */; };
 		92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A49AE51A00225B00EEDF39 /* road@3x.png */; };
 		E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3041A02E895000EF20B /* Getitnexttime.wav */; };
 		E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3051A02E895000EF20B /* Goseahawks.wav */; };
@@ -293,6 +294,7 @@
 				0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
 				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
+				52ED71DB1A23CCB9008BE4E0 /* Main.storyboard in Resources */,
 				52AF413D1A032F96000F5687 /* replay.png in Resources */,
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
