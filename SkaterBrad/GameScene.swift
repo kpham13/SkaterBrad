@@ -113,6 +113,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         swipeDownRecognizer.direction = UISwipeGestureRecognizerDirection.Down
         self.view?.addGestureRecognizer(swipeDownRecognizer)
         
+
         
       // self.addChild(obst2)
         
@@ -165,6 +166,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.hero.physicsBody?.contactTestBitMask = UInt32(self.heroCategory) | UInt32(self.groundCategory) | UInt32(self.obstacleCategory) | UInt32(self.contactCategory) | UInt32(self.scoreCategory)
         self.hero.physicsBody?.collisionBitMask = UInt32(self.groundCategory) | UInt32(self.obstacleCategory) | UInt32(self.contactCategory)
         self.addChild(hero)
+        
+
+        
         
         // Ground [Kevin/Tina]
         var ground = SKShapeNode(rectOfSize: CGSize(width: 400, height: self.roadSize!.height))
@@ -264,6 +268,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         if self.jumpTime >= 0.5 && self.jumpMode == true {
             self.hero.texture = self.bradJumpDownTexture
         }
+        
     }
     
     // MARK: - TOUCHES BEGAN
@@ -486,8 +491,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func heroFallAnimation(completionHandler: () -> Void) {
         println("Fall animation")
         let fallAnimation = SKAction.animateWithTextures(self.bradFallTextures, timePerFrame: 0.1)
-        let moveUp = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.6, y: self.frame.height / 2), duration: 0.5)
-        let moveDown = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.8, y: self.roadSize!.height * 0.9), duration: 0.3)
+        let moveUp = SKAction.moveTo(CGPoint(x: self.frame.width * 0.6, y: self.frame.height / 2), duration: 0.5)
+        let moveDown = SKAction.moveTo(CGPoint(x: self.frame.width * 0.8, y: self.roadSize!.height * 0.9), duration: 0.3)
         let upDown = SKAction.sequence([moveUp, moveDown])
         
         self.jumpMode = false
@@ -696,7 +701,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //var randX = arc4random_uniform(100)
         let coin = SKSpriteNode(imageNamed: "Taco")
 
-        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
+        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, self.roadSize!.height + self.hero.size.height * 3)
         coin.size = CGSize(width: 30, height: 30)
         
         coin.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1 , height: 1))
