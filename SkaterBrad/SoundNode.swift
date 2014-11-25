@@ -26,7 +26,12 @@ class SoundNode: SKNode {
         self.avAudioSession.setCategory(AVAudioSessionCategoryAmbient, error: nil)
         
         self.audioPlayer = AVAudioPlayer()
-        //var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(self.backgoundMusicFile, ofType: "mp3")!)
+        var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource(self.backgoundMusicFile, ofType: "mp3")!)
+        
+        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback, error: nil)
+        AVAudioSession.sharedInstance().setActive(true, error: nil)
+        // Audio will mute when system mute.
+        AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient, error: nil)
         
         self.audioPlayer = AVAudioPlayer(contentsOfURL: musicURL, error: nil)
         self.audioPlayer.numberOfLoops = 100 // Continuous play of background music [Kevin/Tuan]

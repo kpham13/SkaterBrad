@@ -90,9 +90,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOverLabel: SKLabelNode!
     var screenDimmerNode : SKSpriteNode!
     var replayButton : SKSpriteNode!
+    
    
+    
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
+        
+        
         self.registerAppTransitionObservers()
         self.userDefaultsController = UserDefaultsController()
         
@@ -846,20 +850,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
-    func applicationWillResignActive(application: UIApplication) {
-        self.pauseGame()
-    }
-  
-    func applicationDidEnterBackground(application: UIApplication) {
-        self.soundOption?.audioPlayer.stop()
-        self.soundOption?.avAudioSession.setActive(false, error: nil)
-        self.view?.paused = true
+    func applicationWillResignActive() {
+        //self.soundOption!.audioPlayer.stop()
+        self.scene?.paused = true
     }
     
-    func applicationWillEnterForeground(application: UIApplication) {
-        self.scene?.view?.paused = false
-        self.unpauseGame()
-        self.soundOption?.avAudioSession.setActive(true, error: nil)
+    func applicationDidEnterBackground() {
+        //self.soundOption!.audioPlayer.stop()
+        self.scene?.paused = true
+    }
+    
+    func applicationWillEnterForeground() {
+        self.scene?.paused = false
+        //self.soundOption!.audioPlayer.play()
     }
     
     
