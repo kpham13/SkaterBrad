@@ -12,7 +12,7 @@ import GameKit //3
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameViewController : GameViewController? //4
-    
+
     // User Defaults
     var userDefaultsController : UserDefaultsController?
     
@@ -31,7 +31,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var score = 0
     
     // High Score [KP]
-    let highScoreText = SKLabelNode(fontNamed: "Chalkduster")
+    let highScoreText = SKLabelNode(fontNamed: "SkaterDudes")
     var highScore = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
     
     // Jump Properties [Tuan/Vincent]
@@ -83,7 +83,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameCenterButton: SKSpriteNode? //14
     var showNewGameMenu = true
     var showGameOverMenu = false
-    var playSound = true
+    var isSoundOn = true
+    //var isGamePaused = false
     
     // Game Over Screen
     var gameOverLabel: SKLabelNode!
@@ -95,8 +96,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.registerAppTransitionObservers()
         self.userDefaultsController = UserDefaultsController()
         
-        self.soundOption = SoundNode(playSound: self.playSound)
-        self.newGameMenu = NewGameNode(scene: self, playSound: self.playSound)
+        self.soundOption = SoundNode(isSoundOn: self.isSoundOn)
+        self.newGameMenu = NewGameNode(scene: self, playSound: self.isSoundOn)
         self.addChild(self.newGameMenu!)
 
         // Swipe Recognizer Setup [Tuan/Vincent]
@@ -119,7 +120,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         for var index = 0; index < 2; ++index {
             let bg = SKSpriteNode(imageNamed: "Background\(index)")
             bg.anchorPoint = CGPointZero
-            bg.position = CGPoint(x: index * Int(bg.size.width), y: 110)
+            bg.position = CGPoint(x: index * Int(bg.size.width), y: 55)
             bg.name = "background"
             //bg.zPosition = 100
             self.addChild(bg)
@@ -172,7 +173,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(ground)
         
         // Game Score [KP]
-        self.scoreTextLabel = SKLabelNode(fontNamed: "Chalkduster")
+        self.scoreTextLabel = SKLabelNode(fontNamed: "SkaterDudes")
         self.scoreTextLabel.text = "0"
         self.scoreTextLabel.fontSize = 50
         self.scoreTextLabel.color = UIColor.blackColor()
@@ -187,7 +188,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.highScoreText.fontSize = 15
         self.highScoreText.color = UIColor.blackColor()
         self.highScoreText.verticalAlignmentMode = SKLabelVerticalAlignmentMode(rawValue: 3)!
-        self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, CGRectGetMaxY(self.frame) * 0.01)
+        //self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, CGRectGetMaxY(self.frame) * 0.01)
+        self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, 7)
         self.highScoreText.zPosition = 100
         self.addChild(self.highScoreText)
     }
@@ -320,12 +322,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         if self.nodeAtPoint(location).name == "SoundOn" {
-            self.playSound = false
-            self.soundOption!.audioPlayer.stop()
+            self.isSoundOn = false
+            //self.soundOption!.audioPlayer.stop()
+            self.stopMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.Off)
         } else if self.nodeAtPoint(location).name == "SoundOff" {
-            self.playSound = true
-            self.soundOption!.audioPlayer.play()
+            self.isSoundOn = true
+            //self.soundOption!.audioPlayer.play()
+            self.playMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
         }
         
@@ -406,7 +410,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("CHA CHING")
             //self.coin.removeFromParent()
             
-            if self.playSound == true {
+            if self.isSoundOn == true {
                 let ranNum = arc4random_uniform(UInt32(3))
                 if ranNum == 0 {
                     runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
@@ -426,7 +430,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
             
-            if self.playSound == true {
+            if self.isSoundOn == true {
                 let ranNum = arc4random_uniform(UInt32(2))
                 if ranNum == 0 {
                     runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
@@ -482,7 +486,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveDown = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.8, y: self.roadSize!.height * 0.9), duration: 0.3)
         let upDown = SKAction.sequence([moveUp, moveDown])
         
-        self.jumpNumber = 2
+        self.jumpMode = false
+        self.duckMode = false
         self.hero.runAction(fallAnimation)
         self.hero.runAction(upDown, completion: { () -> Void in
             completionHandler()
@@ -591,7 +596,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(vertical)
         
         let chain = SKSpriteNode(imageNamed: "Chain")
-        chain.size = CGSize(width: 3, height: 350)
+        chain.size = CGSize(width: 3, height: CGRectGetMaxY(self.frame) - (self.hero.size.height * 2)   - self.roadSize!.height)
         chain.anchorPoint = CGPointMake(0.5, 1.0)
         chain.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame))
         chain.zPosition = -5
@@ -707,6 +712,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.removeFromParent()
       }
 
+    func pauseGame() {
+        //self.isGamePaused = true
+        self.paused = true
+        if (self.isSoundOn) {
+            self.soundOption?.audioPlayer.pause()
+        }
+    }
+    
+    func unpauseGame() {
+        //self.isGamePaused = false
+        self.paused = false
+        if (self.isSoundOn) {
+            self.soundOption?.audioPlayer.play()
+        }
+    }
+    
+    func playMusic() {
+        self.soundOption?.playMusic(self.isSoundOn)
+    }
+    
+    func stopMusic() {
+        if self.soundOption?.audioPlayer?.playing == true || self.paused == true {
+            self.soundOption?.audioPlayer?.stop()
+        }
+    }
+    
     // MARK: - MENU SCREENS
     // [Sam]
     
@@ -745,7 +776,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .ResizeFill
         scene.size = skView.bounds.size
-        scene.playSound = self.playSound
+        scene.isSoundOn = self.isSoundOn
         skView.presentScene(scene)
 
     }
@@ -805,25 +836,27 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // [Sam]
     func registerAppTransitionObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive:", name:   UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
-    func applicationWillResignActive() {
-        //self.soundOption!.audioPlayer.stop()
-        self.scene?.paused = true
+    func applicationWillResignActive(application: UIApplication) {
+        self.pauseGame()
+    }
+  
+    func applicationDidEnterBackground(application: UIApplication) {
+        self.soundOption?.audioPlayer.stop()
+        self.soundOption?.avAudioSession.setActive(false, error: nil)
+        self.view?.paused = true
     }
     
-    func applicationDidEnterBackground() {
-        //self.soundOption!.audioPlayer.stop()
-        self.scene?.paused = true
+    func applicationWillEnterForeground(application: UIApplication) {
+        self.scene?.view?.paused = false
+        self.unpauseGame()
+        self.soundOption?.avAudioSession.setActive(true, error: nil)
     }
     
-    func applicationWillEnterForeground() {
-        self.scene?.paused = false
-        //self.soundOption!.audioPlayer.play()
-    }
     
     func generateGameOverScreen() {
         // screen dimmer node
@@ -837,7 +870,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // game over label
         self.gameOverLabel = SKLabelNode(text: "Game Over")
-        self.gameOverLabel.fontName = "Chalkduster"
+        self.gameOverLabel.fontName = "SkaterDudes"
         self.gameOverLabel.fontSize = 40
         self.gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.7)
         self.gameOverLabel.zPosition = 200
@@ -847,7 +880,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.replayButton = SKSpriteNode(imageNamed: "replay")
         self.replayButton.name = "Replay"
         self.replayButton.size = CGSize(width: 60.0, height: 60.0)
-        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.55)
+        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
         
