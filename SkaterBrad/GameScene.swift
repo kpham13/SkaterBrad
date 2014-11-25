@@ -2,14 +2,19 @@
 //  GameScene.swift
 //  SkaterBrad
 //
-//  Created by Kevin Pham on 10/27/14.
 //  Copyright (c) 2014 Mother Functions. All rights reserved.
 //
 
 import SpriteKit
 import AVFoundation
+import GameKit //3
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
+    
+    var gameViewController : GameViewController? //4
+
+    // User Defaults
+    var userDefaultsController : UserDefaultsController?
     
     var hero = SKSpriteNode()
     var road = SKSpriteNode()
@@ -21,12 +26,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var roadSpeed : CGFloat = 3.0 // 6.0
     var roadSize : CGSize?
     
-    // Score [Kevin]
-    let scoreText = SKLabelNode(fontNamed: "Chalkduster")
+    // Score [KP]
+    var scoreTextLabel: SKLabelNode!
     var score = 0
     
-    // High Score [Kevin]
-    let highScoreText = SKLabelNode(fontNamed: "Chalkduster")
+    // High Score [KP]
+    let highScoreText = SKLabelNode(fontNamed: "SkaterDudes")
     var highScore = NSUserDefaults.standardUserDefaults().integerForKey("highscore")
     
     // Jump Properties [Tuan/Vincent]
@@ -56,28 +61,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     let hookCategory = 0x1 << 7
     
     // Texture Variables [Tina]
-    var bradJumpTexture = SKTexture(imageNamed: "jump.jpg")
-    var bradTexture = SKTexture(imageNamed: "normal.jpg")
-    var bradDuckTexture = SKTexture(imageNamed: "duck.jpg")
-    var bradJumpDownTexture = SKTexture(imageNamed: "jump2.jpg")
+    var bradJumpTexture = SKTexture(imageNamed: "BradJump0")
+    var bradTexture = SKTexture(imageNamed: "BradNormal")
+    var bradDuckTexture = SKTexture(imageNamed: "BradDuck")
+    var bradJumpDownTexture = SKTexture(imageNamed: "BradJump1")
     var bradFallTextures: Array<SKTexture> = [
-        SKTexture(imageNamed: "Falling0.jpg"),
-        SKTexture(imageNamed: "Falling1.jpg"),
-        SKTexture(imageNamed: "Falling2.jpg"),
-        SKTexture(imageNamed: "Falling3.jpg"),
-        SKTexture(imageNamed: "Falling4.jpg"),
-        SKTexture(imageNamed: "Falling5.jpg"),
-        SKTexture(imageNamed: "Falling6.jpg"),
-        SKTexture(imageNamed: "Falling7.jpg"),
+        SKTexture(imageNamed: "BradFall0"),
+        SKTexture(imageNamed: "BradFall1"),
+        SKTexture(imageNamed: "BradFall2"),
+        SKTexture(imageNamed: "BradFall3"),
+        SKTexture(imageNamed: "BradFall4"),
+        SKTexture(imageNamed: "BradFall5"),
+        SKTexture(imageNamed: "BradFall6"),
+        SKTexture(imageNamed: "BradFall7"),
     ]
     
     // Menu & Buttons
     var soundOption: SoundNode?
     var newGameMenu: NewGameNode?
     var gameOverMenu: GameOverNode?
+    var gameCenterButton: SKSpriteNode? //14
     var showNewGameMenu = true
     var showGameOverMenu = false
-    var playSound = true
+    var isSoundOn = true
+    //var isGamePaused = false
     
     // Game Over Screen
     var gameOverLabel: SKLabelNode!
@@ -91,10 +98,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         self.registerAppTransitionObservers()
+        self.userDefaultsController = UserDefaultsController()
         
-        self.soundOption = SoundNode(playSound: self.playSound)
-        self.newGameMenu = NewGameNode(scene: self, playSound: self.playSound)
-    
+        self.soundOption = SoundNode(isSoundOn: self.isSoundOn)
+        self.newGameMenu = NewGameNode(scene: self, playSound: self.isSoundOn)
         self.addChild(self.newGameMenu!)
 
         // Swipe Recognizer Setup [Tuan/Vincent]
@@ -115,9 +122,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // City Background [Tina]
         for var index = 0; index < 2; ++index {
-            let bg = SKSpriteNode(imageNamed: "bg\(index).jpg")
+            let bg = SKSpriteNode(imageNamed: "Background\(index)")
             bg.anchorPoint = CGPointZero
-            bg.position = CGPoint(x: index * Int(bg.size.width), y: 110)
+            bg.position = CGPoint(x: index * Int(bg.size.width), y: 55)
             bg.name = "background"
             //bg.zPosition = 100
             self.addChild(bg)
@@ -125,7 +132,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Roads [Tina]
         for var index = 0; index < 2; ++index {
-            self.road = SKSpriteNode(imageNamed: "road.jpg")
+            self.road = SKSpriteNode(imageNamed: "road")
             self.road.anchorPoint = CGPointZero
             self.road.position = CGPoint(x: index * Int(self.road.size.width), y: 0)
             self.road.name = "road"
@@ -145,7 +152,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         self.hero.name = "Brad"
         self.hero = SKSpriteNode(texture: bradTexture)
-        self.hero.setScale(2.0)
+        self.hero.setScale(1.0)
         self.hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
         self.hero.anchorPoint = CGPointZero
         self.hero.zPosition = 100
@@ -169,21 +176,24 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         ground.physicsBody?.categoryBitMask = UInt32(self.groundCategory)
         self.addChild(ground)
         
-        // Game Score [Kevin]
-        self.scoreText.text = "0"
-        self.scoreText.fontSize = 50
-        self.scoreText.color = UIColor.blackColor()
-        self.scoreText.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.08)
-        self.scoreText.zPosition = 100
-        self.addChild(self.scoreText)
+        // Game Score [KP]
+        self.scoreTextLabel = SKLabelNode(fontNamed: "SkaterDudes")
+        self.scoreTextLabel.text = "0"
+        self.scoreTextLabel.fontSize = 50
+        self.scoreTextLabel.color = UIColor.blackColor()
+        self.scoreTextLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.08)
+        self.scoreTextLabel.zPosition = 100
+        self.scoreTextLabel.hidden = true
+        self.addChild(self.scoreTextLabel)
         
         //NSUserDefaults.standardUserDefaults().setInteger(0, forKey: "highscore")
-        // High Score [Kevin]
+        // High Score [KP]
         self.highScoreText.text = "High Score: \(self.highScore)"
         self.highScoreText.fontSize = 15
         self.highScoreText.color = UIColor.blackColor()
         self.highScoreText.verticalAlignmentMode = SKLabelVerticalAlignmentMode(rawValue: 3)!
-        self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, CGRectGetMaxY(self.frame) * 0.01)
+        //self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, CGRectGetMaxY(self.frame) * 0.01)
+        self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, 7)
         self.highScoreText.zPosition = 100
         self.addChild(self.highScoreText)
     }
@@ -310,19 +320,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.showNewGameMenu = false
                 self.showGameOverMenu = false
                 self.newGameMenu?.removeFromParent()
+                self.scoreTextLabel.hidden = false
                 self.startSpawn()
             }))
         }
         
         if self.nodeAtPoint(location).name == "SoundOn" {
-            self.playSound = false
-            self.soundOption!.audioPlayer.stop()
+            self.isSoundOn = false
+            //self.soundOption!.audioPlayer.stop()
+            self.stopMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.Off)
         } else if self.nodeAtPoint(location).name == "SoundOff" {
-            self.playSound = true
-            self.soundOption!.audioPlayer.play()
+            self.isSoundOn = true
+            //self.soundOption!.audioPlayer.play()
+            self.playMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
         }
+        
+        //16
+        if self.nodeAtPoint(location).name == "GameCenterButton" {
+            self.gameViewController?.showLeaderboardAndAchievements(true)
+        }
+        
     }
     
     // [Sam]
@@ -383,9 +402,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.scoreCategory):
             println("Score!")
             self.score += 1
-            self.scoreText.text = String(self.score)
-            self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
-            self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
+            self.scoreTextLabel.text = String(self.score)
+            self.scoreTextLabel.runAction(SKAction.scaleTo(2.0, duration: 0.1))
+            self.scoreTextLabel.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.coinCategory):
           // calls function that removes coin on contact
             if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
@@ -395,7 +414,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             println("CHA CHING")
             //self.coin.removeFromParent()
             
-            if self.playSound == true {
+            if self.isSoundOn == true {
                 let ranNum = arc4random_uniform(UInt32(3))
                 if ranNum == 0 {
                     runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
@@ -409,13 +428,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }
             
             self.score += 10
-            self.scoreText.text = String(self.score)
-            self.scoreText.runAction(SKAction.scaleTo(2.0, duration: 0.1))
-            self.scoreText.runAction(SKAction.scaleTo(1.0, duration: 0.1))
+            self.scoreTextLabel.text = String(self.score)
+            self.scoreTextLabel.runAction(SKAction.scaleTo(2.0, duration: 0.1))
+            self.scoreTextLabel.runAction(SKAction.scaleTo(1.0, duration: 0.1))
         case UInt32(self.heroCategory) | UInt32(self.contactCategory):
             println("Hero hit contact node")
             
-            if self.playSound == true {
+            if self.isSoundOn == true {
                 let ranNum = arc4random_uniform(UInt32(2))
                 if ranNum == 0 {
                     runAction(SKAction.playSoundFileNamed("Getitnexttime.wav", waitForCompletion: false))
@@ -444,12 +463,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //         Jump Limit Logic ------ Uncomment to use.
             if self.jumpNumber < 2 && self.jumpTime <= 0.5 {
                 self.hero.physicsBody!.velocity = CGVectorMake(0, 0)
-                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 70))
+                self.hero.physicsBody!.applyImpulse(CGVectorMake(0, 150))
                 self.hero.texture = self.bradJumpTexture
                 self.jumpNumber += 1
             }
         } else if self.duckMode == true && self.fallMode == false {
-            self.hero.yScale = 2.0
+            self.hero.yScale = 1.0
             self.hero.texture = bradTexture
             self.duckMode = false
         }
@@ -458,7 +477,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     func swipeDownAction(swipe: UISwipeGestureRecognizer) {
         if self.duckMode == false && self.jumpMode == false && self.fallMode == false {
             println("Swipe down")
-            self.hero.yScale = 1.33
+            self.hero.yScale = 0.66
             self.hero.texture = bradDuckTexture
             self.duckMode = true
         }
@@ -471,6 +490,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         let moveDown = SKAction.moveTo(CGPoint(x: self.roadSize!.width * 0.8, y: self.roadSize!.height * 0.9), duration: 0.3)
         let upDown = SKAction.sequence([moveUp, moveDown])
         
+        self.jumpMode = false
+        self.duckMode = false
         self.hero.runAction(fallAnimation)
         self.hero.runAction(upDown, completion: { () -> Void in
             completionHandler()
@@ -493,7 +514,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.name = "vertical"
         self.addChild(vertical)
         
-        let bench = SKSpriteNode(imageNamed: "bench.gif")
+        let bench = SKSpriteNode(imageNamed: "Bench")
         bench.size = CGSize(width: 105, height: 60)
         bench.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height + (bench.size.height * 0.3)))
         bench.zPosition = 110
@@ -537,7 +558,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.name = "vertical"
         self.addChild(vertical)
 
-        let trashCan = SKSpriteNode(imageNamed: "trashCan.gif")
+        let trashCan = SKSpriteNode(imageNamed: "TrashCan")
         trashCan.size = CGSize(width: 35, height: 40)
         trashCan.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height + (trashCan.size.height / 2)))
         trashCan.zPosition = 110
@@ -578,14 +599,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.name = "vertical"
         self.addChild(vertical)
         
-        let chain = SKSpriteNode(imageNamed: "chain.png")
-        chain.size = CGSize(width: 3, height: 350)
+        let chain = SKSpriteNode(imageNamed: "Chain")
+        chain.size = CGSize(width: 3, height: CGRectGetMaxY(self.frame) - (self.hero.size.height * 2)   - self.roadSize!.height)
         chain.anchorPoint = CGPointMake(0.5, 1.0)
         chain.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame))
         chain.zPosition = -5
         vertical.addChild(chain)
         
-        let craneHook = SKSpriteNode(imageNamed: "crane.gif")
+        let craneHook = SKSpriteNode(imageNamed: "CraneHook")
         craneHook.anchorPoint = CGPointMake(0.5, 1.0)
         craneHook.size = CGSize(width: 40.0, height: 60.0)
         craneHook.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame) - chain.size.height * 0.95)
@@ -595,7 +616,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //craneHook.physicsBody?.categoryBitMask = UInt32(self.obstacleCategory)
         // vertical.addChild(craneHook) - delete if using conditional addChild below
         
-        let beem = SKSpriteNode(imageNamed: "steelBeam.gif")
+        let beem = SKSpriteNode(imageNamed: "SteelBeam")
         beem.zPosition = 112
         beem.size = CGSize(width: 250, height: 30)
         beem.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame) - chain.size.height - craneHook.size.height * 0.70)
@@ -642,7 +663,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         vertical.name = "vertical"
         self.addChild(vertical)
         
-        let pylon = SKSpriteNode(imageNamed: "pylon.gif")
+        let pylon = SKSpriteNode(imageNamed: "Pylon")
         pylon.size = CGSize(width: 25, height: 35)
         pylon.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, (self.roadSize!.height) + pylon.size.height / 2)
         pylon.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 25, height: 35))
@@ -673,7 +694,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Spawn coin [Tuan] - edited by [Kori-Brian]
     func spawnCoin() {
         //var randX = arc4random_uniform(100)
-        let coin = SKSpriteNode(imageNamed: "taco.gif")
+        let coin = SKSpriteNode(imageNamed: "Taco")
 
         coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, 350)
         coin.size = CGSize(width: 30, height: 30)
@@ -695,6 +716,32 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         coin.removeFromParent()
       }
 
+    func pauseGame() {
+        //self.isGamePaused = true
+        self.paused = true
+        if (self.isSoundOn) {
+            self.soundOption?.audioPlayer.pause()
+        }
+    }
+    
+    func unpauseGame() {
+        //self.isGamePaused = false
+        self.paused = false
+        if (self.isSoundOn) {
+            self.soundOption?.audioPlayer.play()
+        }
+    }
+    
+    func playMusic() {
+        self.soundOption?.playMusic(self.isSoundOn)
+    }
+    
+    func stopMusic() {
+        if self.soundOption?.audioPlayer?.playing == true || self.paused == true {
+            self.soundOption?.audioPlayer?.stop()
+        }
+    }
+    
     // MARK: - MENU SCREENS
     // [Sam]
     
@@ -727,12 +774,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.backgroundSpeed = 1.0
         
         var scene = GameScene(size: self.size)
-
+        scene.gameViewController = self.gameViewController
+        
         let skView = self.view! as SKView
         skView.ignoresSiblingOrder = true
         scene.scaleMode = .ResizeFill
         scene.size = skView.bounds.size
-        scene.playSound = self.playSound
+        scene.isSoundOn = self.isSoundOn
         skView.presentScene(scene)
 
     }
@@ -792,9 +840,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // [Sam]
     func registerAppTransitionObservers() {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive", name:UIApplicationWillResignActiveNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground", name:UIApplicationDidEnterBackgroundNotification, object: nil)
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground", name:UIApplicationWillEnterForegroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillResignActive:", name:   UIApplicationWillResignActiveNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationDidEnterBackground:", name: UIApplicationDidEnterBackgroundNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "applicationWillEnterForeground:", name: UIApplicationWillEnterForegroundNotification, object: nil)
     }
     
     func applicationWillResignActive() {
@@ -812,6 +860,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //self.soundOption!.audioPlayer.play()
     }
     
+    
     func generateGameOverScreen() {
         // screen dimmer node
         self.screenDimmerNode = SKSpriteNode()
@@ -824,32 +873,28 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // game over label
         self.gameOverLabel = SKLabelNode(text: "Game Over")
-        self.gameOverLabel.fontName = "Chalkduster"
+        self.gameOverLabel.fontName = "SkaterDudes"
         self.gameOverLabel.fontSize = 40
         self.gameOverLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.7)
         self.gameOverLabel.zPosition = 200
         self.addChild(self.gameOverLabel)
         
-        // reply button
+        // replay button
         self.replayButton = SKSpriteNode(imageNamed: "replay")
         self.replayButton.name = "Replay"
         self.replayButton.size = CGSize(width: 60.0, height: 60.0)
-        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.55)
+        self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
         
-        // High Score [Kevin]
-        if self.score > NSUserDefaults.standardUserDefaults().integerForKey("highscore") {
-            NSUserDefaults.standardUserDefaults().setInteger(score, forKey: "highscore")
-            NSUserDefaults.standardUserDefaults().synchronize()
-            
-            self.highScoreText.speed = 0.1
-            
-            for var newScore = self.highScore; newScore <= self.score; ++newScore {
-                self.highScoreText.text = "High Score: \(newScore)"
-            }
-            
-            self.highScoreText.speed = 1.0
+        // High Score [KP]
+        self.userDefaultsController?.highScoreCheck(self)
+
+        // Game Center [KP] //12
+        if self.gameViewController?.gameCenterEnabled == true {
+            println(self.gameViewController?.gameCenterEnabled)
+            let gameCenterScore = Int64(self.score)
+            self.gameViewController!.reportScoreToGameCenter(gameCenterScore, forLeaderboard: "MF.SkaterBrad")
         }
     }
 
