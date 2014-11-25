@@ -373,6 +373,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 self.restartGame()
         }
         
+        if self.nodeAtPoint(location).name == "GameCenterButton" {
+            self.gameViewController?.showLeaderboardAndAchievements(true)
+        }
+        
 //        if self.nodeAtPoint(location) == self.gameOverMenu?.replayButton {
 //            self.runAction(SKAction.runBlock({ () -> Void in
 //                self.gameOverMenu?.removeFromParent()
@@ -888,6 +892,30 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
+        
+        // Game Center Button [KP] //15
+        self.gameCenterButton = SKSpriteNode(imageNamed: "GameCenter")
+        self.gameCenterButton?.name = "GameCenterButton"
+        self.gameCenterButton?.zPosition = 200
+        self.gameCenterButton?.xScale = 0.8
+        self.gameCenterButton?.yScale = 0.8
+        self.gameCenterButton?.anchorPoint = CGPointMake(0, 0)
+        
+        println("The height of the frame is \(self.frame.size.height)")
+        if self.frame.size.height == 568 {
+            self.gameCenterButton?.position = CGPointMake(CGRectGetMaxX(self.frame) * (-0.04), CGRectGetMaxY(self.frame) * (-0.03))
+        } else if self.frame.size.height == 667 {
+            self.gameCenterButton?.position = CGPointMake(CGRectGetMaxX(self.frame) * (-0.01), CGRectGetMaxY(self.frame) * (-0.025))
+        } else if self.frame.size.height == 736 {
+            println(self.frame.size.height)
+            self.gameCenterButton?.xScale = 1.0
+            self.gameCenterButton?.yScale = 1.0
+            self.gameCenterButton?.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.02, CGRectGetMaxY(self.frame) * (-0.015))
+        } else {
+            self.gameCenterButton?.position = CGPointMake(CGRectGetMaxX(self.frame) * (-0.03), CGRectGetMaxY(self.frame) * (-0.03))
+        }
+        
+        self.addChild(self.gameCenterButton!)
         
         // High Score [KP]
         self.userDefaultsController?.highScoreCheck(self)
