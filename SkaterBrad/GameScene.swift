@@ -83,9 +83,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOverLabel: SKLabelNode!
     var screenDimmerNode : SKSpriteNode!
     var replayButton : SKSpriteNode!
+    
    
+    
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
+        
+        
         self.registerAppTransitionObservers()
         
         self.soundOption = SoundNode(playSound: self.playSound)
@@ -794,18 +798,18 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     func applicationWillResignActive() {
-        self.soundOption!.audioPlayer.stop()
+        //self.soundOption!.audioPlayer.stop()
         self.scene?.paused = true
     }
     
     func applicationDidEnterBackground() {
-        self.soundOption!.audioPlayer.stop()
+        //self.soundOption!.audioPlayer.stop()
         self.scene?.paused = true
     }
     
     func applicationWillEnterForeground() {
         self.scene?.paused = false
-        self.soundOption!.audioPlayer.play()
+        //self.soundOption!.audioPlayer.play()
     }
     
     func generateGameOverScreen() {
