@@ -596,7 +596,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(vertical)
         
         let chain = SKSpriteNode(imageNamed: "Chain")
-        chain.size = CGSize(width: 3, height: 350)
+        chain.size = CGSize(width: 3, height: CGRectGetMaxY(self.frame) - (self.hero.size.height * 2)   - self.roadSize!.height)
         chain.anchorPoint = CGPointMake(0.5, 1.0)
         chain.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame))
         chain.zPosition = -5
