@@ -91,8 +91,10 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var screenDimmerNode : SKSpriteNode!
     var replayButton : SKSpriteNode!
    
+    
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
+        self.scaleMode = SKSceneScaleMode.ResizeFill
         self.registerAppTransitionObservers()
         self.userDefaultsController = UserDefaultsController()
         
@@ -148,11 +150,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
         
         self.hero.name = "Brad"
-        self.hero = SKSpriteNode(texture: bradTexture)
+        self.hero = SKSpriteNode(texture: bradTexture, size: CGSize(width: 70, height: 90))
         self.hero.setScale(1.0)
         self.hero.position = CGPoint(x: self.frame.size.width * self.heroPositionX, y: self.frame.size.height * 0.5) // Change y to ground level
         self.hero.anchorPoint = CGPointZero
         self.hero.zPosition = 100
+        
         
         // Physics Body Around Hero
         self.hero.physicsBody = SKPhysicsBody(rectangleOfSize: hero.size, center: CGPointMake(hero.frame.width / 2, hero.frame.height / 2))
@@ -605,7 +608,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(vertical)
         
         let chain = SKSpriteNode(imageNamed: "Chain")
-        chain.size = CGSize(width: 3, height: CGRectGetMaxY(self.frame) - (self.hero.size.height * 2)   - self.roadSize!.height)
+        chain.size = CGSize(width: 3, height: CGRectGetMaxY(self.frame) - (self.hero.size.height * 1.4)   - self.roadSize!.height)
         chain.anchorPoint = CGPointMake(0.5, 1.0)
         chain.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, CGRectGetMaxY(self.frame))
         chain.zPosition = -5
