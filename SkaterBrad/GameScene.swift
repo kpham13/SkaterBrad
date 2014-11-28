@@ -183,22 +183,41 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         // Game Score [KP]
         self.scoreTextLabel = SKLabelNode(fontNamed: "SkaterDudes")
         self.scoreTextLabel.text = "0"
-        self.scoreTextLabel.fontSize = 50
         self.scoreTextLabel.color = UIColor.blackColor()
-        self.scoreTextLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.08)
         self.scoreTextLabel.zPosition = 100
         self.scoreTextLabel.hidden = true
-        self.addChild(self.scoreTextLabel)
         
         //NSUserDefaults.standardUserDefaults().setInteger(0, forKey: "highscore")
         // High Score [KP]
         self.highScoreText.text = "High Score: \(self.highScore)"
-        self.highScoreText.fontSize = 15
         self.highScoreText.color = UIColor.blackColor()
         self.highScoreText.verticalAlignmentMode = SKLabelVerticalAlignmentMode(rawValue: 3)!
         //self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, CGRectGetMaxY(self.frame) * 0.01)
-        self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, 7)
         self.highScoreText.zPosition = 100
+        
+        if self.frame.size.height == 568 {
+            self.scoreTextLabel.fontSize = 35
+            self.scoreTextLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.09)
+            self.highScoreText.fontSize = 15
+            self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.76, 8)
+        } else if self.frame.size.height == 667 {
+            self.scoreTextLabel.fontSize = 38
+            self.scoreTextLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.08)
+            self.highScoreText.fontSize = 16
+            self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.77, 8)
+        } else if self.frame.size.height == 736 {
+            self.scoreTextLabel.fontSize = 41
+            self.scoreTextLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.08)
+            self.highScoreText.fontSize = 17
+            self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.76, 9)
+        } else {
+            self.scoreTextLabel.fontSize = 32
+            self.scoreTextLabel.position = CGPointMake(CGRectGetMidX(self.frame), self.frame.size.height * 0.1)
+            self.highScoreText.fontSize = 13
+            self.highScoreText.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.8, 7)
+        }
+    
+        self.addChild(self.scoreTextLabel)
         self.addChild(self.highScoreText)
     }
     
@@ -212,8 +231,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Add speed increase as a function of score. [Vincent]
         if self.score >= self.scoreLevelLimit {
-            self.backgroundSpeed += 5
-            self.roadSpeed += 5
+            self.backgroundSpeed = self.backgroundSpeed * 1.15
+            self.roadSpeed = self.roadSpeed * 1.15
             self.self.scoreLevelLimit += 50
             println("Level Increase")
         }
@@ -431,15 +450,12 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             //self.coin.removeFromParent()
             
             if self.isSoundOn == true {
-                let ranNum = arc4random_uniform(UInt32(3))
+                let ranNum = arc4random_uniform(UInt32(2))
                 if ranNum == 0 {
-                    runAction(SKAction.playSoundFileNamed("Ohdamn.wav", waitForCompletion: false))
+                    runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
                 }
                 else if ranNum == 1 {
                     runAction(SKAction.playSoundFileNamed("Goseahawks.wav", waitForCompletion: false))
-                }
-                else if ranNum == 2 {
-                    runAction(SKAction.playSoundFileNamed("Twitterrocks.wav", waitForCompletion: false))
                 }
             }
             
@@ -712,7 +728,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         //var randX = arc4random_uniform(100)
         let coin = SKSpriteNode(imageNamed: "Taco")
 
-        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, self.roadSize!.height + self.hero.size.height * 3)
+        coin.position = CGPointMake(CGRectGetMaxX(self.frame) /*+ CGFloat(randX)*/, self.roadSize!.height + self.hero.size.height * 2.75)
         coin.size = CGSize(width: 30, height: 30)
         
         coin.physicsBody = SKPhysicsBody(rectangleOfSize: CGSize(width: 1 , height: 1))
@@ -900,6 +916,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.replayButton = SKSpriteNode(imageNamed: "replay")
         self.replayButton.name = "Replay"
         self.replayButton.size = CGSize(width: 60.0, height: 60.0)
+        //self.replayButton.xScale = 0.9
+        //self.replayButton.yScale = 0.9
         self.replayButton.position = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame))
         self.replayButton.zPosition = 200
         self.addChild(self.replayButton)
@@ -923,6 +941,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.gameCenterButton?.yScale = 1.0
             self.gameCenterButton?.position = CGPointMake(CGRectGetMaxX(self.frame) * 0.02, CGRectGetMaxY(self.frame) * (-0.015))
         } else {
+            self.gameCenterButton?.xScale = 0.7
+            self.gameCenterButton?.yScale = 0.7
             self.gameCenterButton?.position = CGPointMake(CGRectGetMaxX(self.frame) * (-0.03), CGRectGetMaxY(self.frame) * (-0.03))
         }
         

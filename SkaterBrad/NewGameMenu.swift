@@ -92,9 +92,12 @@ class NewGameNode: SKNode {
             self.gameCenterButton.position = CGPointMake(CGRectGetMaxX(scene.frame) * 0.02, CGRectGetMaxY(scene.frame) * (-0.015))
         } else {
             self.titleLabel.fontSize = 40
-            self.directionLabel.fontSize = 24
+            self.titleLabel.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMaxY(scene.frame) * 0.78)
+            self.directionLabel.fontSize = 18
+            self.directionLabel.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMaxY(scene.frame) * 0.15)
+            self.gameCenterButton.xScale = 0.7
+            self.gameCenterButton.yScale = 0.7
             self.gameCenterButton.position = CGPointMake(CGRectGetMaxX(scene.frame) * (-0.03), CGRectGetMaxY(scene.frame) * (-0.03))
-            self.directionLabel.position = CGPointMake(CGRectGetMidX(scene.frame), CGRectGetMaxY(scene.frame) * 0.13)
         }
         
         self.addChild(self.titleLabel)
