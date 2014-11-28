@@ -29,6 +29,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // Score [KP]
     var scoreTextLabel: SKLabelNode!
     var score = 0
+    var scoreLevelLimit = 50
     
     // High Score [KP]
     let highScoreText = SKLabelNode(fontNamed: "SkaterDudes")
@@ -209,6 +210,13 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             self.hero.position.x = self.frame.size.width * self.heroPositionX
         }
         
+        // Add speed increase as a function of score. [Vincent]
+        if self.score >= self.scoreLevelLimit {
+            self.backgroundSpeed += 5
+            self.roadSpeed += 5
+            self.self.scoreLevelLimit += 50
+            println("Level Increase")
+        }
         
         // Moving Background [Kevin/Tina]
         self.enumerateChildNodesWithName("background", usingBlock: { (node, stop) -> Void in
