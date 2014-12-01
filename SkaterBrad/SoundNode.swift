@@ -13,9 +13,9 @@ class SoundNode: SKNode {
     
     var audioPlayer : AVAudioPlayer! = nil
     var isSoundOn = true
-    let backgoundMusicFile = "music"
+    let backgoundMusicFile = "CoolKids"
     var avAudioSession : AVAudioSession!
-    var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("music", ofType: "mp3")!)
+    var musicURL = NSURL(fileURLWithPath: NSBundle.mainBundle().pathForResource("CoolKids", ofType: "wav")!)
     
     init(isSoundOn : Bool) {
         super.init()

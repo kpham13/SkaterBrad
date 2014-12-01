@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A5158301A2D326200E153D9 /* SkaterKids.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0A51582F1A2D326200E153D9 /* SkaterKids.wav */; };
+		0A5158321A2D354100E153D9 /* CoolKids.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0A5158311A2D354100E153D9 /* CoolKids.wav */; };
 		0A5479B719FEE4F500D697D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479B619FEE4F500D697D8 /* AppDelegate.swift */; };
 		0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479B819FEE4F500D697D8 /* GameScene.sks */; };
 		0A5479BB19FEE4F500D697D8 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479BA19FEE4F500D697D8 /* GameScene.swift */; };
@@ -20,7 +22,6 @@
 		0A7D05EA1A15DA5300301D06 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D05E91A15DA5300301D06 /* GameKit.framework */; };
 		0A7D05EE1A167C8A00301D06 /* GKLocalPlayerCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */; };
 		45367B8E1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */; };
-		45FD56BC1A03F7C200E24B28 /* music.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45FD56BB1A03F7C200E24B28 /* music.mp3 */; };
 		52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52348A941A00584A0054E55A /* bgMusic.mp3 */; };
 		52348A9B1A00584A0054E55A /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52348A961A00584A0054E55A /* lose.wav */; };
 		52348A9D1A00584A0054E55A /* win.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52348A981A00584A0054E55A /* win.wav */; };
@@ -28,7 +29,6 @@
 		52AF41361A032AE7000F5687 /* GameOverMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41331A032AE7000F5687 /* GameOverMenu.swift */; };
 		52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41341A032AE7000F5687 /* SoundNode.swift */; };
 		52AF413D1A032F96000F5687 /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF413C1A032F96000F5687 /* replay.png */; };
-		52ED71DB1A23CCB9008BE4E0 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479BE19FEE4F500D697D8 /* Main.storyboard */; };
 		92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = 92A49AE51A00225B00EEDF39 /* road@3x.png */; };
 		E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3041A02E895000EF20B /* Getitnexttime.wav */; };
 		E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */ = {isa = PBXBuildFile; fileRef = E1C2D3051A02E895000EF20B /* Goseahawks.wav */; };
@@ -47,6 +47,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0A51582E1A2D1DDF00E153D9 /* SkaterKids.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = SkaterKids.aif; sourceTree = "<group>"; };
+		0A51582F1A2D326200E153D9 /* SkaterKids.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SkaterKids.wav; sourceTree = "<group>"; };
+		0A5158311A2D354100E153D9 /* CoolKids.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = CoolKids.wav; sourceTree = "<group>"; };
 		0A5479B119FEE4F500D697D8 /* SkaterBrad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkaterBrad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5479B519FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479B619FEE4F500D697D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,7 +70,6 @@
 		0A7D05EC1A167C8A00301D06 /* GKLocalPlayerCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLocalPlayerCustom.h; sourceTree = "<group>"; };
 		0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLocalPlayerCustom.m; sourceTree = "<group>"; };
 		45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 5MinuteWaterBreak.mp3; sourceTree = "<group>"; };
-		45FD56BB1A03F7C200E24B28 /* music.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = music.mp3; sourceTree = "<group>"; };
 		52348A941A00584A0054E55A /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgMusic.mp3; path = SkaterBrad/bgMusic.mp3; sourceTree = "<group>"; };
 		52348A961A00584A0054E55A /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = lose.wav; path = SkaterBrad/lose.wav; sourceTree = "<group>"; };
 		52348A981A00584A0054E55A /* win.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = win.wav; path = SkaterBrad/win.wav; sourceTree = "<group>"; };
@@ -179,11 +181,13 @@
 		52348A9E1A00588D0054E55A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
+				0A5158311A2D354100E153D9 /* CoolKids.wav */,
+				0A51582E1A2D1DDF00E153D9 /* SkaterKids.aif */,
+				0A51582F1A2D326200E153D9 /* SkaterKids.wav */,
 				52AF41341A032AE7000F5687 /* SoundNode.swift */,
 				E1C2D3041A02E895000EF20B /* Getitnexttime.wav */,
 				45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */,
 				E1C2D3051A02E895000EF20B /* Goseahawks.wav */,
-				45FD56BB1A03F7C200E24B28 /* music.mp3 */,
 				E1C2D3061A02E895000EF20B /* Ohdamn.wav */,
 				E1C2D3071A02E895000EF20B /* Twitterrocks.wav */,
 				52348A941A00584A0054E55A /* bgMusic.mp3 */,
@@ -298,16 +302,17 @@
 				0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */,
 				0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
+				0A5158321A2D354100E153D9 /* CoolKids.wav in Resources */,
 				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
 				0A5FEA8F1A23C9C600A96133 /* Main.storyboard in Resources */,
 				52AF413D1A032F96000F5687 /* replay.png in Resources */,
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
+				0A5158301A2D326200E153D9 /* SkaterKids.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
 				E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */,
 				52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */,
 				52348A9D1A00584A0054E55A /* win.wav in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
-				45FD56BC1A03F7C200E24B28 /* music.mp3 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

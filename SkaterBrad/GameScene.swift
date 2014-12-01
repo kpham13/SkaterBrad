@@ -231,9 +231,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         // Add speed increase as a function of score. [Vincent]
         if self.score >= self.scoreLevelLimit {
-            self.backgroundSpeed = self.backgroundSpeed * 1.15
-            self.roadSpeed = self.roadSpeed * 1.15
-            self.self.scoreLevelLimit += 50
+            self.backgroundSpeed = self.backgroundSpeed * 1.20
+            self.roadSpeed = self.roadSpeed * 1.20
+            self.self.scoreLevelLimit += 30
             println("Level Increase")
         }
         
