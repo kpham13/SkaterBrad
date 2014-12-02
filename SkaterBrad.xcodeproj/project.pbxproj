@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0A5158301A2D326200E153D9 /* SkaterKids.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0A51582F1A2D326200E153D9 /* SkaterKids.wav */; };
-		0A5158321A2D354100E153D9 /* CoolKids.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0A5158311A2D354100E153D9 /* CoolKids.wav */; };
 		0A5479B719FEE4F500D697D8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479B619FEE4F500D697D8 /* AppDelegate.swift */; };
 		0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */ = {isa = PBXBuildFile; fileRef = 0A5479B819FEE4F500D697D8 /* GameScene.sks */; };
 		0A5479BB19FEE4F500D697D8 /* GameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A5479BA19FEE4F500D697D8 /* GameScene.swift */; };
@@ -21,6 +19,12 @@
 		0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A7D05E71A15D39000301D06 /* GameCenter.png */; };
 		0A7D05EA1A15DA5300301D06 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D05E91A15DA5300301D06 /* GameKit.framework */; };
 		0A7D05EE1A167C8A00301D06 /* GKLocalPlayerCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */; };
+		0AED3FDB1A2D4C6C002B75E0 /* CoolKids.wav in Resources */ = {isa = PBXBuildFile; fileRef = 0AED3FDA1A2D4C6C002B75E0 /* CoolKids.wav */; };
+		0AED3FDF1A2D4EF5002B75E0 /* Launch Screen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0AED3FDE1A2D4EF5002B75E0 /* Launch Screen.xib */; };
+		0AED3FE91A2D513F002B75E0 /* LaunchImages-4s.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AED3FE51A2D513F002B75E0 /* LaunchImages-4s.png */; };
+		0AED3FEA1A2D513F002B75E0 /* LaunchImages-5s.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AED3FE61A2D513F002B75E0 /* LaunchImages-5s.png */; };
+		0AED3FEB1A2D513F002B75E0 /* LaunchImages-6.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AED3FE71A2D513F002B75E0 /* LaunchImages-6.png */; };
+		0AED3FEC1A2D513F002B75E0 /* LaunchImages-6plus.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AED3FE81A2D513F002B75E0 /* LaunchImages-6plus.png */; };
 		45367B8E1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */; };
 		52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52348A941A00584A0054E55A /* bgMusic.mp3 */; };
 		52348A9B1A00584A0054E55A /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52348A961A00584A0054E55A /* lose.wav */; };
@@ -47,9 +51,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		0A51582E1A2D1DDF00E153D9 /* SkaterKids.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = SkaterKids.aif; sourceTree = "<group>"; };
-		0A51582F1A2D326200E153D9 /* SkaterKids.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = SkaterKids.wav; sourceTree = "<group>"; };
-		0A5158311A2D354100E153D9 /* CoolKids.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = CoolKids.wav; sourceTree = "<group>"; };
 		0A5479B119FEE4F500D697D8 /* SkaterBrad.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SkaterBrad.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5479B519FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479B619FEE4F500D697D8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -57,18 +58,23 @@
 		0A5479BA19FEE4F500D697D8 /* GameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameScene.swift; sourceTree = "<group>"; };
 		0A5479BC19FEE4F500D697D8 /* GameViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameViewController.swift; sourceTree = "<group>"; };
 		0A5479BF19FEE4F500D697D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		0A5479C419FEE4F500D697D8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		0A5479CA19FEE4F500D697D8 /* SkaterBradTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SkaterBradTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A5479CF19FEE4F500D697D8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		0A5479D019FEE4F500D697D8 /* SkaterBradTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SkaterBradTests.swift; sourceTree = "<group>"; };
 		0A5FEA901A23CDB900A96133 /* Skater.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Skater.ttf; sourceTree = "<group>"; };
-		0A62FC051A16B35F00A844D2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SkaterBrad/Images.xcassets; sourceTree = "<group>"; };
+		0A62FC051A16B35F00A844D2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		0A7D05E41A15BB3100301D06 /* UserDefaultsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserDefaultsController.swift; sourceTree = "<group>"; };
 		0A7D05E71A15D39000301D06 /* GameCenter.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = GameCenter.png; sourceTree = "<group>"; };
 		0A7D05E91A15DA5300301D06 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		0A7D05EB1A167C8A00301D06 /* SkaterBrad-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SkaterBrad-Bridging-Header.h"; sourceTree = "<group>"; };
 		0A7D05EC1A167C8A00301D06 /* GKLocalPlayerCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLocalPlayerCustom.h; sourceTree = "<group>"; };
 		0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLocalPlayerCustom.m; sourceTree = "<group>"; };
+		0AED3FDA1A2D4C6C002B75E0 /* CoolKids.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = CoolKids.wav; sourceTree = "<group>"; };
+		0AED3FDE1A2D4EF5002B75E0 /* Launch Screen.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = "Launch Screen.xib"; sourceTree = "<group>"; };
+		0AED3FE51A2D513F002B75E0 /* LaunchImages-4s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImages-4s.png"; sourceTree = "<group>"; };
+		0AED3FE61A2D513F002B75E0 /* LaunchImages-5s.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImages-5s.png"; sourceTree = "<group>"; };
+		0AED3FE71A2D513F002B75E0 /* LaunchImages-6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImages-6.png"; sourceTree = "<group>"; };
+		0AED3FE81A2D513F002B75E0 /* LaunchImages-6plus.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "LaunchImages-6plus.png"; sourceTree = "<group>"; };
 		45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 5MinuteWaterBreak.mp3; sourceTree = "<group>"; };
 		52348A941A00584A0054E55A /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgMusic.mp3; path = SkaterBrad/bgMusic.mp3; sourceTree = "<group>"; };
 		52348A961A00584A0054E55A /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = lose.wav; path = SkaterBrad/lose.wav; sourceTree = "<group>"; };
@@ -131,11 +137,12 @@
 				0A7D05EC1A167C8A00301D06 /* GKLocalPlayerCustom.h */,
 				0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */,
 				0A7D05E41A15BB3100301D06 /* UserDefaultsController.swift */,
-				0A5479BE19FEE4F500D697D8 /* Main.storyboard */,
-				0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */,
-				0A5479B819FEE4F500D697D8 /* GameScene.sks */,
+				0AED3FDE1A2D4EF5002B75E0 /* Launch Screen.xib */,
+				0A62FC051A16B35F00A844D2 /* Images.xcassets */,
 				0A7D05E61A15BB9200301D06 /* Menus */,
+				0AED3FE41A2D513F002B75E0 /* LaunchImages */,
 				52AF41311A0327FC000F5687 /* Images */,
+				0AED3FD91A2D4C6C002B75E0 /* Music */,
 				52348A9E1A00588D0054E55A /* Sounds */,
 				0A5479B419FEE4F500D697D8 /* Supporting Files */,
 				0A7D05EB1A167C8A00301D06 /* SkaterBrad-Bridging-Header.h */,
@@ -146,6 +153,8 @@
 		0A5479B419FEE4F500D697D8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				0A5479B819FEE4F500D697D8 /* GameScene.sks */,
+				0A5479BE19FEE4F500D697D8 /* Main.storyboard */,
 				0A5FEA901A23CDB900A96133 /* Skater.ttf */,
 				0A5479B519FEE4F500D697D8 /* Info.plist */,
 			);
@@ -178,12 +187,28 @@
 			name = Menus;
 			sourceTree = "<group>";
 		};
+		0AED3FD91A2D4C6C002B75E0 /* Music */ = {
+			isa = PBXGroup;
+			children = (
+				0AED3FDA1A2D4C6C002B75E0 /* CoolKids.wav */,
+			);
+			path = Music;
+			sourceTree = "<group>";
+		};
+		0AED3FE41A2D513F002B75E0 /* LaunchImages */ = {
+			isa = PBXGroup;
+			children = (
+				0AED3FE51A2D513F002B75E0 /* LaunchImages-4s.png */,
+				0AED3FE61A2D513F002B75E0 /* LaunchImages-5s.png */,
+				0AED3FE71A2D513F002B75E0 /* LaunchImages-6.png */,
+				0AED3FE81A2D513F002B75E0 /* LaunchImages-6plus.png */,
+			);
+			path = LaunchImages;
+			sourceTree = "<group>";
+		};
 		52348A9E1A00588D0054E55A /* Sounds */ = {
 			isa = PBXGroup;
 			children = (
-				0A5158311A2D354100E153D9 /* CoolKids.wav */,
-				0A51582E1A2D1DDF00E153D9 /* SkaterKids.aif */,
-				0A51582F1A2D326200E153D9 /* SkaterKids.wav */,
 				52AF41341A032AE7000F5687 /* SoundNode.swift */,
 				E1C2D3041A02E895000EF20B /* Getitnexttime.wav */,
 				45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */,
@@ -201,7 +226,6 @@
 		52AF41311A0327FC000F5687 /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				0A62FC051A16B35F00A844D2 /* Images.xcassets */,
 				52AF413C1A032F96000F5687 /* replay.png */,
 				92A49AE51A00225B00EEDF39 /* road@3x.png */,
 				0A7D05E71A15D39000301D06 /* GameCenter.png */,
@@ -296,21 +320,25 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0AED3FDB1A2D4C6C002B75E0 /* CoolKids.wav in Resources */,
 				0A5FEA911A23CEE700A96133 /* Skater.ttf in Resources */,
 				E1C2D30B1A02E895000EF20B /* Twitterrocks.wav in Resources */,
 				45367B8E1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 in Resources */,
 				0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */,
+				0AED3FEB1A2D513F002B75E0 /* LaunchImages-6.png in Resources */,
 				0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
-				0A5158321A2D354100E153D9 /* CoolKids.wav in Resources */,
 				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
 				0A5FEA8F1A23C9C600A96133 /* Main.storyboard in Resources */,
+				0AED3FDF1A2D4EF5002B75E0 /* Launch Screen.xib in Resources */,
 				52AF413D1A032F96000F5687 /* replay.png in Resources */,
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
-				0A5158301A2D326200E153D9 /* SkaterKids.wav in Resources */,
+				0AED3FEA1A2D513F002B75E0 /* LaunchImages-5s.png in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
 				E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */,
+				0AED3FEC1A2D513F002B75E0 /* LaunchImages-6plus.png in Resources */,
 				52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */,
+				0AED3FE91A2D513F002B75E0 /* LaunchImages-4s.png in Resources */,
 				52348A9D1A00584A0054E55A /* win.wav in Resources */,
 				0A5479B919FEE4F500D697D8 /* GameScene.sks in Resources */,
 			);
@@ -366,14 +394,6 @@
 				0A5479BF19FEE4F500D697D8 /* Base */,
 			);
 			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
-		0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				0A5479C419FEE4F500D697D8 /* Base */,
-			);
-			name = LaunchScreen.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
@@ -460,6 +480,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -477,6 +498,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";

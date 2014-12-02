@@ -40,5 +40,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
 }
-
-
