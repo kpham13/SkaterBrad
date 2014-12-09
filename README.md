@@ -21,7 +21,7 @@ Skater Brad is written in Swift on Xcode 6.1, utilizing Sprite Kit, Game Kit, an
 
 - iOS 8.1 or later.
 - iPhone 4s, 5, 5s, 6, 6 Plus
-- Optimized for iPhone 5, 5s,6, 6 Plus
+- Optimized for iPhone 5, 5s, 6, 6 Plus
 
 ## Authors
 - ![Brian Mendez](https://github.com/brmendez)
@@ -33,6 +33,6 @@ Skater Brad is written in Swift on Xcode 6.1, utilizing Sprite Kit, Game Kit, an
 
 ## Special Shoutout
 
-Inspiration by Bradley Johnson
-Graphics by Vincent Lee
-Music by Jeff Chavez
+- Inspiration by Bradley Johnson
+- Graphics by Vincent Lee
+- Music by Jeff Chavez
