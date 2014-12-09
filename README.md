@@ -1,6 +1,6 @@
 Skater Brad
 ==========
-Available on the Apple App Store
+Available on the Apple App Store.
 
 Skater Brad is a 2D skateboarding runner game, where you'll gain points by clearing the different obstacles and high jumping to reach the bonus tacos. Brad speeds up as you gain points to make the challenge insane. Try to beat your friend's scores on Game Center to prove that you're not a poser!
 
