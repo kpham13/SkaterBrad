@@ -1,5 +1,7 @@
 == Simplified BSD *** MODIFIED FOR NON-COMMERCIAL USE ONLY!!! *** ==
+
 Copyright (c) 2014, Brian Mendez/Kevin Pham/Kori Kolodziejczak/Tina Fu/Tuan Vu/Vincent Lee
+
 All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
