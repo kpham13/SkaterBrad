@@ -16,7 +16,7 @@ Play as Brad as you traverse obstacles through the Seattle landscape. Don't cras
 
 ## Development
 
-Skater Brad is written in Swift on Xcode 6.1, utilizing Sprite Kit, Game Kit, and AVFoundation frameworks. Sprite Kit was used as our game engine and Game Kit for Game Center integration. Customized music was integrated using AVFoundation.
+Skater Brad is written in Swift on Xcode 6.1, utilizing SpriteKit, GameKit, and AVFoundation frameworks. SpriteKit was used as our game engine and Game Kit for Game Center integration. Customized music was integrated using AVFoundation.
 
 ## Compatability
 
