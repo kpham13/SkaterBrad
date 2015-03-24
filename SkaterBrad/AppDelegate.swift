@@ -8,12 +8,30 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifier {
     
     var window: UIWindow?
+    var tagManager: TAGManager!
+    var tagContainer: TAGContainer?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        self.tagManager = TAGManager.instance()
+        self.tagManager.logger.setLogLevel(kTAGLoggerLogLevelVerbose)
+        TAGContainerOpener.openContainerWithId("GTM-MGSTLS", tagManager: self.tagManager, openType: kTAGOpenTypePreferNonDefault, timeout: nil, notifier: self)
+        self.tagManager.dispatchInterval = 1
+        
         return true
+    }
+    
+    func containerAvailable(container: TAGContainer!) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tagContainer = container
+            let screenViewDictionary = ["event" : "screen-open", "screen-name" : "Start Screen"]
+            var dataLayer : TAGDataLayer = TAGManager.instance().dataLayer
+            dataLayer.push(NSDictionary(dictionary: screenViewDictionary))
+            
+            container.refresh()
+        })
     }
     
     func applicationWillResignActive(application: UIApplication) {

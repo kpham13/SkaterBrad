@@ -93,6 +93,7 @@
 		52AF41331A032AE7000F5687 /* GameOverMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverMenu.swift; sourceTree = "<group>"; };
 		52AF41341A032AE7000F5687 /* SoundNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoundNode.swift; path = SkaterBrad/SoundNode.swift; sourceTree = "<group>"; };
 		52AF413C1A032F96000F5687 /* replay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay.png; sourceTree = "<group>"; };
+		6313CAE01AC1CEE0005D3040 /* GTM-MGSTLS */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-MGSTLS"; sourceTree = "<group>"; };
 		63FCA56B1AC0B4FF0084E72C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		63FCA56D1AC0B5050084E72C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63FCA56F1AC0B50D0084E72C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -159,14 +160,6 @@
 		0A5479A819FEE4F500D697D8 = {
 			isa = PBXGroup;
 			children = (
-				63FCA58F1AC0B5F60084E72C /* StoreKit.framework */,
-				63FCA58D1AC0B5EF0084E72C /* MessageUI.framework */,
-				63FCA5891AC0B5EA0084E72C /* EventKit.framework */,
-				63FCA58A1AC0B5EA0084E72C /* EventKitUI.framework */,
-				63FCA5871AC0B5E00084E72C /* CoreTelephony.framework */,
-				63FCA5851AC0B5DB0084E72C /* CoreGraphics.framework */,
-				63FCA5831AC0B5D50084E72C /* AVFoundation.framework */,
-				63FCA5811AC0B5CE0084E72C /* AudioToolbox.framework */,
 				0A5479B319FEE4F500D697D8 /* SkaterBrad */,
 				0A5479CD19FEE4F500D697D8 /* SkaterBradTests */,
 				0A5479B219FEE4F500D697D8 /* Products */,
@@ -194,11 +187,11 @@
 				0A5479BE19FEE4F500D697D8 /* Main.storyboard */,
 				0A5479C319FEE4F500D697D8 /* LaunchScreen.xib */,
 				0A5479B819FEE4F500D697D8 /* GameScene.sks */,
+				0A7D05EB1A167C8A00301D06 /* SkaterBrad-Bridging-Header.h */,
 				0A7D05E61A15BB9200301D06 /* Menus */,
 				52AF41311A0327FC000F5687 /* Images */,
 				52348A9E1A00588D0054E55A /* Sounds */,
 				0A5479B419FEE4F500D697D8 /* Supporting Files */,
-				0A7D05EB1A167C8A00301D06 /* SkaterBrad-Bridging-Header.h */,
 			);
 			path = SkaterBrad;
 			sourceTree = "<group>";
@@ -275,6 +268,7 @@
 		63FCA56A1AC0B4DD0084E72C /* GTM */ = {
 			isa = PBXGroup;
 			children = (
+				6313CAE01AC1CEE0005D3040 /* GTM-MGSTLS */,
 				63FCA5791AC0B5460084E72C /* TAGContainer.h */,
 				63FCA57A1AC0B5460084E72C /* TAGContainerOpener.h */,
 				63FCA57B1AC0B5460084E72C /* TAGDataLayer.h */,
@@ -295,6 +289,14 @@
 		63FCA57E1AC0B57C0084E72C /* AdMob */ = {
 			isa = PBXGroup;
 			children = (
+				63FCA58F1AC0B5F60084E72C /* StoreKit.framework */,
+				63FCA58D1AC0B5EF0084E72C /* MessageUI.framework */,
+				63FCA5891AC0B5EA0084E72C /* EventKit.framework */,
+				63FCA58A1AC0B5EA0084E72C /* EventKitUI.framework */,
+				63FCA5871AC0B5E00084E72C /* CoreTelephony.framework */,
+				63FCA5851AC0B5DB0084E72C /* CoreGraphics.framework */,
+				63FCA5831AC0B5D50084E72C /* AVFoundation.framework */,
+				63FCA5811AC0B5CE0084E72C /* AudioToolbox.framework */,
 				63FCA57F1AC0B5C10084E72C /* GoogleMobileAds.framework */,
 			);
 			name = AdMob;
@@ -349,7 +351,7 @@
 				TargetAttributes = {
 					0A5479B019FEE4F500D697D8 = {
 						CreatedOnToolsVersion = 6.1;
-						DevelopmentTeam = 6ALA275LQK;
+						DevelopmentTeam = GBG956P6A4;
 						SystemCapabilities = {
 							com.apple.GameCenter = {
 								enabled = 1;
@@ -564,6 +566,12 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)/SkaterBrad",
 				);
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"$(PROJECT_DIR)/SkaterBrad/libAdIdAccess.a",
+					"-framework",
+					AdSupport,
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SkaterBrad/SkaterBrad-Bridging-Header.h";
@@ -588,6 +596,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)/SkaterBrad",
+				);
+				OTHER_LDFLAGS = (
+					"-force_load",
+					"$(PROJECT_DIR)/SkaterBrad/libAdIdAccess.a",
+					"-framework",
+					AdSupport,
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
