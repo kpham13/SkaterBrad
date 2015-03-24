@@ -29,6 +29,7 @@
 		52AF41361A032AE7000F5687 /* GameOverMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41331A032AE7000F5687 /* GameOverMenu.swift */; };
 		52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41341A032AE7000F5687 /* SoundNode.swift */; };
 		52AF413D1A032F96000F5687 /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF413C1A032F96000F5687 /* replay.png */; };
+		639186461AC2048600E08E36 /* GTM-MGSTLS in Resources */ = {isa = PBXBuildFile; fileRef = 6313CAE01AC1CEE0005D3040 /* GTM-MGSTLS */; };
 		63FCA56C1AC0B4FF0084E72C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56B1AC0B4FF0084E72C /* CoreData.framework */; };
 		63FCA56E1AC0B5050084E72C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56D1AC0B5050084E72C /* SystemConfiguration.framework */; };
 		63FCA5701AC0B50D0084E72C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56F1AC0B50D0084E72C /* libz.dylib */; };
@@ -401,6 +402,7 @@
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
 				0A5158301A2D326200E153D9 /* SkaterKids.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
+				639186461AC2048600E08E36 /* GTM-MGSTLS in Resources */,
 				E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */,
 				52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */,
 				52348A9D1A00584A0054E55A /* win.wav in Resources */,

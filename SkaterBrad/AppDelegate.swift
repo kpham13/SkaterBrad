@@ -31,13 +31,70 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
             var dataLayer : TAGDataLayer = TAGManager.instance().dataLayer
             dataLayer.push(NSDictionary(dictionary: screenViewDictionary))
             
+            let uuid = NSUUID()
+            
+            println("UUID : \(uuid.UUIDString))")
+            
             container.refresh()
         })
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
-        
-        return true
+        if sourceApplication == "com.analyticspros.TestShop" as String! {
+//            if let urlQuery = url.query {
+//                let queryParameters = urlQuery.componentsSeparatedByString("&")
+//                var queryDictionary = [String: String]()
+//                for query in queryParameters {
+//                    let separatedQuery = query.componentsSeparatedByString("=")
+//                    let utm = separatedQuery[0]
+//                    let parameter = separatedQuery[1]
+//                    queryDictionary.updateValue(parameter, forKey: utm)
+//                }
+//                let utmCampaign = queryDictionary["utm_campaign"]
+//                let utmSource = queryDictionary["utm_source"]
+//                let utmMedium = queryDictionary["utm_medium"]
+//                let utmTerm = queryDictionary["utm_term"]
+//                let utmContent = queryDictionary["utm_content"]
+//                
+//                if utmCampaign == nil || utmSource == nil || utmMedium == nil {
+//                    println("Required Campaign Name, Source, and Medium")
+//                    return false
+//                }
+            if let urlQuery = url.query as String! {
+                //  Network Call to GA
+                let endpoint = "http://www.google-analytics.com/debug/collect?v=1&tid=UA-59762855-5&t=appview&cid"
+                let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
+                let session = NSURLSession(configuration: configuration)
+                let urlString = "\(endpoint)\(urlQuery)"
+                let URL = NSURL(string: urlString)
+                let request = NSMutableURLRequest(URL: URL!)
+                request.HTTPMethod = "GET"
+                let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
+                    if let httpResponse = response as? NSHTTPURLResponse {
+                        let code = httpResponse.statusCode
+                        if code == 200 {
+                            println("Status Code: \(code)")
+                            var err : NSError?
+                            let parsedResponse: NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as? NSDictionary
+                            println("Parsed JSON Response: \(parsedResponse!)")
+                        }
+                        else {
+                            println("Status Code: \(code)")
+                        }
+                    }
+                    else {
+                        println("Error: \(error.description)")
+                    }
+                })
+                dataTask.resume()
+                
+                return true
+            }
+            println("Error: No Query Parameters")
+            return false
+        }
+        println("Error: Launching App is not authorized to run Skater Brad")
+        return false
     }
     
     func applicationWillResignActive(application: UIApplication) {
