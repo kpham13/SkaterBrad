@@ -95,7 +95,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
-        let screenViewDictionary = ["event" : "screen-open", "screen-name" : "Start Screen"]
+        let screenViewDictionary = ["event" : "screen-open", "screen-name" : "Start Screen", "sound-on" : "\(self.isSoundOn)"]
         var dataLayer : TAGDataLayer = TAGManager.instance().dataLayer
         dataLayer.push(NSDictionary(dictionary: screenViewDictionary))
         
@@ -364,13 +364,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }))
         }
         
+        var dataLayer = TAGManager.instance().dataLayer
         if self.nodeAtPoint(location).name == "SoundOn" {
             self.isSoundOn = false
+            dataLayer.push(["sound-on" : "false"])
             //self.soundOption!.audioPlayer.stop()
             self.stopMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.Off)
         } else if self.nodeAtPoint(location).name == "SoundOff" {
             self.isSoundOn = true
+            dataLayer.push(["sound-on" : "true"])
             //self.soundOption!.audioPlayer.play()
             self.playMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)

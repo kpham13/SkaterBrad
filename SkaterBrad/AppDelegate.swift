@@ -15,6 +15,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
     var tagContainer: TAGContainer?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        println("Bundle Identifier : \(NSBundle.mainBundle().bundleIdentifier!)")
         self.tagManager = TAGManager.instance()
         self.tagManager.logger.setLogLevel(kTAGLoggerLogLevelVerbose)
         TAGContainerOpener.openContainerWithId("GTM-MGSTLS", tagManager: self.tagManager, openType: kTAGOpenTypePreferNonDefault, timeout: nil, notifier: self)
@@ -32,6 +33,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
             
             container.refresh()
         })
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        
+        return true
     }
     
     func applicationWillResignActive(application: UIApplication) {
