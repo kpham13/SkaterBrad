@@ -12,7 +12,7 @@ import GameKit //3
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
     var gameViewController : GameViewController? //4
-
+    
     // User Defaults
     var userDefaultsController : UserDefaultsController?
     
@@ -91,10 +91,14 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     var gameOverLabel: SKLabelNode!
     var screenDimmerNode : SKSpriteNode!
     var replayButton : SKSpriteNode!
-   
+    
     
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
+        let screenViewDictionary = ["event" : "screen-open", "screen-name" : "Start Screen", "sound-on" : "\(self.isSoundOn)"]
+        var dataLayer : TAGDataLayer = TAGManager.instance().dataLayer
+        dataLayer.push(NSDictionary(dictionary: screenViewDictionary))
+        
         self.scaleMode = SKSceneScaleMode.ResizeFill
         self.registerAppTransitionObservers()
         self.userDefaultsController = UserDefaultsController()
@@ -220,6 +224,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.addChild(self.scoreTextLabel)
         self.addChild(self.highScoreText)
     }
+    
+
     
     // MARK: - UPDATE
     
@@ -347,6 +353,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         
         if self.nodeAtPoint(location).name == "PlayNow" {
+            var dataLayer = TAGManager.instance().dataLayer
+            dataLayer.push(["event" : "screen-open", "screen-name" : "Play Screen"])
             self.runAction(SKAction.runBlock({ () -> Void in
                 self.showNewGameMenu = false
                 self.showGameOverMenu = false
@@ -356,13 +364,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             }))
         }
         
+        var dataLayer = TAGManager.instance().dataLayer
         if self.nodeAtPoint(location).name == "SoundOn" {
             self.isSoundOn = false
+            dataLayer.push(["sound-on" : "false"])
             //self.soundOption!.audioPlayer.stop()
             self.stopMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.Off)
         } else if self.nodeAtPoint(location).name == "SoundOff" {
             self.isSoundOn = true
+            dataLayer.push(["sound-on" : "true"])
             //self.soundOption!.audioPlayer.play()
             self.playMusic()
             self.newGameMenu?.turnSoundOnOff(SoundButtonSwitch.On)
@@ -475,7 +486,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                     runAction(SKAction.playSoundFileNamed("5MinuteWaterBreak.mp3", waitForCompletion: false))
                 }
             }
-
+            var dataLayer = TAGManager.instance().dataLayer
+            dataLayer.push(["event" : "contact-touched", "score" : score])
             self.fallMode = true
             self.endGame()
         default:
@@ -744,6 +756,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
  
     //removing coin when hero collides - [Kori-Brian]
     func heroDidCollideWithCoin(coin: SKSpriteNode, hero:SKSpriteNode) {
+        var dataLayer = TAGManager.instance().dataLayer
+        dataLayer.push(["event" : "taco-touched"])
         println("Hit-coin")
         coin.removeFromParent()
       }
@@ -785,6 +799,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         self.hero.physicsBody?.dynamic = false
         self.roadSpeed = 0
         self.backgroundSpeed = 0
+        var dataLayer = TAGManager.instance().dataLayer
+        dataLayer.push(["event" : "screen-open", "screen-name" : "Game Over Screen"])
         
         // hero fall animation - Vincent
         self.heroFallAnimation { () -> Void in

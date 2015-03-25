@@ -8,12 +8,81 @@
 import UIKit
 
 @UIApplicationMain
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifier {
     
     var window: UIWindow?
+    var tagManager: TAGManager!
+    var tagContainer: TAGContainer?
     
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
+        println("Bundle Identifier : \(NSBundle.mainBundle().bundleIdentifier!)")
+        self.tagManager = TAGManager.instance()
+        self.tagManager.logger.setLogLevel(kTAGLoggerLogLevelVerbose)
+        TAGContainerOpener.openContainerWithId("GTM-MGSTLS", tagManager: self.tagManager, openType: kTAGOpenTypePreferNonDefault, timeout: nil, notifier: self)
+        self.tagManager.dispatchInterval = 1
+        
         return true
+    }
+    
+    func containerAvailable(container: TAGContainer!) {
+        dispatch_async(dispatch_get_main_queue(), { () -> Void in
+            self.tagContainer = container
+            let screenViewDictionary = ["event" : "screen-open", "screen-name" : "Start Screen"]
+            var dataLayer : TAGDataLayer = TAGManager.instance().dataLayer
+            dataLayer.push(NSDictionary(dictionary: screenViewDictionary))
+            
+            container.refresh()
+        })
+    }
+    
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        if sourceApplication == "com.analyticspros.TestShop" as String! {
+            if let urlQuery = url.query {
+                let queryParameters = urlQuery.componentsSeparatedByString("&")
+                var queryDictionary = [String: String]()
+                for query in queryParameters {
+                    let separatedQuery = query.componentsSeparatedByString("=")
+                    let utm = separatedQuery[0]
+                    let parameter = separatedQuery[1]
+                    queryDictionary.updateValue(parameter, forKey: utm)
+                }
+                let utmCampaign = queryDictionary["utm_campaign"]
+                let utmSource = queryDictionary["utm_source"]
+                let utmMedium = queryDictionary["utm_medium"]
+                let utmTerm = queryDictionary["utm_term"]
+                let utmContent = queryDictionary["utm_content"]
+                
+                if utmCampaign == nil || utmSource == nil || utmMedium == nil {
+                    println("Required Campaign Name, Source, and Medium")
+                    return false
+                }
+                let dataLayer = TAGManager.instance().dataLayer
+                if utmContent == nil {
+                    dataLayer.push(["event" : "campaign-app-attribution",
+                        "utm-campaign" : utmCampaign!,
+                        "utm-source" : utmSource!,
+                        "utm-medium" : utmMedium!,
+                        "utm-term" : utmTerm!])
+                    return true
+                }
+                if utmTerm == nil {
+                    dataLayer.push(["event" : "campaign-app-attribution",
+                        "utm-campaign" : utmCampaign!,
+                        "utm-source" : utmSource!,
+                        "utm-medium" : utmMedium!,
+                        "utm-content" : utmContent!])
+                    return true
+                }
+                dataLayer.push(["event" : "campaign-app-attribution",
+                    "utm-campaign" : utmCampaign!,
+                    "utm-source" : utmSource!,
+                    "utm-medium" : utmMedium!,
+                    "utm-content" : utmContent!,
+                    "utm-term" : utmTerm!])
+                return true
+            }
+        }
+        return false
     }
     
     func applicationWillResignActive(application: UIApplication) {
