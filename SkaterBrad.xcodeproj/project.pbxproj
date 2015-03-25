@@ -29,7 +29,7 @@
 		52AF41361A032AE7000F5687 /* GameOverMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41331A032AE7000F5687 /* GameOverMenu.swift */; };
 		52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41341A032AE7000F5687 /* SoundNode.swift */; };
 		52AF413D1A032F96000F5687 /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF413C1A032F96000F5687 /* replay.png */; };
-		639186461AC2048600E08E36 /* GTM-MGSTLS in Resources */ = {isa = PBXBuildFile; fileRef = 6313CAE01AC1CEE0005D3040 /* GTM-MGSTLS */; };
+		639186531AC27C4300E08E36 /* GTM-MGSTLS in Resources */ = {isa = PBXBuildFile; fileRef = 639186521AC27C4300E08E36 /* GTM-MGSTLS */; };
 		63FCA56C1AC0B4FF0084E72C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56B1AC0B4FF0084E72C /* CoreData.framework */; };
 		63FCA56E1AC0B5050084E72C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56D1AC0B5050084E72C /* SystemConfiguration.framework */; };
 		63FCA5701AC0B50D0084E72C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56F1AC0B50D0084E72C /* libz.dylib */; };
@@ -94,7 +94,7 @@
 		52AF41331A032AE7000F5687 /* GameOverMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverMenu.swift; sourceTree = "<group>"; };
 		52AF41341A032AE7000F5687 /* SoundNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoundNode.swift; path = SkaterBrad/SoundNode.swift; sourceTree = "<group>"; };
 		52AF413C1A032F96000F5687 /* replay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay.png; sourceTree = "<group>"; };
-		6313CAE01AC1CEE0005D3040 /* GTM-MGSTLS */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-MGSTLS"; sourceTree = "<group>"; };
+		639186521AC27C4300E08E36 /* GTM-MGSTLS */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-MGSTLS"; sourceTree = "<group>"; };
 		63FCA56B1AC0B4FF0084E72C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		63FCA56D1AC0B5050084E72C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63FCA56F1AC0B50D0084E72C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -269,7 +269,7 @@
 		63FCA56A1AC0B4DD0084E72C /* GTM */ = {
 			isa = PBXGroup;
 			children = (
-				6313CAE01AC1CEE0005D3040 /* GTM-MGSTLS */,
+				639186521AC27C4300E08E36 /* GTM-MGSTLS */,
 				63FCA5791AC0B5460084E72C /* TAGContainer.h */,
 				63FCA57A1AC0B5460084E72C /* TAGContainerOpener.h */,
 				63FCA57B1AC0B5460084E72C /* TAGDataLayer.h */,
@@ -399,10 +399,10 @@
 				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
 				0A5FEA8F1A23C9C600A96133 /* Main.storyboard in Resources */,
 				52AF413D1A032F96000F5687 /* replay.png in Resources */,
+				639186531AC27C4300E08E36 /* GTM-MGSTLS in Resources */,
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
 				0A5158301A2D326200E153D9 /* SkaterKids.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
-				639186461AC2048600E08E36 /* GTM-MGSTLS in Resources */,
 				E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */,
 				52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */,
 				52348A9D1A00584A0054E55A /* win.wav in Resources */,
