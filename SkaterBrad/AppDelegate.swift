@@ -72,42 +72,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         }
         return false
     }
-
-//            if let urlQuery = url.query as String! {
-//                //  Network Call to GA
-//                let endpoint = "http://www.google-analytics.com/debug/collect?v=1&tid=UA-59762855-5&t=appview&cid"
-//                let configuration = NSURLSessionConfiguration.ephemeralSessionConfiguration()
-//                let session = NSURLSession(configuration: configuration)
-//                let urlString = "\(endpoint)\(urlQuery)"
-//                let URL = NSURL(string: urlString)
-//                let request = NSMutableURLRequest(URL: URL!)
-//                request.HTTPMethod = "GET"
-//                let dataTask = session.dataTaskWithRequest(request, completionHandler: { (data, response, error) -> Void in
-//                    if let httpResponse = response as? NSHTTPURLResponse {
-//                        let code = httpResponse.statusCode
-//                        if code == 200 {
-//                            println("Status Code: \(code)")
-//                            var err : NSError?
-//                            let parsedResponse: NSDictionary? = NSJSONSerialization.JSONObjectWithData(data, options: NSJSONReadingOptions.MutableContainers, error: &err) as? NSDictionary
-//                            println("Parsed JSON Response: \(parsedResponse!)")
-//                        }
-//                        else {
-//                            println("Status Code: \(code)")
-//                        }
-//                    }
-//                    else {
-//                        println("Error: \(error.description)")
-//                    }
-//                })
-//                dataTask.resume()
-//                
-//                return true
-//            }
-//            println("Error: No Query Parameters")
-//            return false
-//        }
-//        println("Error: Launching App is not authorized to run Skater Brad")
-//        return false
     
     func applicationWillResignActive(application: UIApplication) {
         // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
