@@ -31,10 +31,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
             var dataLayer : TAGDataLayer = TAGManager.instance().dataLayer
             dataLayer.push(NSDictionary(dictionary: screenViewDictionary))
             
-            let uuid = NSUUID()
-            
-            println("UUID : \(uuid.UUIDString))")
-            
             container.refresh()
         })
     }
@@ -61,14 +57,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
                     return false
                 }
                 let dataLayer = TAGManager.instance().dataLayer
+                if utmContent == nil {
+                    dataLayer.push(["event" : "campaign-app-attribution",
+                        "utm-campaign" : utmCampaign!,
+                        "utm-source" : utmSource!,
+                        "utm-medium" : utmMedium!,
+                        "utm-term" : utmTerm!])
+                    return true
+                }
+                if utmTerm == nil {
+                    dataLayer.push(["event" : "campaign-app-attribution",
+                        "utm-campaign" : utmCampaign!,
+                        "utm-source" : utmSource!,
+                        "utm-medium" : utmMedium!,
+                        "utm-content" : utmContent!])
+                    return true
+                }
                 dataLayer.push(["event" : "campaign-app-attribution",
                     "utm-campaign" : utmCampaign!,
                     "utm-source" : utmSource!,
                     "utm-medium" : utmMedium!,
                     "utm-content" : utmContent!,
                     "utm-term" : utmTerm!])
+                return true
             }
-            return true
         }
         return false
     }
