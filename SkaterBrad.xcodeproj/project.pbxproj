@@ -21,6 +21,9 @@
 		0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */ = {isa = PBXBuildFile; fileRef = 0A7D05E71A15D39000301D06 /* GameCenter.png */; };
 		0A7D05EA1A15DA5300301D06 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A7D05E91A15DA5300301D06 /* GameKit.framework */; };
 		0A7D05EE1A167C8A00301D06 /* GKLocalPlayerCustom.m in Sources */ = {isa = PBXBuildFile; fileRef = 0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */; };
+		0AEACA161AC290980099AD00 /* iOS7-Default-568h.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AEACA151AC290980099AD00 /* iOS7-Default-568h.png */; };
+		0AEACA181AC29E690099AD00 /* iOS7-Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AEACA171AC29E690099AD00 /* iOS7-Default-568h@2x.png */; };
+		0AEACA1A1AC29FC60099AD00 /* iOS7-Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 0AEACA191AC29FC60099AD00 /* iOS7-Default.png */; };
 		45367B8E1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */; };
 		52348A991A00584A0054E55A /* bgMusic.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 52348A941A00584A0054E55A /* bgMusic.mp3 */; };
 		52348A9B1A00584A0054E55A /* lose.wav in Resources */ = {isa = PBXBuildFile; fileRef = 52348A961A00584A0054E55A /* lose.wav */; };
@@ -86,6 +89,9 @@
 		0A7D05EB1A167C8A00301D06 /* SkaterBrad-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SkaterBrad-Bridging-Header.h"; sourceTree = "<group>"; };
 		0A7D05EC1A167C8A00301D06 /* GKLocalPlayerCustom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GKLocalPlayerCustom.h; sourceTree = "<group>"; };
 		0A7D05ED1A167C8A00301D06 /* GKLocalPlayerCustom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GKLocalPlayerCustom.m; sourceTree = "<group>"; };
+		0AEACA151AC290980099AD00 /* iOS7-Default-568h.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iOS7-Default-568h.png"; sourceTree = "<group>"; };
+		0AEACA171AC29E690099AD00 /* iOS7-Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iOS7-Default-568h@2x.png"; sourceTree = "<group>"; };
+		0AEACA191AC29FC60099AD00 /* iOS7-Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iOS7-Default.png"; sourceTree = "<group>"; };
 		45367B8D1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = 5MinuteWaterBreak.mp3; sourceTree = "<group>"; };
 		52348A941A00584A0054E55A /* bgMusic.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; name = bgMusic.mp3; path = SkaterBrad/bgMusic.mp3; sourceTree = "<group>"; };
 		52348A961A00584A0054E55A /* lose.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = lose.wav; path = SkaterBrad/lose.wav; sourceTree = "<group>"; };
@@ -261,6 +267,9 @@
 				52AF413C1A032F96000F5687 /* replay.png */,
 				92A49AE51A00225B00EEDF39 /* road@3x.png */,
 				0A7D05E71A15D39000301D06 /* GameCenter.png */,
+				0AEACA151AC290980099AD00 /* iOS7-Default-568h.png */,
+				0AEACA191AC29FC60099AD00 /* iOS7-Default.png */,
+				0AEACA171AC29E690099AD00 /* iOS7-Default-568h@2x.png */,
 			);
 			name = Images;
 			path = ..;
@@ -396,11 +405,14 @@
 				0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
 				0A5158321A2D354100E153D9 /* CoolKids.wav in Resources */,
+				0AEACA161AC290980099AD00 /* iOS7-Default-568h.png in Resources */,
 				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
 				0A5FEA8F1A23C9C600A96133 /* Main.storyboard in Resources */,
+				0AEACA1A1AC29FC60099AD00 /* iOS7-Default.png in Resources */,
 				52AF413D1A032F96000F5687 /* replay.png in Resources */,
 				639186531AC27C4300E08E36 /* GTM-MGSTLS in Resources */,
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
+				0AEACA181AC29E690099AD00 /* iOS7-Default-568h@2x.png in Resources */,
 				0A5158301A2D326200E153D9 /* SkaterKids.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
 				E1C2D3091A02E895000EF20B /* Goseahawks.wav in Resources */,
@@ -554,6 +566,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
@@ -585,6 +598,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
