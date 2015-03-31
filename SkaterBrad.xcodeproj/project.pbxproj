@@ -32,6 +32,7 @@
 		52AF41361A032AE7000F5687 /* GameOverMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41331A032AE7000F5687 /* GameOverMenu.swift */; };
 		52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41341A032AE7000F5687 /* SoundNode.swift */; };
 		52AF413D1A032F96000F5687 /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF413C1A032F96000F5687 /* replay.png */; };
+		630C75291AC31C8E00F73613 /* libGoogleConversionTracking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 630C75281AC31C8E00F73613 /* libGoogleConversionTracking.a */; };
 		639186531AC27C4300E08E36 /* GTM-MGSTLS in Resources */ = {isa = PBXBuildFile; fileRef = 639186521AC27C4300E08E36 /* GTM-MGSTLS */; };
 		63FCA56C1AC0B4FF0084E72C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56B1AC0B4FF0084E72C /* CoreData.framework */; };
 		63FCA56E1AC0B5050084E72C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56D1AC0B5050084E72C /* SystemConfiguration.framework */; };
@@ -100,6 +101,8 @@
 		52AF41331A032AE7000F5687 /* GameOverMenu.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameOverMenu.swift; sourceTree = "<group>"; };
 		52AF41341A032AE7000F5687 /* SoundNode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SoundNode.swift; path = SkaterBrad/SoundNode.swift; sourceTree = "<group>"; };
 		52AF413C1A032F96000F5687 /* replay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay.png; sourceTree = "<group>"; };
+		630C75271AC31C8800F73613 /* ACTReporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACTReporter.h; sourceTree = "<group>"; };
+		630C75281AC31C8E00F73613 /* libGoogleConversionTracking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleConversionTracking.a; sourceTree = "<group>"; };
 		639186521AC27C4300E08E36 /* GTM-MGSTLS */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-MGSTLS"; sourceTree = "<group>"; };
 		63FCA56B1AC0B4FF0084E72C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		63FCA56D1AC0B5050084E72C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
@@ -145,6 +148,7 @@
 				63FCA5801AC0B5C10084E72C /* GoogleMobileAds.framework in Frameworks */,
 				63FCA5741AC0B51E0084E72C /* AdSupport.framework in Frameworks */,
 				63FCA5771AC0B5380084E72C /* libAdIdAccess.a in Frameworks */,
+				630C75291AC31C8E00F73613 /* libGoogleConversionTracking.a in Frameworks */,
 				63FCA5721AC0B5130084E72C /* libsqlite3.dylib in Frameworks */,
 				63FCA5781AC0B5380084E72C /* libGoogleAnalyticsServices.a in Frameworks */,
 				63FCA5701AC0B50D0084E72C /* libz.dylib in Frameworks */,
@@ -206,6 +210,7 @@
 		0A5479B419FEE4F500D697D8 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				630C75261AC31C7500F73613 /* ConversionTracking */,
 				63FCA57E1AC0B57C0084E72C /* AdMob */,
 				63FCA56A1AC0B4DD0084E72C /* GTM */,
 				0A5FEA901A23CDB900A96133 /* Skater.ttf */,
@@ -273,6 +278,15 @@
 			);
 			name = Images;
 			path = ..;
+			sourceTree = "<group>";
+		};
+		630C75261AC31C7500F73613 /* ConversionTracking */ = {
+			isa = PBXGroup;
+			children = (
+				630C75271AC31C8800F73613 /* ACTReporter.h */,
+				630C75281AC31C8E00F73613 /* libGoogleConversionTracking.a */,
+			);
+			name = ConversionTracking;
 			sourceTree = "<group>";
 		};
 		63FCA56A1AC0B4DD0084E72C /* GTM */ = {

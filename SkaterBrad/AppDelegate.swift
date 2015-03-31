@@ -21,6 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         TAGContainerOpener.openContainerWithId("GTM-MGSTLS", tagManager: self.tagManager, openType: kTAGOpenTypePreferNonDefault, timeout: nil, notifier: self)
         self.tagManager.dispatchInterval = 1
         
+        //  Conversion Tracking
+        let reporter = ACTConversionReporter(conversionID: "948452532", label: "4_zZCMSo11oQtPmgxAM", value: "0.01", isRepeatable: false)
+        
         return true
     }
     
