@@ -21,8 +21,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
         TAGContainerOpener.openContainerWithId("GTM-MGSTLS", tagManager: self.tagManager, openType: kTAGOpenTypePreferNonDefault, timeout: nil, notifier: self)
         self.tagManager.dispatchInterval = 1
         
-        //  Conversion Tracking
-        let reporter = ACTConversionReporter(conversionID: "948452532", label: "4_zZCMSo11oQtPmgxAM", value: "0.01", isRepeatable: false)
+        //  Conversion Tracking for download
+        ACTAutomatedUsageTracker.enableAutomatedUsageReportingWithConversionID("948452532")
+        ACTConversionReporter(conversionID: "948452532", label: "4_zZCMSo11oQtPmgxAM", value: "0.01", isRepeatable: false)
         
         return true
     }
@@ -32,13 +33,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
             self.tagContainer = container
             let screenViewDictionary = ["event" : "screen-open", "screen-name" : "Start Screen"]
             var dataLayer : TAGDataLayer = TAGManager.instance().dataLayer
-            dataLayer.push(NSDictionary(dictionary: screenViewDictionary))
+            
+            dataLayer.push(screenViewDictionary)
             
             container.refresh()
         })
     }
     
     func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject?) -> Bool {
+        
+        NSLog("%@", url);
         if sourceApplication == "com.analyticspros.TestShop" as String! {
             if let urlQuery = url.query {
                 let queryParameters = urlQuery.componentsSeparatedByString("&")
@@ -60,7 +64,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, TAGContainerOpenerNotifie
                     return false
                 }
                 let dataLayer = TAGManager.instance().dataLayer
-                if utmContent == nil {
+                if utmContent == nil { 
                     dataLayer.push(["event" : "campaign-app-attribution",
                         "utm-campaign" : utmCampaign!,
                         "utm-source" : utmSource!,

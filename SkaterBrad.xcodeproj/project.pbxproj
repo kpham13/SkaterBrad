@@ -30,7 +30,7 @@
 		52AF41371A032AE7000F5687 /* SoundNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 52AF41341A032AE7000F5687 /* SoundNode.swift */; };
 		52AF413D1A032F96000F5687 /* replay.png in Resources */ = {isa = PBXBuildFile; fileRef = 52AF413C1A032F96000F5687 /* replay.png */; };
 		630C75291AC31C8E00F73613 /* libGoogleConversionTracking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 630C75281AC31C8E00F73613 /* libGoogleConversionTracking.a */; };
-		639186531AC27C4300E08E36 /* GTM-MGSTLS in Resources */ = {isa = PBXBuildFile; fileRef = 639186521AC27C4300E08E36 /* GTM-MGSTLS */; };
+		6330293B1AD336EF0052A0CE /* GTM-MGSTLS in Resources */ = {isa = PBXBuildFile; fileRef = 6330293A1AD336EF0052A0CE /* GTM-MGSTLS */; };
 		63FCA56C1AC0B4FF0084E72C /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56B1AC0B4FF0084E72C /* CoreData.framework */; };
 		63FCA56E1AC0B5050084E72C /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56D1AC0B5050084E72C /* SystemConfiguration.framework */; };
 		63FCA5701AC0B50D0084E72C /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 63FCA56F1AC0B50D0084E72C /* libz.dylib */; };
@@ -97,7 +97,7 @@
 		52AF413C1A032F96000F5687 /* replay.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = replay.png; sourceTree = "<group>"; };
 		630C75271AC31C8800F73613 /* ACTReporter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACTReporter.h; sourceTree = "<group>"; };
 		630C75281AC31C8E00F73613 /* libGoogleConversionTracking.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libGoogleConversionTracking.a; sourceTree = "<group>"; };
-		639186521AC27C4300E08E36 /* GTM-MGSTLS */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-MGSTLS"; sourceTree = "<group>"; };
+		6330293A1AD336EF0052A0CE /* GTM-MGSTLS */ = {isa = PBXFileReference; lastKnownFileType = file; path = "GTM-MGSTLS"; sourceTree = "<group>"; };
 		63FCA56B1AC0B4FF0084E72C /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		63FCA56D1AC0B5050084E72C /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		63FCA56F1AC0B50D0084E72C /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -283,7 +283,7 @@
 		63FCA56A1AC0B4DD0084E72C /* GTM */ = {
 			isa = PBXGroup;
 			children = (
-				639186521AC27C4300E08E36 /* GTM-MGSTLS */,
+				6330293A1AD336EF0052A0CE /* GTM-MGSTLS */,
 				63FCA5791AC0B5460084E72C /* TAGContainer.h */,
 				63FCA57A1AC0B5460084E72C /* TAGContainerOpener.h */,
 				63FCA57B1AC0B5460084E72C /* TAGDataLayer.h */,
@@ -408,12 +408,12 @@
 				45367B8E1A035A4C00A2CE4E /* 5MinuteWaterBreak.mp3 in Resources */,
 				0A7D05E81A15D39000301D06 /* GameCenter.png in Resources */,
 				0A62FC061A16B35F00A844D2 /* Images.xcassets in Resources */,
+				6330293B1AD336EF0052A0CE /* GTM-MGSTLS in Resources */,
 				92A49AE61A00225B00EEDF39 /* road@3x.png in Resources */,
 				0A5158321A2D354100E153D9 /* CoolKids.wav in Resources */,
 				E1C2D3081A02E895000EF20B /* Getitnexttime.wav in Resources */,
 				0A5FEA8F1A23C9C600A96133 /* Main.storyboard in Resources */,
 				52AF413D1A032F96000F5687 /* replay.png in Resources */,
-				639186531AC27C4300E08E36 /* GTM-MGSTLS in Resources */,
 				E1C2D30A1A02E895000EF20B /* Ohdamn.wav in Resources */,
 				0A5158301A2D326200E153D9 /* SkaterKids.wav in Resources */,
 				52348A9B1A00584A0054E55A /* lose.wav in Resources */,
@@ -521,7 +521,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -557,7 +557,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
@@ -587,6 +587,7 @@
 					"$(PROJECT_DIR)/SkaterBrad/libAdIdAccess.a",
 					"-framework",
 					AdSupport,
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -618,6 +619,7 @@
 					"$(PROJECT_DIR)/SkaterBrad/libAdIdAccess.a",
 					"-framework",
 					AdSupport,
+					"-ObjC",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";

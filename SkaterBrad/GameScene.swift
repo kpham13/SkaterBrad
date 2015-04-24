@@ -95,9 +95,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // MARK: - DID MOVE TO VIEW
     override func didMoveToView(view: SKView) {
-        let screenViewDictionary = ["event" : "screen-open", "screen-name" : "Start Screen", "sound-on" : "\(self.isSoundOn)"]
+        let screenViewDictionary = NSDictionary(dictionary: ["event" : "screen-open", "screen-name" : "Start Screen", "sound-on" : "\(self.isSoundOn)"])
         var dataLayer : TAGDataLayer = TAGManager.instance().dataLayer
-        dataLayer.push(NSDictionary(dictionary: screenViewDictionary))
+        dataLayer.push(screenViewDictionary as [NSObject : AnyObject])
         
         self.scaleMode = SKSceneScaleMode.ResizeFill
         self.registerAppTransitionObservers()
@@ -304,9 +304,8 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     }
     
     // MARK: - TOUCHES BEGAN
-    
-    override func touchesBegan(touches: NSSet, withEvent event: UIEvent) {
-        var touch = touches.anyObject() as UITouch
+    override func touchesBegan(touches: Set<NSObject>, withEvent event: UIEvent) {
+        var touch = touches.first as! UITouch
         var location = touch.locationInNode(self)
         
         if self.showNewGameMenu == true {
@@ -335,7 +334,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     // [Sam]
     func newGameMenuTouches(touches: NSSet) {
         
-        var touch = touches.anyObject() as UITouch
+        var touch = touches.anyObject() as! UITouch
         var location = touch.locationInNode(self.newGameMenu)
         
         println(" ")
@@ -388,7 +387,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
     
     // [Sam]
     func gameOverMenuTouches(touches: NSSet) {
-        var touch = touches.anyObject() as UITouch
+        var touch = touches.anyObject() as! UITouch
         var location = touch.locationInNode(self)
 //        var location = touch.locationInNode(self.gameOverMenu)
         
@@ -454,7 +453,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         case UInt32(self.heroCategory) | UInt32(self.coinCategory):
           // calls function that removes coin on contact
             if contact.bodyA.categoryBitMask < contact.bodyB.categoryBitMask {
-              heroDidCollideWithCoin(contact.bodyB.node as SKSpriteNode, hero: contact.bodyA.node as SKSpriteNode)
+              heroDidCollideWithCoin(contact.bodyB.node as! SKSpriteNode, hero: contact.bodyA.node as! SKSpriteNode)
             }
 
             println("CHA CHING")
